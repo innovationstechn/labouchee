@@ -48,3 +48,4 @@ app.*.map.json
 *.g.*
 /lib/app/locator.config.dart
 /lib/app/routes.gr.dart
+/android/app/build/

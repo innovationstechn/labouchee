@@ -8,7 +8,7 @@ void setupSnackbarUi() {
 
   // Registers a config to be used when calling showSnackbar
   service.registerSnackbarConfig(SnackbarConfig(
-    backgroundColor: Colors.red,
+    backgroundColor: const Color.fromRGBO(80, 32, 10, 1),
     textColor: Colors.white,
     messageColor: Colors.white,
     mainButtonTextColor: Colors.black,
@@ -29,7 +29,7 @@ void setupSnackbarUi() {
     config: SnackbarConfig(
       backgroundColor: Colors.white,
       titleColor: Colors.green,
-      messageColor: Colors.red,
+      messageColor: Color.fromRGBO(80, 32, 10, 1),
       borderRadius: 1,
     ),
   );

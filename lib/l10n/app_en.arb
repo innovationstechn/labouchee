@@ -1,0 +1,215 @@
+{
+  "welcomeToAll": "Welcome to the all-newLaBouchee MobileApp",
+  "@welcomeToAll": {
+    "description": "The current language"
+  },
+  "premiumChocolate": "Premiumchocolate with wide range of our products with improved user experience.",
+  "@premiumChocolate": {
+    "description": "The current language"
+  },
+  "welComeBack": "Welcome Back",
+  "@welComeBack": {
+    "description": "The current language"
+  },
+  "laBoucheeIsArt": "LaBouchee ... the chocolate and sweets industry ... is an art ... and a world with no limits...",
+  "@laBoucheeIsArt": {
+    "description": "The current language"
+  },
+  "ourGoal": "our goal is to satisfy the tastes of the customers.",
+  "@ourGoal": {
+    "description": "The current language"
+  },
+  "foundedIn": "LaBouchee was founded in 2012",
+  "@foundedIn": {
+    "description": "The current language"
+  },
+  "branches": "LaBouchee has over 13 branches all over the Kingdom of Saudi Arabia.",
+  "@branches": {
+    "description": "The current language"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "The current language"
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "The current language"
+  },
+  "signInWithEmailPassword": "Sign in with email password",
+  "@signInWithEmailPassword": {
+    "description": "The current language"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "The current language"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "The current language"
+  },
+  "forgotPassword": "Forget Password?",
+  "@forgotPassword": {
+    "description": "The current language"
+  },
+  "dontHaveAccount": "Don’t have an Account?",
+  "@dontHaveAccount": {
+    "description": "The current language"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "The current language"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "The current language"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "The current language"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "The current language"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "The current language"
+  },
+  "myProfile": "My profile",
+  "@myProfile": {
+    "description": "The current language"
+  },
+  "myOrders": "My orders",
+  "@myOrders": {
+    "description": "The current language"
+  },
+  "featuredProducts": "Featured products",
+  "@featuredProducts": {
+    "description": "The current language"
+  },
+  "proceedToPay": "Proceed to pay",
+  "@proceedToPay": {
+    "description": "The current language"
+  },
+  "submitOrder": "Submit order",
+  "@submitOrder": {
+    "description": "The current language"
+  },
+  "popularProducts": "Popular Products",
+  "@popularProducts": {
+    "description": "The current language"
+  },
+  "mostViewed": "Most Viewed",
+  "@mostViewed": {
+    "description": "The current language"
+  },
+  "feature": "Feature",
+  "@feature": {
+    "description": "The current language"
+  },
+  "hotSales": "Hot Sales",
+  "@hotSales": {
+    "description": "The current language"
+  },
+  "ourProducts": "Our Products",
+  "@ourProducts": {
+    "description": "The current language"
+  },
+  "more": "More...",
+  "@more": {
+    "description": "The current language"
+  },
+  "callUs": "Call Us",
+  "@callUs": {
+    "description": "The current language"
+  },
+  "sar": "SAR",
+  "@sar": {
+    "description": "The current language"
+  },
+  "quantity": "Quantity",
+  "@quantity": {
+    "description": "The current language"
+  },
+  "addToCard": "Add to cart",
+  "@addToCard": {
+    "description": "The current language"
+  },
+  "addReview": "ADD A REVIEW",
+  "@addReview": {
+    "description": "The current language"
+  },
+  "noRecordFound": "No Record Found",
+  "@noRecordFound": {
+    "description": "The current language"
+  },
+  "yourRatings": "Your Rating*",
+  "@yourRatings": {
+    "description": "The current language"
+  },
+  "yourReview": "Your review*",
+  "@yourReview": {
+    "description": "The current language"
+  },
+  "reviews": "Reviews",
+  "@reviews": {
+    "description": "The current language"
+  },
+  "submit": "Submit",
+  "@submit": {
+    "description": "The current language"
+  },
+  "relatedProducts": "Related Products",
+  "@relatedProducts": {
+    "description": "The current language"
+  },
+  "inquiryForm": "Inquiry Form",
+  "@inquiryForm": {
+    "description": "The current language"
+  },
+  "orders": "Orders",
+  "@orders": {
+    "description": "The current language"
+  },
+  "discountCoupons": "Discount Coupons",
+  "@discountCoupons": {
+    "description": "The current language"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "The current language"
+  },
+  "selectCity": "Select City",
+  "@selectCity": {
+    "description": "The current language"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "The current language"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "The current language"
+  },
+  "emailAddress": "Email Address *",
+  "@emailAddress": {
+    "description": "The current language"
+  },
+  "zipCode": "Zip Code",
+  "@zipCode": {
+    "description": "The current language"
+  },
+  "contactNo": "Contact No",
+  "@contactNo": {
+    "description": "The current language"
+  },
+  "selectPaymentMethod": "Select Payment Method",
+  "@selectPaymentMethod": {
+    "description": "The current language"
+  },
+  "thankYouPlacingOrder": "Thank you for placing order with us, have a wonderful day.",
+  "@thankYouPlacingOrder": {
+    "description": "The current language"
+  }
+}
+

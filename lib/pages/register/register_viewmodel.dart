@@ -54,4 +54,9 @@ class RegisterVM extends BaseViewModel {
 
     await runBusyFuture(_register());
   }
+
+  void setState(){
+    clearErrors();
+    notifyListeners();
+  }
 }
