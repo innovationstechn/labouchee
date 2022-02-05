@@ -81,7 +81,7 @@ class AddressFormWidget extends FormField<String> {
                               context);
                           if(result!=null){
                             state.didChange(result);
-                            textEditingController!.text = result!;
+                            textEditingController!.text = result;
                           }
                         } catch (e) {
                           print(e);
@@ -142,7 +142,7 @@ class AddressFormWidget extends FormField<String> {
 
     final List<double> result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => GMAP(latitude: _locationData!.latitude,longitude: _locationData!.longitude,)),
+      MaterialPageRoute(builder: (_) => GMAP(latitude: _locationData.latitude,longitude: _locationData.longitude,)),
     );
 
     List<Placemark> placemarks;

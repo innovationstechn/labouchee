@@ -61,7 +61,7 @@ class ContactFormWidget extends FormField<String> {
                             hintStyle: TextStyle(
                                 color: focusNode!.hasFocus
                                     ? Colors.black
-                                    : Theme.of(context!).primaryColor,
+                                    : Theme.of(context).primaryColor,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w300),
                             focusedBorder: UnderlineInputBorder(
