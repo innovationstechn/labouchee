@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/widgets/setup_bottom_sheet_ui.dart';
 import 'package:labouchee/widgets/setup_dialog_ui.dart';
 import 'package:labouchee/widgets/setup_snackbar_ui.dart';
@@ -10,23 +12,28 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'l10n/l10n.dart';
 
-void main() {
+Future<void> main() async {
   setupLocator();
   setupDialogUi();
   setupSnackbarUi();
   setupBottomSheetUi();
 
   WidgetsFlutterBinding.ensureInitialized();
-  runApp( MyApp(),);
+
+  await Hive.initFlutter();
+  await HiveLocalStorage.init();
+
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
-        localizationsDelegates:  const [
+        localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -38,13 +45,12 @@ class MyApp extends StatelessWidget {
           // _LoggingObserver(),
         ],
         navigatorKey: StackedService.navigatorKey,
-        initialRoute: auto_router.Routes.loginScreenRoute,
+        initialRoute: auto_router.Routes.onboardingScreenRoute,
         onGenerateRoute: auto_router.Router().onGenerateRoute,
         theme: ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),
         title: 'Flutter Demo',
       );
     });
-
   }
 }
 //
