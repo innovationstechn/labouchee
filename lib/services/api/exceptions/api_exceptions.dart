@@ -1,10 +1,10 @@
 import 'package:labouchee/models/register_error_model.dart';
 
-class RegisterValidationException implements Exception {
-  final RegisterValidationErrorModel error;
+class ErrorModelException<T> implements Exception {
+  final T error;
   final String message;
 
-  RegisterValidationException(this.message, this.error);
+  ErrorModelException(this.message, this.error);
 }
 
 class CustomException implements Exception {
@@ -25,4 +25,12 @@ class RequestFailureException extends CustomException {
 
 class UnauthorisedException extends CustomException {
   UnauthorisedException(message) : super(message, "");
+}
+
+class InvalidOTPException extends CustomException {
+  InvalidOTPException(message) : super(message, "");
+}
+
+class NoEmailFoundException extends CustomException {
+  NoEmailFoundException(message) : super(message, "");
 }

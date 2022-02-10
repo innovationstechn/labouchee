@@ -19,4 +19,28 @@ class HiveLocalStorage implements LocalStorage {
       () => _prefsBox!.get('onboarding_done') ?? false,
     );
   }
+
+  @override
+  Future<String?> locale({String? localeString}) async {
+    if (localeString != null) {
+      await _prefsBox!.put('locale', localeString);
+    }
+
+    return Future.delayed(
+    Duration.zero,
+    () => _prefsBox!.get('locale'),
+    );
+  }
+
+  @override
+  Future<String?> token({String? token}) async {
+    if (token != null) {
+      await _prefsBox!.put('token', token);
+    }
+
+    return Future.delayed(
+    Duration.zero,
+    () => _prefsBox!.get('token'),
+    );
+  }
 }
