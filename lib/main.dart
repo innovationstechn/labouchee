@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:labouchee/language_view_model.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/widgets/setup_bottom_sheet_ui.dart';
 import 'package:labouchee/widgets/setup_dialog_ui.dart';
 import 'package:labouchee/widgets/setup_snackbar_ui.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'app/locator.dart';
 import 'app/routes.gr.dart' as auto_router;
@@ -31,26 +33,35 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: L10n.all,
-        navigatorObservers: [
-          StackedService.routeObserver,
-          // _LoggingObserver(),
-        ],
-        navigatorKey: StackedService.navigatorKey,
-        initialRoute: auto_router.Routes.onboardingScreenRoute,
-        onGenerateRoute: auto_router.Router().onGenerateRoute,
-        theme: ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),
-        title: 'Flutter Demo',
-      );
-    });
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return ViewModelBuilder<LanguageVM>.reactive(
+          viewModelBuilder: () => LanguageVM(),
+          builder: (context, languageVM, _) {
+            return MaterialApp(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              locale: languageVM.locale,
+              supportedLocales: L10n.all,
+              navigatorObservers: [
+                StackedService.routeObserver,
+                // _LoggingObserver(),
+              ],
+              navigatorKey: StackedService.navigatorKey,
+              initialRoute: auto_router.Routes.onboardingScreenRoute,
+              onGenerateRoute: auto_router.Router().onGenerateRoute,
+              theme:
+                  ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),
+              title: 'Flutter Demo',
+            );
+          },
+        );
+      },
+    );
   }
 }
 //

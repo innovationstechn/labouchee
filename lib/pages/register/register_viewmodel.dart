@@ -41,7 +41,7 @@ class RegisterVM extends BaseViewModel {
 
         await _localStorage.token(token: token);
 
-        _navigationService.navigateTo(Routes.forgotScreenRoute);
+        // _navigationService.navigateTo(Routes.forgotScreenRoute);
       } on ErrorModelException<RegisterValidationErrorModel> catch (e) {
         _snackbarService.showSnackbar(message: e.message);
         setError(e.error);
@@ -57,6 +57,11 @@ class RegisterVM extends BaseViewModel {
     }
 
     await runBusyFuture(_register());
+  }
+
+
+  void navigateToOTPVerification(){
+    _navigationService.navigateTo(Routes.otpScreenRoute);
   }
 
   void setState(){

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:labouchee/app/locator.dart';
-import 'package:labouchee/app/routes.gr.dart';
 import 'package:labouchee/pages/login/login_viewmodel.dart';
 import 'package:labouchee/mixins/validator_mixin.dart';
 import 'package:labouchee/widgets/custom_button.dart';
@@ -47,7 +45,8 @@ class _LoginViewState extends State<LoginView> {
                           text: AppLocalizations.of(context)!.welComeBack,
                           fontSize: 25.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor),
+                          color: Theme.of(context).primaryColor,
+                          ),
                       SizedBox(
                         height: 1.h,
                       ),
@@ -84,8 +83,9 @@ class _LoginViewState extends State<LoginView> {
                                   AppLocalizations.of(context)!.forgotPassword,
                               padding:
                                   EdgeInsets.symmetric(horizontal: 5.w,vertical: 5),
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w300)),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w300,
+                              onTap:() => onForgotPassword(loginVM))),
                       SizedBox(height: 1.5.h),
                       if(loginVM.isBusy)
                         CircularProgressIndicator(color: Theme.of(context).primaryColor,)
@@ -120,28 +120,27 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  void onForgotPassword(LoginVM loginVm){
+    loginVm.navigateToForgotPassword();
+  }
+
   Widget createAccount(BuildContext context,LoginVM loginVM) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal:2.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton(
-              onPressed: ()=>loginVM.navigateToSignUp(),
-              child: Row(
-                children: [
-                  CustomText(
-                      text: AppLocalizations.of(context)!.dontHaveAccount+" ",
-                      fontSize: 12.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
-                  CustomText(
-                      text: AppLocalizations.of(context)!.signUp,
-                      fontSize: 12.sp,
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w400),
-                ],
-              ))
+          CustomText(
+              text: AppLocalizations.of(context)!.dontHaveAccount+" ",
+              fontSize: 14.sp,
+              color: Colors.black,
+              fontWeight: FontWeight.w400),
+          CustomText(
+              text: AppLocalizations.of(context)!.signUp,
+              fontSize: 14.sp,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w400,
+              onTap:()=>loginVM.navigateToSignUp())
         ],
       ),
     );

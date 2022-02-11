@@ -164,7 +164,7 @@ class LaboucheeAPI implements API {
     try {
       final response = await _dio.post('/send-verification-code');
 
-      return response.data['code'];
+      return response.data['verification_code'].toString();
     } on DioError catch (e) {
       if (e.response!.statusCode == 400) {
         throw ErrorModelException<int>(

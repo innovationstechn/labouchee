@@ -3,7 +3,7 @@ import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 
 class TextFormWidget extends FormField<String> {
-  final String? labelText,bottomText;
+  final String? labelText;
   final IconData? suffixIcon;
   final bool? showIcon;
   final BuildContext? context;
@@ -20,7 +20,6 @@ class TextFormWidget extends FormField<String> {
       this.labelText,
       this.suffixIcon,
       this.focusNode,
-      this.bottomText = "",
       this.errorText,
       bool? obscureText = false,
       required this.validationMethod,
@@ -89,18 +88,6 @@ class TextFormWidget extends FormField<String> {
                             width: 1.0,
                           ),
                         ),
-                      ),
-                    ),
-                    if(bottomText!="")
-                    Align(
-                      alignment: AlignmentDirectional.topStart,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 1.w,vertical: 10),
-                        child: CustomText(
-                            text: bottomText,
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black),
                       ),
                     ),
                   ],

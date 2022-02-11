@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:labouchee/pages/forgot/forgot_view.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
+import 'package:labouchee/pages/language/language.dart';
 import 'package:labouchee/pages/login/login_view.dart';
 import 'package:labouchee/pages/onboarding/onboarding_view.dart';
 import 'package:labouchee/pages/otp/otp_view.dart';
@@ -35,6 +36,11 @@ import 'package:labouchee/pages/register/register_view.dart';
       name: 'onboardingScreenRoute',
       initial: true,
     ),
+    MaterialRoute(
+      page: LanguageView,
+      name: 'languageScreenRoute',
+    ),
+
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,
   durationInMilliseconds: 400,

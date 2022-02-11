@@ -41,6 +41,10 @@ class LoginVM extends BaseViewModel {
     await runBusyFuture(_login());
   }
 
+  void navigateToForgotPassword(){
+    _navigationService.navigateTo(Routes.forgotScreenRoute);
+  }
+
   void navigateToSignUp(){
     _navigationService.navigateTo(Routes.registerScreenRoute);
   }

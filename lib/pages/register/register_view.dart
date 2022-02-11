@@ -45,7 +45,6 @@ class _RegisterViewState extends State<RegisterView> {
       viewModelBuilder: () => RegisterVM(),
       onModelReady: (model) {},
       builder: (context, registerVM, _) {
-
         return Form(
           key: _signUpFormKey,
           child: Scaffold(
@@ -66,10 +65,11 @@ class _RegisterViewState extends State<RegisterView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                            text: "Create Account",
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor),
+                          text: "Create Account",
+                          fontSize: 25.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         SizedBox(
                           height: 3.h,
                         ),
@@ -78,7 +78,9 @@ class _RegisterViewState extends State<RegisterView> {
                           textEditingController: name,
                           labelText: AppLocalizations.of(context)!.name,
                           focusNode: FocusNode(),
-                          errorText: registerValidationErrorModel.name!=null?registerValidationErrorModel.name!.first:null,
+                          errorText: registerValidationErrorModel.name != null
+                              ? registerValidationErrorModel.name!.first
+                              : null,
                           validationMethod: (text) =>
                               widget.nameValidator(text),
                         ),
@@ -87,7 +89,9 @@ class _RegisterViewState extends State<RegisterView> {
                           textEditingController: email,
                           labelText: AppLocalizations.of(context)!.email,
                           focusNode: FocusNode(),
-                          errorText: registerValidationErrorModel.email!=null?registerValidationErrorModel.email!.first:null,
+                          errorText: registerValidationErrorModel.email != null
+                              ? registerValidationErrorModel.email!.first
+                              : null,
                           validationMethod: (text) =>
                               widget.emailValidator(text),
                         ),
@@ -97,7 +101,10 @@ class _RegisterViewState extends State<RegisterView> {
                           labelText: AppLocalizations.of(context)!.password,
                           obscureText: true,
                           showIcon: true,
-                          errorText: registerValidationErrorModel.password!=null?registerValidationErrorModel.password!.first:null,
+                          errorText:
+                              registerValidationErrorModel.password != null
+                                  ? registerValidationErrorModel.password!.first
+                                  : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.passwordValidator(text),
@@ -107,7 +114,10 @@ class _RegisterViewState extends State<RegisterView> {
                           textEditingController: address,
                           labelText: "Address",
                           focusNode: FocusNode(),
-                          errorText: registerValidationErrorModel.address1!=null?registerValidationErrorModel.address1!.first:null,
+                          errorText:
+                              registerValidationErrorModel.address1 != null
+                                  ? registerValidationErrorModel.address1!.first
+                                  : null,
                           validationMethod: (text) =>
                               widget.addressValidator(text),
                         ),
@@ -115,7 +125,10 @@ class _RegisterViewState extends State<RegisterView> {
                           context: context,
                           textEditingController: postalCode,
                           labelText: "Postal Code",
-                          errorText: registerValidationErrorModel.zipCode!=null?registerValidationErrorModel.zipCode!.first:null,
+                          errorText:
+                              registerValidationErrorModel.zipCode != null
+                                  ? registerValidationErrorModel.zipCode!.first
+                                  : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.postalCodeValidator(text),
@@ -126,7 +139,10 @@ class _RegisterViewState extends State<RegisterView> {
                           labelText: AppLocalizations.of(context)!.contactNo,
                           bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
                           initialValue: "0966",
-                          errorText: registerValidationErrorModel.contactNo!=null?registerValidationErrorModel.contactNo!.first:null,
+                          errorText: registerValidationErrorModel.contactNo !=
+                                  null
+                              ? registerValidationErrorModel.contactNo!.first
+                              : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.contactNoValidator(text),
@@ -172,11 +188,14 @@ class _RegisterViewState extends State<RegisterView> {
         address1: address.text,
         address2: '',
         zipCode: postalCode.text,
-        contactNo: phoneNumber.text,
+        contactNo: phoneNumber.text.replaceAll(RegExp(r' '), r""),
       );
       if (registerVM.hasError) {
-        registerValidationErrorModel = registerVM.error(registerVM) as RegisterValidationErrorModel;
+        registerValidationErrorModel =
+            registerVM.error(registerVM) as RegisterValidationErrorModel;
         registerVM.setState();
+      }else{
+        registerVM.navigateToOTPVerification();
       }
     }
   }

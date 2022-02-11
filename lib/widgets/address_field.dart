@@ -68,7 +68,7 @@ class AddressFormWidget extends FormField<String> {
                     ),
                   ),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.edit,
+                    icon: Icon(Icons.pin_drop_outlined,
                       color: Theme
                           .of(context)
                           .primaryColor,
