@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:labouchee/language_view_model.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
+import 'package:labouchee/utils/helpers.dart';
 import 'package:labouchee/widgets/setup_bottom_sheet_ui.dart';
 import 'package:labouchee/widgets/setup_dialog_ui.dart';
 import 'package:labouchee/widgets/setup_snackbar_ui.dart';
@@ -25,12 +26,20 @@ Future<void> main() async {
   await Hive.initFlutter();
   await HiveLocalStorage.init();
 
+  final String initialRoute = await generateInitRoute();
+
   runApp(
-    MyApp(),
+    MyApp(
+      initialRoute: initialRoute,
+    ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  final String initialRoute;
+
+  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -52,7 +61,7 @@ class MyApp extends StatelessWidget {
                 // _LoggingObserver(),
               ],
               navigatorKey: StackedService.navigatorKey,
-              initialRoute: auto_router.Routes.onboardingScreenRoute,
+              initialRoute: initialRoute,
               onGenerateRoute: auto_router.Router().onGenerateRoute,
               theme:
                   ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),

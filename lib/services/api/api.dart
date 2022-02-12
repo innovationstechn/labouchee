@@ -1,4 +1,5 @@
 import 'package:labouchee/models/reset_password_model.dart';
+import 'package:labouchee/models/user.dart';
 
 import '../../models/login_model.dart';
 import '../../models/register_model.dart';
@@ -9,4 +10,6 @@ abstract class API {
   Future<String> forgotPassword(String email);
   Future<void> resetPassword(ResetPasswordModel model);
   Future<String> sendOTP();
+  Future<void> verifyUser();
+  Future<UserModel> getUser();
 }

@@ -43,4 +43,16 @@ class HiveLocalStorage implements LocalStorage {
     () => _prefsBox!.get('token'),
     );
   }
+
+  @override
+  Future<bool> isOtpVerified({bool? isVerified}) async {
+    if (isVerified != null) {
+      await _prefsBox!.put('otp_verified', isVerified);
+    }
+
+    return Future.delayed(
+      Duration.zero,
+          () => _prefsBox!.get('otp_verified') ?? false,
+    );
+  }
 }

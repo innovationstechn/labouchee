@@ -4,6 +4,8 @@ import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/services/api/api.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
 import 'package:labouchee/services/api/labouchee_api.dart';
+import 'package:labouchee/services/local_storage/hive_local_storage.dart';
+import 'package:labouchee/services/local_storage/local_storage.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,6 +15,7 @@ class OtpVM extends BaseViewModel {
   final API _api = locator<LaboucheeAPI>();
   final NavigationService _navigationService = locator();
   final SnackbarService _snackbarService = locator();
+  final LocalStorage _localStorage = locator<HiveLocalStorage>();
 
   String? _otpCode;
 
@@ -34,11 +37,19 @@ class OtpVM extends BaseViewModel {
     await runBusyFuture(_sendOTP());
   }
 
-  void match(String userOtpCode) {
-    if(userOtpCode == _otpCode) {
-      _navigationService.clearStackAndShow(Routes.landingScreenRoute);
-    } else {
-      _snackbarService.showSnackbar(message: 'Sorry, that OTP didn\'t match');
+  Future<void> match(String userOtpCode) async {
+    Future<void> _match() async {
+      if(userOtpCode == _otpCode) {
+        await _api.verifyUser();
+        await _localStorage.isOtpVerified(isVerified: true);
+
+        _navigationService.clearStackAndShow(Routes.landingScreenRoute);
+      } else {
+        _snackbarService.showSnackbar(message: 'Sorry, that OTP didn\'t match');
+      }
+
     }
+
+    await runBusyFuture(_match());
   }
 }

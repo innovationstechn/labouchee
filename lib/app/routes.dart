@@ -34,7 +34,6 @@ import 'package:labouchee/pages/register/register_view.dart';
     MaterialRoute(
       page: OnboardingView,
       name: 'onboardingScreenRoute',
-      initial: true,
     ),
     MaterialRoute(
       page: LanguageView,

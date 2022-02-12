@@ -7,6 +7,7 @@ import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/register_model.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/models/reset_password_error_model.dart';
+import 'package:labouchee/models/user.dart';
 import 'package:labouchee/services/api/api.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
@@ -53,15 +54,17 @@ class LaboucheeAPI implements API {
 
       return response.data['token'];
     } on DioError catch (e) {
-      if (e.response!.statusCode == 401) {
-        throw UnauthorisedException(
-          e.response!.data['message'],
-        );
-      } else if (e.response!.statusCode != 200) {
-        throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
-        );
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          throw UnauthorisedException(
+            e.response!.data['message'],
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
       } else {
         throw RequestFailureException(
           "No internet detected. Please check your internet connection and try again.",
@@ -82,18 +85,20 @@ class LaboucheeAPI implements API {
 
       return response.data['token'];
     } on DioError catch (e) {
-      if (e.response!.statusCode == 422) {
-        throw ErrorModelException<RegisterValidationErrorModel>(
-          e.response!.data['message'],
-          RegisterValidationErrorModel.fromJson(
-            e.response!.data['errors'],
-          ),
-        );
-      } else if (e.response!.statusCode != 200) {
-        throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
-        );
+      if (e.response != null) {
+        if (e.response!.statusCode == 422) {
+          throw ErrorModelException<RegisterValidationErrorModel>(
+            e.response!.data['message'],
+            RegisterValidationErrorModel.fromJson(
+              e.response!.data['errors'],
+            ),
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
       } else {
         throw RequestFailureException(
           "Oops! We could not serve your request.",
@@ -114,15 +119,17 @@ class LaboucheeAPI implements API {
 
       return response.data['code'];
     } on DioError catch (e) {
-      if (e.response!.statusCode == 422) {
-        throw NoEmailFoundException(
-          e.response!.data['message'],
-        );
-      } else if (e.response!.statusCode != 200) {
-        throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
-        );
+      if (e.response != null) {
+        if (e.response!.statusCode == 422) {
+          throw NoEmailFoundException(
+            e.response!.data['message'],
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
       } else {
         throw RequestFailureException(
           "Oops! We could not serve your request.",
@@ -139,18 +146,20 @@ class LaboucheeAPI implements API {
         data: model.toJson(),
       );
     } on DioError catch (e) {
-      if (e.response!.statusCode == 422) {
-        throw ErrorModelException<ResetPasswordErrorModel>(
-          e.response!.data['message'],
-          ResetPasswordErrorModel.fromJson(
-            e.response!.data['error'],
-          ),
-        );
-      } else if (e.response!.statusCode != 200) {
-        throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
-        );
+      if (e.response != null) {
+        if (e.response!.statusCode == 422) {
+          throw ErrorModelException<ResetPasswordErrorModel>(
+            e.response!.data['message'],
+            ResetPasswordErrorModel.fromJson(
+              e.response!.data['error'],
+            ),
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
       } else {
         throw RequestFailureException(
           "No internet detected. Please check your internet connection and try again.",
@@ -166,20 +175,63 @@ class LaboucheeAPI implements API {
 
       return response.data['verification_code'].toString();
     } on DioError catch (e) {
-      if (e.response!.statusCode == 400) {
-        throw ErrorModelException<int>(
-          e.response!.data['message'],
-          e.response!.data['verification_code'],
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          throw ErrorModelException<int>(
+            e.response!.data['message'],
+            e.response!.data['verification_code'],
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
         );
-      } else if (e.response!.statusCode != 200) {
+      }
+    }
+  }
+
+  @override
+  Future<void> verifyUser() async {
+    try {
+      final response = await _dio.post('/verify-number');
+
+      return response.data['code'];
+    } on DioError catch (e) {
+      if (e.response != null && e.response!.statusCode != 200) {
         throw RequestFailureException(
           e.response!.data['message'] ??
               "Oops! We could not serve your request.",
         );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
       }
-      throw RequestFailureException(
-        "No internet detected. Please check your internet connection and try again.",
-      );
+    }
+  }
+
+  @override
+  Future<UserModel> getUser() async {
+    try {
+      final response = await _dio.get('/auth-user');
+
+      return UserModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
     }
   }
 }
