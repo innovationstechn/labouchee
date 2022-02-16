@@ -8,9 +8,10 @@ import 'local_storage/hive_local_storage.dart';
 
 class LanguageService {
   final LocalStorage _storage = locator<HiveLocalStorage>();
-  final StreamController<Locale> _localeController = StreamController();
+  final StreamController<Locale> _localeController = StreamController.broadcast();
 
   Stream<Locale> get locale => _localeController.stream;
+
 
   LanguageService() {
     _localeController.add(DEFAULT_LOCALE);

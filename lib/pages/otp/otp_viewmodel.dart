@@ -43,7 +43,7 @@ class OtpVM extends BaseViewModel {
         await _api.verifyUser();
         await _localStorage.isOtpVerified(isVerified: true);
 
-        _navigationService.clearStackAndShow(Routes.landingScreenRoute);
+        await _navigationService.clearStackAndShow(Routes.landingScreenRoute);
       } else {
         _snackbarService.showSnackbar(message: 'Sorry, that OTP didn\'t match');
       }

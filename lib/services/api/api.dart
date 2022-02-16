@@ -1,3 +1,7 @@
+import 'package:labouchee/models/banner.dart';
+import 'package:labouchee/models/banner_filter.dart';
+import 'package:labouchee/models/product.dart';
+import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/reset_password_model.dart';
 import 'package:labouchee/models/user.dart';
 
@@ -12,4 +16,6 @@ abstract class API {
   Future<String> sendOTP();
   Future<void> verifyUser();
   Future<UserModel> getUser();
+  Future<List<ProductModel>> fetchProducts(ProductFilterModel filter);
+  Future<List<BannerModel>> fetchBanners(BannerFilterModel filter);
 }

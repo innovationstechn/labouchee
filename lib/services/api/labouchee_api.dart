@@ -3,13 +3,18 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/constants/general.dart';
+import 'package:labouchee/models/banner.dart';
+import 'package:labouchee/models/banner_filter.dart';
 import 'package:labouchee/models/login_model.dart';
+import 'package:labouchee/models/product.dart';
+import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/register_model.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/models/reset_password_error_model.dart';
 import 'package:labouchee/models/user.dart';
 import 'package:labouchee/services/api/api.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
+import 'package:labouchee/services/language_service.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/local_storage/local_storage.dart';
 
@@ -30,9 +35,11 @@ class LaboucheeAPI implements API {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await _localStorage.token();
+          final language = (await _localStorage.locale()) ?? DEFAULT_LOCALE.languageCode;
 
           options.headers['api_key'] = API_KEY;
           options.headers['Accept'] = 'application/json';
+          options.headers['language'] = language;
 
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
@@ -221,6 +228,58 @@ class LaboucheeAPI implements API {
       final response = await _dio.get('/auth-user');
 
       return UserModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<List<BannerModel>> fetchBanners(BannerFilterModel filter) async {
+    try {
+      final response = await _dio.get(
+        '/banners',
+        queryParameters: filter.toJson(),
+      );
+
+      return response.data['data']
+          .map((e) => BannerModel.fromJson(e))
+          .toList()
+          .cast<BannerModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> fetchProducts(ProductFilterModel filter) async {
+    try {
+      final response = await _dio.get(
+        '/products',
+        queryParameters: filter.toJson(),
+      );
+
+      return response.data['data']
+          .map((e) => ProductModel.fromJson(e))
+          .toList()
+          .cast<ProductModel>();
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
