@@ -8,6 +8,8 @@ import 'package:labouchee/pages/onboarding/onboarding_view.dart';
 import 'package:labouchee/pages/otp/otp_view.dart';
 import 'package:labouchee/pages/register/register_view.dart';
 
+import '../pages/starting/starting.dart';
+
 // Defining routes and global transitions
 @CustomAutoRouter(
   routes: <AutoRoute>[
@@ -38,6 +40,10 @@ import 'package:labouchee/pages/register/register_view.dart';
     MaterialRoute(
       page: LanguageView,
       name: 'languageScreenRoute',
+    ),
+    MaterialRoute(
+      page: Starting,
+      name: 'startingScreenRoute',
     ),
 
   ],

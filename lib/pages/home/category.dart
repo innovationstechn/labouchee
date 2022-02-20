@@ -14,21 +14,19 @@ class _CategoryState extends State<Category> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60.h,
+    return SizedBox(
+      height: 30.h,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          itemCount: items.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-          ),
-          itemBuilder: (BuildContext context, int index){
-            return Container(
-                height: 30.h,
-                child: Center(child: categoryCard()));
-          },
-        )
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+            direction: Axis.horizontal,
+            children: [
+              ...items.map((item)=>Container(
+                  height: 15.h,
+                  width: 30.w,
+                  child: categoryCard()))
+            ],
+          )
       ),
     );
   }
@@ -39,13 +37,13 @@ class _CategoryState extends State<Category> {
       child: Column(
         children: [
           Icon(Icons.access_time_outlined,size: 8.h,),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Text("Product Name",
             overflow: TextOverflow.fade,
             style: TextStyle(
-            fontSize: 10.sp,
-            fontWeight: FontWeight.normal,
-          ),)
+              fontSize: 10.sp,
+              fontWeight: FontWeight.normal,
+            ),)
         ],
       ),
     );

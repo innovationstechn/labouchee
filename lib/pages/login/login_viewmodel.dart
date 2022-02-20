@@ -24,7 +24,7 @@ class LoginVM extends BaseViewModel {
         await _localStorage.token(token: token);
 
         if(await _localStorage.isOtpVerified()) {
-          _navigationService.navigateTo(Routes.landingScreenRoute);
+          _navigationService.navigateTo(Routes.startingScreenRoute);
         } else {
           _navigationService.navigateTo(Routes.otpScreenRoute);
         }

@@ -69,6 +69,9 @@ dev_dependencies:
   carousel_pro: ^1.0.0
   lottie: ^1.2.1
   pin_code_fields: ^7.3.0
+  flutter_rating_bar: ^4.0.0
+  bottom_navy_bar: ^5.6.0
+  flutter_slider_drawer: ^2.1.1
 
   flutter_localizations:
     sdk: flutter

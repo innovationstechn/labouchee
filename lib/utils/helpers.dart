@@ -20,6 +20,6 @@ Future<String> generateInitRoute() async {
   //   return Routes.otpScreenRoute;
   // }
   else {
-    return Routes.landingScreenRoute;
+    return Routes.startingScreenRoute;
   }
 }

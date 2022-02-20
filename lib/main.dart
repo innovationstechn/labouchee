@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: L10n.all,
               navigatorObservers: [
                 StackedService.routeObserver,
-                // _LoggingObserver(),
+                //_LoggingObserver(),
               ],
               navigatorKey: StackedService.navigatorKey,
               initialRoute: initialRoute,
