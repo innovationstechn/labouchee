@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:labouchee/app/locator.dart';
@@ -7,6 +8,7 @@ import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
 import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/product.dart';
+import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/register_model.dart';
 import 'package:labouchee/models/register_error_model.dart';
@@ -286,6 +288,32 @@ class LaboucheeAPI implements API {
           e.response!.data['message'] ??
               "Oops! We could not serve your request.",
         );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<ProductDetailModel> fetchProductDetail(int id) async {
+    try {
+      final response = await _dio.get(
+        '/products/$id/details',
+      );
+
+      return ProductDetailModel.fromJson(response.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if(e.response?.statusCode == 404) {
+          throw RequestFailureException('Sorry, we could not get that product. Please contact administrator.');
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
       } else {
         throw RequestFailureException(
           "No internet detected. Please check your internet connection and try again.",
