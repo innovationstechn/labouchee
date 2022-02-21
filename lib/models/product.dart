@@ -9,8 +9,17 @@ class ProductModel {
   final List<String>? images;
 
   @JsonKey(fromJson: _doubleFromString, toJson: _doubleToString)
-  final double? discount, price, priceSmall, priceMedium, priceLarge,
+  final double? discount, price,
       productRating;
+
+  @JsonKey(name: 'price_sm', fromJson: _doubleFromString, toJson: _doubleToString)
+  final double? priceSmall;
+
+  @JsonKey(name: 'price_md', fromJson: _doubleFromString, toJson: _doubleToString)
+  final double? priceMedium;
+
+  @JsonKey(name: 'price_lg', fromJson: _doubleFromString, toJson: _doubleToString)
+  final double? priceLarge;
 
   ProductModel({
     this.id,
