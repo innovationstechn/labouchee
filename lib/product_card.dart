@@ -10,7 +10,6 @@ class ProductCard extends StatelessWidget {
   final ProductModel? productModel;
   final bool isSmall;
 
-  // final Function? onTap;
   const ProductCard({Key? key, this.productModel, required this.isSmall})
       : super(key: key);
 
@@ -22,16 +21,17 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: LayoutBuilder(builder: (context, cosntraints) {
         return Column(
-          // agay set kar le. Ab bas spacing kam zada he karni hy bas
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
               flex: 3,
-              child: Image.network(
-                productModel!.images!.elementAt(0),
-                fit: BoxFit.contain,
+              child: SizedBox.expand(
+                child: Image.network(
+                  productModel!.images!.elementAt(0),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             Flexible(
@@ -77,8 +77,7 @@ class ProductCard extends StatelessWidget {
                               Icons.star,
                               color: Color(0xffDE970B),
                             ),
-                            rating: productModel!.productRating ?? 0, // Ye nuull ho sakta hy + iske code ma masla hy push ia hoa hy ma na fix
-                            //Abhi kia karna is ka? Marzi teri. Ye null ha to 0 kar da
+                            rating: productModel!.productRating ?? 0,
                             itemSize: 0.12 * constraints.maxWidth,
                             unratedColor: Colors.grey[300],
                           ),

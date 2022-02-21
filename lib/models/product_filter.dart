@@ -5,7 +5,9 @@ part 'product_filter.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class ProductFilterModel {
   final int? page, min, max;
-  final String? sort, query;
+  final String? sort;
+  @JsonKey(name: 'q')
+  final String? query;
   @JsonKey(fromJson: _boolFromInt, toJson: _boolToInt)
   final bool? mostViewed, featured, hotSale;
 

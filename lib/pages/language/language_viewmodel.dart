@@ -9,11 +9,10 @@ class LanguageVM extends BaseViewModel{
   final _navigationService = locator<NavigationService>();
   final _languageService = locator<LanguageService>();
 
-  Future<void> languageSelection(String language) async {
+  Future<void> languageSelection(String language, String nextPage) async {
     await _languageService.changeLanguage(Locale(language));
-    _navigationService.clearStackAndShow(Routes.loginScreenRoute);
+    _navigationService.clearStackAndShow(nextPage);
   }
-
   void update(){
     notifyListeners();
   }

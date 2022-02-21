@@ -1,16 +1,19 @@
+import 'dart:ui';
+
 import 'package:labouchee/app/routes.gr.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/user.dart';
+import 'package:labouchee/utils/language_aware_base_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
 import '../../services/api/labouchee_api.dart';
 
-class LandingVM extends BaseViewModel {
+class LandingVM extends LanguageAwareBaseView {
   final _laboucheeAPI = locator<LaboucheeAPI>();
   final _snackbarService = locator<SnackbarService>();
   final _navigationService = locator<NavigationService>();
@@ -68,5 +71,10 @@ class LandingVM extends BaseViewModel {
     await runBusyFuture(
       _initialize(),
     );
+  }
+
+  @override
+  void onLanguageChanged(Locale newLocale) {
+    initialize();
   }
 }

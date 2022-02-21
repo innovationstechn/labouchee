@@ -6,7 +6,9 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageView extends StatefulWidget {
-  const LanguageView({Key? key}) : super(key: key);
+  String nextPage;
+
+  LanguageView({Key? key, required this.nextPage}) : super(key: key);
 
   @override
   State<LanguageView> createState() => _LanguageViewState();
@@ -74,7 +76,7 @@ class _LanguageViewState extends State<LanguageView> {
                     text: AppLocalizations.of(context)!.submit,
                     size: Size(80.w, 7.h),
                     textFontSize: 12.sp,
-                    onTap: () => languageVM.languageSelection(language!),
+                    onTap: () => languageVM.languageSelection(language!, widget.nextPage),
                   ),
                 ],
               ),

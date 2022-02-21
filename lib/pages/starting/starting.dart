@@ -2,8 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
+import 'package:labouchee/pages/product_details/product_details.dart';
 import 'package:labouchee/searchbar.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import '../../app/locator.dart';
+import '../../app/routes.gr.dart';
+import '../cart/cart.dart';
 
+// The no worry
 class Starting extends StatefulWidget {
   const Starting({Key? key}) : super(key: key);
 
@@ -11,12 +19,10 @@ class Starting extends StatefulWidget {
   _StartingState createState() => _StartingState();
 }
 
-// Sir screen visible ha? Yes. Ab bata landing k UI ka kya karna hy?
-// Search kidr ho hra? Search kahi nahi ho raha abhi
-
 class _StartingState extends State<Starting> {
   int _currentIndex = 0;
   late PageController _pageController;
+  final GlobalKey<SliderDrawerState> _key = GlobalKey<SliderDrawerState>();
 
   @override
   void initState() {
@@ -32,23 +38,102 @@ class _StartingState extends State<Starting> {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final navigationService = locator<NavigationService>();
+
     return Scaffold(
-      drawer: Drawer(),
-      appBar: AppBar(title: Text("Bottom Nav Bar")),
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
-          children: <Widget>[
-            LandingView(),
-            SearchBar(),
-            Container(color: Colors.green,),
-            Container(color: Colors.blue,),
-          ],
-        ),
+      // drawer: Drawer(),
+      // appBar: AppBar(
+      //   leading: Builder(builder: (context) {
+      //     return IconButton(
+      //       icon: Icon(
+      //         Icons.menu,
+      //         color: primaryColor,
+      //       ),
+      //       onPressed: () => Scaffold.of(context).openDrawer(),
+      //     );
+      //   }),
+      //   actions: [
+      //     Container(
+      //       child: IconButton(
+      //         icon: Icon(
+      //           Icons.language,
+      //           color: primaryColor,
+      //         ),
+      //         onPressed: () => navigationService.navigateTo(
+      //           Routes.languageScreenRoute,
+      //           arguments:
+      //               LanguageViewArguments(nextPage: Routes.startingScreenRoute),
+      //         ),
+      //       ),
+      //       margin: EdgeInsets.symmetric(horizontal: 10),
+      //     ),
+      //     // Ye abhi bhi login pa ja raha
+      //     Container(
+      //         child: Icon(
+      //           Icons.shopping_cart,
+      //           color: primaryColor,
+      //         ),
+      //         margin: EdgeInsets.symmetric(horizontal: 10)),
+      //   ],
+      //   title: Image.asset("assets/images/flags/logo.png"),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.white,
+      // ),
+      body: SliderDrawer(
+          appBar: SliderAppBar(
+            trailing: Row(
+              children: [
+                Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.language,
+                      color: primaryColor,
+                    ),
+                    onPressed: () => navigationService.navigateTo(
+                      Routes.languageScreenRoute,
+                      arguments: LanguageViewArguments(
+                          nextPage: Routes.startingScreenRoute),
+                    ),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                Container(
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: primaryColor,
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 10)),
+              ],
+            ),
+            title: Image.asset("assets/images/flags/logo.png"),
+            isTitleCenter: true,
+            appBarColor: Colors.white,
+          ),
+          key: _key,
+          sliderOpenSize: 200,
+          slider: _SliderView(
+            onItemClick: (title) {
+              _key.currentState!.closeSlider();
+              // setState(() {
+              //   this.title = title;
+              // });
+            },
+          ),
+          child: SizedBox.expand(
+      child: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _currentIndex = index);
+        },
+        children: <Widget>[
+          LandingView(),
+          SearchBar(),
+          Cart(),
+          ProductDetailPage(),
+        ],
       ),
+    ),),
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
@@ -60,33 +145,29 @@ class _StartingState extends State<Starting> {
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Colors.grey,
               title: Text('Home'),
-              icon: Icon(Icons.home)
-          ),
+              icon: Icon(Icons.home)),
           BottomNavyBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Colors.grey,
               title: Text('Search'),
-              icon: Icon(Icons.search)
-          ),
+              icon: Icon(Icons.search)),
           BottomNavyBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Colors.grey,
-              title: Text('Item Three'),
-              icon: Icon(Icons.chat_bubble)
-          ),
+              title: Text('Cart'),
+              icon: Icon(Icons.shopping_cart)),
           BottomNavyBarItem(
               activeColor: Theme.of(context).primaryColor,
               inactiveColor: Colors.grey,
               title: Text('Item Four'),
-              icon: Icon(Icons.settings)
-          ),
+              icon: Icon(Icons.settings)),
         ],
       ),
     );
   }
-  // Widget CustomAppBar(){
-  //   return AppBar()
-  // }
+// Widget CustomAppBar(){
+//   return AppBar()
+// }
 }
 
 class _SliderView extends StatelessWidget {
@@ -128,7 +209,7 @@ class _SliderView extends StatelessWidget {
             height: 20,
           ),
           _SliderMenuItem(
-              title: 'Home', iconData: Icons.home, onTap: onItemClick),
+              title: 'Profile', iconData: Icons.account_circle_sharp, onTap: onItemClick),
           _SliderMenuItem(
               title: 'Add Post',
               iconData: Icons.add_circle,
@@ -158,9 +239,9 @@ class _SliderMenuItem extends StatelessWidget {
 
   const _SliderMenuItem(
       {Key? key,
-        required this.title,
-        required this.iconData,
-        required this.onTap})
+      required this.title,
+      required this.iconData,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -172,88 +253,4 @@ class _SliderMenuItem extends StatelessWidget {
         leading: Icon(iconData, color: Colors.black),
         onTap: () => onTap?.call(title));
   }
-}
-
-class _AuthorList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    List<Data> dataList = [];
-    dataList.add(Data(Colors.amber, 'Amelia Brown',
-        'Life would be a great deal easier if dead things had the decency to remain dead.'));
-    dataList.add(Data(Colors.orange, 'Olivia Smith',
-        'That proves you are unusual," returned the Scarecrow'));
-    dataList.add(Data(Colors.deepOrange, 'Sophia Jones',
-        'Her name badge read: Hello! My name is DIE, DEMIGOD SCUM!'));
-    dataList.add(Data(Colors.red, 'Isabella Johnson',
-        'I am about as intimidating as a butterfly.'));
-    dataList.add(Data(Colors.purple, 'Emily Taylor',
-        'Never ask an elf for help; they might decide your better off dead, eh?'));
-    dataList.add(Data(Colors.green, 'Maya Thomas', 'Act first, explain later'));
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: ListView.separated(
-          scrollDirection: Axis.vertical,
-          //   physics: BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          itemBuilder: (builder, index) {
-            return LimitedBox(
-              maxHeight: 150,
-              child: Container(
-                decoration: new BoxDecoration(
-                    color: dataList[index].color,
-                    borderRadius: new BorderRadius.all(
-                      const Radius.circular(10.0),
-                    )),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(
-                        dataList[index].name,
-                        style: TextStyle(
-                            fontFamily: 'BalsamiqSans_Blod',
-                            fontSize: 30,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        dataList[index].detail,
-                        style: TextStyle(
-                            fontFamily: 'BalsamiqSans_Regular',
-                            fontSize: 15,
-                            color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (builder, index) {
-            return Divider(
-              height: 10,
-              thickness: 0,
-            );
-          },
-          itemCount: dataList.length),
-    );
-  }
-}
-
-class Data {
-  MaterialColor color;
-  String name;
-  String detail;
-
-  Data(this.color, this.name, this.detail);
-}
-
-class ColoursHelper {
-  static Color blue() => Color(0xff5e6ceb);
-
-  static Color blueDark() => Color(0xff4D5DFB);
 }

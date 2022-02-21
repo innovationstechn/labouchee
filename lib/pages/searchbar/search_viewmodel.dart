@@ -14,6 +14,20 @@ class SearchVM extends BaseViewModel {
 
   List<ProductModel> get searched => _searched;
 
+  Future<void> loadDefault() async {
+    Future<void> _loadDefault() async {
+      try {
+        _searched = await _laboucheeAPI.fetchProducts(
+          ProductFilterModel(),
+        );
+      } catch (e) {
+        _snackbarService.showSnackbar(message: e.toString());
+      }
+    }
+
+    await runBusyFuture(_loadDefault());
+  }
+
   Future<void> search(String query) async {
     Future<void> _search() async {
       try {

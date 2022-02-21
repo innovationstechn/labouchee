@@ -19,7 +19,7 @@ class OnboardingVM extends BaseViewModel {
     Future<void> _init() async {
       final onboardingDone = await _storageService.onboardingDone();
 
-      if(onboardingDone) {
+      if (onboardingDone) {
         await _navigationService.navigateTo(Routes.languageScreenRoute);
       }
     }
@@ -29,6 +29,7 @@ class OnboardingVM extends BaseViewModel {
 
   void onUserDone() async {
     await _storageService.onboardingDone(isDone: true);
-    await _navigationService.clearStackAndShow(Routes.languageScreenRoute);
+    await _navigationService.clearStackAndShow(Routes.languageScreenRoute,
+        arguments: LanguageViewArguments(nextPage: Routes.loginScreenRoute));
   }
 }

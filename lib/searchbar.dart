@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:labouchee/landing_products_list.dart';
 import 'package:labouchee/pages/searchbar/search_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
-
 import 'models/product.dart';
 
-// Abhi aik image ka size thk karna + Home? home bilkul bhe acha nahi lag raha. Tera wala utha kar chipka deta han
-
+// search bar ma by default aik list lagai jae? Are you here?YEs . SMjha nhi Page open ho to jo product wali list show ho rahi wo aa jae
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key}) : super(key: key);
 
@@ -33,8 +32,10 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SearchVM>.reactive(
+      onModelReady: (model) => model.loadDefault(),
       viewModelBuilder: () => SearchVM(),
       builder: (context, searchVM, __) {
+
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: CustomScrollView(
@@ -48,6 +49,16 @@ class _SearchBarState extends State<SearchBar> {
                   ],
                 ),
               ),
+
+              if (searchVM.isBusy)
+                SliverFillRemaining(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                )
+              else
               LandingProductList(items: searchVM.searched),
             ],
           ),
@@ -60,7 +71,7 @@ class _SearchBarState extends State<SearchBar> {
     return TextFormField(
       enableSuggestions: true,
       onChanged: (String? text) {
-        if(text != null && text.length > 3) onSearch(text);
+        if (text != null && text.length > 3) onSearch(text);
       },
       autofocus: true,
       style: TextStyle(color: Colors.black, fontSize: 13.sp),

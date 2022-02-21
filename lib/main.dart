@@ -15,6 +15,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'l10n/l10n.dart';
 
+// Language change hone par logout sa hataya jae
+
 Future<void> main() async {
   setupLocator();
   setupDialogUi();
