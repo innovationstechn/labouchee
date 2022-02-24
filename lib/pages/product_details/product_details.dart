@@ -34,6 +34,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         body: ViewModelBuilder<ProductDetailsVM>.reactive(
           viewModelBuilder: () =>
               ProductDetailsVM(product: widget.productModel!),
+          onModelReady: (model) => model.loadDetails(),
           builder: (context, productDetailsVM, _) {
             if (productDetailsVM.isBusy) {
               return Expanded(
@@ -425,7 +426,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 height: boxConstraints.maxHeight * 0.2,
                 child: SizedBox.expand(
                   child: Image.network(
-                    widget.productModel!.images!.elementAt(0)!,
+                    widget.productModel!.images!.elementAt(0),
                     fit: BoxFit.fill,
                   ),
                 ),

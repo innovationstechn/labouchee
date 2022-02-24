@@ -13,6 +13,7 @@ class ProductCard extends StatelessWidget {
   final ProductModel? productModel;
   final bool isSmall;
   final NavigationService _navigationService = locator<NavigationService>();
+
   ProductCard({Key? key, this.productModel, required this.isSmall})
       : super(key: key);
 
@@ -24,7 +25,10 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: LayoutBuilder(builder: (context, cosntraints) {
         return GestureDetector(
-          onTap:()=>_navigationService.navigateTo(Routes.productScreenRoute,arguments: ProductDetailPageArguments(productModel:productModel)),
+          onTap: () => _navigationService.navigateTo(
+            Routes.productScreenRoute,
+            arguments: ProductDetailPageArguments(productModel: productModel),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +91,10 @@ class ProductCard extends StatelessWidget {
                               unratedColor: Colors.grey[300],
                             ),
                           ),
-                          Icon(Icons.shopping_cart, size: constraints.maxWidth * 0.15,),
+                          Icon(
+                            Icons.shopping_cart,
+                            size: constraints.maxWidth * 0.15,
+                          ),
                         ],
                       );
                     }),

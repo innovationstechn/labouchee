@@ -10,6 +10,7 @@ import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
+import 'package:labouchee/models/product_review.dart';
 import 'package:labouchee/models/register_model.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/models/reset_password_error_model.dart';
@@ -37,7 +38,8 @@ class LaboucheeAPI implements API {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await _localStorage.token();
-          final language = (await _localStorage.locale()) ?? DEFAULT_LOCALE.languageCode;
+          final language =
+              (await _localStorage.locale()) ?? DEFAULT_LOCALE.languageCode;
 
           options.headers['api_key'] = API_KEY;
           options.headers['Accept'] = 'application/json';
@@ -306,14 +308,40 @@ class LaboucheeAPI implements API {
       return ProductDetailModel.fromJson(response.data);
     } on DioError catch (e) {
       if (e.response != null) {
-        if(e.response?.statusCode == 404) {
-          throw RequestFailureException('Sorry, we could not get that product. Please contact administrator.');
+        if (e.response?.statusCode == 404) {
+          throw RequestFailureException(
+              'Sorry, we could not get that product. Please contact administrator.');
         } else {
           throw RequestFailureException(
             e.response!.data['message'] ??
                 "Oops! We could not serve your request.",
           );
         }
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<List<ProductReviewModel>> fetchProductReviews(int productId) async {
+    try {
+      final response = await _dio.get(
+        '/$productId/reviews',
+      );
+
+      return response.data['data']
+          .map((e) => ProductReviewModel.fromJson(e))
+          .toList()
+          .cast<ProductReviewModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
       } else {
         throw RequestFailureException(
           "No internet detected. Please check your internet connection and try again.",

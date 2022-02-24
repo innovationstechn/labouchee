@@ -78,7 +78,10 @@ class LandingVM extends LanguageAwareBaseView {
     initialize();
   }
 
-  void goToProductDetailPage(ProductModel productModel){
-    _navigationService.navigateTo(Routes.productScreenRoute,arguments: ProductDetailPageArguments(productModel:productModel));
+  void goToProductDetailPage(ProductModel productModel) {
+    _navigationService.navigateTo(
+      Routes.productScreenRoute,
+      arguments: ProductDetailPageArguments(productModel: productModel),
+    );
   }
 }
