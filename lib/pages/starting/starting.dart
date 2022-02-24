@@ -130,7 +130,7 @@ class _StartingState extends State<Starting> {
           LandingView(),
           SearchBar(),
           Cart(),
-          ProductDetailPage(),
+          ProductDetailPage()
         ],
       ),
     ),),
@@ -186,14 +186,14 @@ class _SliderView extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          CircleAvatar(
-            radius: 65,
-            backgroundColor: Colors.grey,
-            child: CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/images/user_profile.jpg'),
-            ),
-          ),
+          // CircleAvatar(
+          //   radius: 65,
+          //   backgroundColor: Colors.grey,
+          //   child: CircleAvatar(
+          //     radius: 60,
+          //     backgroundImage: AssetImage('assets/images/user_profile.jpg'),
+          //   ),
+          // ),
           SizedBox(
             height: 20,
           ),

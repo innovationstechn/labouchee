@@ -6,6 +6,7 @@ import 'package:labouchee/pages/language/language.dart';
 import 'package:labouchee/pages/login/login_view.dart';
 import 'package:labouchee/pages/onboarding/onboarding_view.dart';
 import 'package:labouchee/pages/otp/otp_view.dart';
+import 'package:labouchee/pages/product_details/product_details.dart';
 import 'package:labouchee/pages/register/register_view.dart';
 
 import '../pages/starting/starting.dart';
@@ -44,6 +45,10 @@ import '../pages/starting/starting.dart';
     MaterialRoute(
       page: Starting,
       name: 'startingScreenRoute',
+    ),
+    MaterialRoute(
+      page: ProductDetailPage,
+      name: 'productScreenRoute',
     ),
 
   ],

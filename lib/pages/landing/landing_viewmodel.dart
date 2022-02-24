@@ -77,4 +77,8 @@ class LandingVM extends LanguageAwareBaseView {
   void onLanguageChanged(Locale newLocale) {
     initialize();
   }
+
+  void goToProductDetailPage(ProductModel productModel){
+    _navigationService.navigateTo(Routes.productScreenRoute,arguments: ProductDetailPageArguments(productModel:productModel));
+  }
 }

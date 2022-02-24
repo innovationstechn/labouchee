@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
       padding: padding??EdgeInsets.zero,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: buttonColor,
+            primary: buttonColor??Theme.of(context).primaryColor,
             minimumSize: size,
           ),
           child: CustomText(

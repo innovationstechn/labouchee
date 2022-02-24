@@ -77,6 +77,8 @@ dev_dependencies:
   bottom_navy_bar: ^5.6.0
   flutter_slider_drawer: ^2.1.1
   sliding_up_panel: ^2.0.0+1
+  rating_dialog: ^2.0.3
+  flutter_zoom_drawer: ^2.3.1
 
   flutter_localizations:
     sdk: flutter

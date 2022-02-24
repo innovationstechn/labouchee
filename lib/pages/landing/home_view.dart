@@ -54,7 +54,7 @@ class LandingView extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(8.0),
                           child: GFCarousel(
-                            hasPagination: true,
+                            // hasPagination: true,
                             passiveIndicator: Colors.white.withAlpha(100),
                             activeIndicator: Colors.white.withAlpha(200),
                             viewportFraction: 1.0,
@@ -127,7 +127,7 @@ class LandingView extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final item = landingVM.products[index];
 
-                                return productCard(item);
+                                return productCard(item,landingVM);
                               },
                               crossAxisCount:
                                   constraints.maxWidth > 400 ? 2 : 1,
@@ -226,103 +226,105 @@ class LandingView extends StatelessWidget {
     );
   }
 
-  // Mughe is wkt wo meme yaad aa rahi jis ma banda bus khali hath hila raha hota ha or dosre kaam kar rahe hote. :XD
-  // Meri halat wo hath hilane wali ha Koi mal
-
-  Widget productCard(ProductModel item) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 300),
-      margin: const EdgeInsets.all(8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                item.name!,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
+  Widget productCard(ProductModel item,LandingVM landingVM) {
+    return GestureDetector(
+      onTap:(){
+        landingVM.goToProductDetailPage(item);
+      },
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 300),
+        margin: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  item.name!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                item.productRating?.toStringAsFixed(1) ?? "-",
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              Icon(
-                Icons.star,
-                color: Colors.yellow[700],
-                size: 18,
-              )
-            ],
-          ),
+                const Spacer(),
+                Text(
+                  item.productRating?.toStringAsFixed(1) ?? "-",
+                  style:
+                      const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[700],
+                  size: 18,
+                )
+              ],
+            ),
 
-          const SizedBox(
-            height: 10,
-          ),
-          LayoutBuilder(builder: (context, constraints) {
-            return ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                item.images!.first,
-                fit: BoxFit.cover,
-              ),
-            );
-          }),
-          // LayoutBuilder(
-          //   builder: (context, constraints) {
-          //     return Wrap(
-          //       crossAxisAlignment: WrapCrossAlignment.center,
-          //       alignment: WrapAlignment.center,
-          //       children: item.images!
-          //           .map(
-          //             (e) => Container(
-          //               width: constraints.maxWidth < 500 ? double.infinity : 250,
-          //               margin: const EdgeInsets.all(4),
-          //               child: ClipRRect(
-          //                 borderRadius:
-          //                     const BorderRadius.all(Radius.circular(5.0)),
-          //                 child: Image.network(
-          //                   e,
-          //                   fit: BoxFit.cover,
-          //                 ),
-          //               ),
-          //             ),
-          //           )
-          //           .toList(),
-          //     );
-          //   }
-          // ),
+            const SizedBox(
+              height: 10,
+            ),
+            LayoutBuilder(builder: (context, constraints) {
+              return ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                child: Image.network(
+                  item.images!.first,
+                  fit: BoxFit.cover,
+                ),
+              );
+            }),
+            // LayoutBuilder(
+            //   builder: (context, constraints) {
+            //     return Wrap(
+            //       crossAxisAlignment: WrapCrossAlignment.center,
+            //       alignment: WrapAlignment.center,
+            //       children: item.images!
+            //           .map(
+            //             (e) => Container(
+            //               width: constraints.maxWidth < 500 ? double.infinity : 250,
+            //               margin: const EdgeInsets.all(4),
+            //               child: ClipRRect(
+            //                 borderRadius:
+            //                     const BorderRadius.all(Radius.circular(5.0)),
+            //                 child: Image.network(
+            //                   e,
+            //                   fit: BoxFit.cover,
+            //                 ),
+            //               ),
+            //             ),
+            //           )
+            //           .toList(),
+            //     );
+            //   }
+            // ),
 
-          const SizedBox(
-            height: 10,
-          ),
-          LayoutBuilder(builder: (context, constraints) {
-            return SizedBox(
-              width: constraints.maxWidth,
-              child: Row(
-                children: [
-                  if (item.priceSmall != null) buildSizeCapsule('SMALL'),
-                  if (item.priceMedium != null) buildSizeCapsule('MEDIUM'),
-                  if (item.priceLarge != null) buildSizeCapsule('LARGE'),
-                ],
-              ),
-            );
-          }),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            item.description!,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
-          // const Divider()
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            LayoutBuilder(builder: (context, constraints) {
+              return SizedBox(
+                width: constraints.maxWidth,
+                child: Row(
+                  children: [
+                    if (item.priceSmall != null) buildSizeCapsule('SMALL'),
+                    if (item.priceMedium != null) buildSizeCapsule('MEDIUM'),
+                    if (item.priceLarge != null) buildSizeCapsule('LARGE'),
+                  ],
+                ),
+              );
+            }),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              item.description!,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            // const Divider()
+          ],
+        ),
       ),
     );
   }
