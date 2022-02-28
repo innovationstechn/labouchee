@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final Color? buttonColor;
   final Size? size;
   final Function onTap;
+  final double? circularSize;
   final EdgeInsetsGeometry? padding;
   const CustomButton(
       {Key? key,
@@ -19,6 +20,7 @@ class CustomButton extends StatelessWidget {
       this.buttonColor,
       this.padding,
       this.size,
+      this.circularSize,
       required this.onTap,
       this.text})
       : super(key: key);
@@ -29,8 +31,12 @@ class CustomButton extends StatelessWidget {
       padding: padding??EdgeInsets.zero,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(circularSize??0.0),
+            ),
             primary: buttonColor??Theme.of(context).primaryColor,
             minimumSize: size,
+            maximumSize: size,
           ),
           child: CustomText(
             text: text,

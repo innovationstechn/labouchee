@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/loader/gf_loader.dart';
-import 'package:labouchee/landing_products_list.dart';
-import 'package:labouchee/models/product.dart';
-import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:sdk/components/network_helper.dart';
+import 'package:sdk/screens/webview_screen.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:xml/xml.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import '../../app/locator.dart';
+import '../../app/routes.gr.dart';
 import '../../services/api/labouchee_api.dart';
 import '../../widgets/custom_button.dart';
 
@@ -20,31 +21,48 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final _laboucheeAPI = locator<LaboucheeAPI>();
+  final _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
         children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return displayCard(constraints);
-            },
-            separatorBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Divider(
-                  thickness: 1.0,
-                  color: Colors.black12,
-                ),
-              );
-            },
+          Container(
+            height: constraints.maxHeight-60,
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+              itemCount: 40,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    displayCard(constraints),
+                    const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Divider(
+                        thickness: 1.0,
+                        color: Colors.black12,
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
-          CustomButton(size:const Size(50,50),text:"CheckOUT", onTap: (){},)
+          const SizedBox(height:10),
+          CustomButton(
+            size: Size(
+                constraints.maxWidth*0.9,
+                40
+            ),
+            text: "CHECK OUT",
+            textFontSize: 14.sp,
+            // circularSize: 20,
+            onTap: () {
+              _navigationService.navigateTo(Routes.checkoutScreenRoute);
+            },
+          )
         ],
       );
     });
@@ -98,7 +116,9 @@ class _CartState extends State<Cart> {
                     children: [
                       CustomText(
                         text: "& 366.00",
-                        color: Theme.of(context).primaryColor,
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -113,31 +133,39 @@ class _CartState extends State<Cart> {
                                 Radius.circular(25.0),
                               ),
                               border: Border.all(
-                                  color: Theme.of(context).primaryColor),
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Icon(
                                   Icons.add,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
                                   size: 18.sp,
                                 ),
                                 CustomText(
                                   text: "1",
                                   fontSize: 14.sp,
                                   padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  const EdgeInsets.symmetric(horizontal: 3),
                                 ),
                                 Icon(Icons.remove,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor,
                                     size: 18.sp),
                               ],
                             ),
                           ),
                           const SizedBox(width: 10),
                           Icon(Icons.delete,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
                               size: 20.sp),
                         ],
                       ),

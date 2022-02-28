@@ -29,142 +29,140 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ViewModelBuilder<ProductDetailsVM>.reactive(
-          viewModelBuilder: () =>
-              ProductDetailsVM(product: widget.productModel!),
-          onModelReady: (model) => model.loadDetails(),
-          builder: (context, productDetailsVM, _) {
+    return ViewModelBuilder<ProductDetailsVM>.reactive(
+      viewModelBuilder: () =>
+          ProductDetailsVM(product: widget.productModel!),
+      onModelReady: (model) => model.loadDetails(),
+      builder: (context, productDetailsVM, _) {
+        return Scaffold(
+          body: LayoutBuilder(builder: (context, constraints) {
+
             if (productDetailsVM.isBusy) {
-              return Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor),
-                ),
+              return Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor),
               );
             }
-            return LayoutBuilder(builder: (context, constraints) {
-              return Stack(
-                children: <Widget>[
-                  SizedBox(
-                    height: constraints.maxHeight * 0.35,
-                    child: SizedBox.expand(
-                      child: Image.network(
-                        productDetailsVM.details.images![selectedImageIndex!],
-                        fit: BoxFit.fill,
-                      ),
+
+            return Stack(
+              children: <Widget>[
+                SizedBox(
+                  height: constraints.maxHeight * 0.35,
+                  child: SizedBox.expand(
+                    child: Image.network(
+                      productDetailsVM.details.images![selectedImageIndex!],
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  SlidingUpPanel(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(18.0),
-                        topRight: Radius.circular(18.0)),
-                    maxHeight: constraints.maxHeight * 0.7,
-                    minHeight: constraints.maxHeight * 0.7,
-                    panel: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                imageCards(constraints, 0, productDetailsVM),
-                                const SizedBox(width: 10),
-                                imageCards(constraints, 1, productDetailsVM),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  text: "Cake",
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                Icon(
-                                  Icons.favorite,
-                                  size: 15.sp,
-                                  color: Colors.redAccent,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  text: productDetailsVM.details.category ?? "",
+                ),
+                SlidingUpPanel(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(18.0),
+                      topRight: Radius.circular(18.0)),
+                  maxHeight: constraints.maxHeight * 0.7,
+                  minHeight: constraints.maxHeight * 0.7,
+                  panel: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              imageCards(constraints, 0, productDetailsVM),
+                              const SizedBox(width: 10),
+                              imageCards(constraints, 1, productDetailsVM),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomText(
+                                text: "Cake",
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              Icon(
+                                Icons.favorite,
+                                size: 15.sp,
+                                color: Colors.redAccent,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomText(
+                                text: productDetailsVM.details.category ?? "",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              priceTag(productDetailsVM)
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                fontWeight: FontWeight.bold,
+                                text: "Desription",
+                                fontSize: 13.sp,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              CustomText(
                                   fontSize: 12.sp,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                priceTag(productDetailsVM)
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  fontWeight: FontWeight.bold,
-                                  text: "Desription",
-                                  fontSize: 13.sp,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                CustomText(
-                                    fontSize: 12.sp,
-                                    text: productDetailsVM.details.description),
-                              ],
-                            ),
-                            Container(
-                                margin: const EdgeInsetsDirectional.only(
-                                    bottom: 20, top: 10),
-                                child: productSizeWidget(
-                                    constraints, productDetailsVM)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomButton(
-                                  size: Size(constraints.maxWidth * 0.5,
-                                      constraints.maxWidth * 0.1),
-                                  onTap: () {},
-                                  text: "ADD TO CART",
-                                  textColor: Colors.white,
-                                  buttonColor: Theme.of(context).primaryColor,
-                                ),
-                                numberOfItems(constraints, productDetailsVM),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            buildReviewCard(constraints, ["Hello", "Umer"]),
-                            buildSimilarProudcts(constraints)
-                          ],
-                        ),
+                                  text: productDetailsVM.details.description),
+                            ],
+                          ),
+                          Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                  bottom: 20, top: 10),
+                              child: productSizeWidget(
+                                  constraints, productDetailsVM)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomButton(
+                                size: Size(constraints.maxWidth * 0.5,
+                                    constraints.maxWidth * 0.1),
+                                onTap: () {},
+                                text: "ADD TO CART",
+                                textColor: Colors.white,
+                                buttonColor: Theme.of(context).primaryColor,
+                              ),
+                              numberOfItems(constraints, productDetailsVM),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          buildReviewCard(constraints, ["Hello", "Umer"]),
+                          buildSimilarProudcts(constraints)
+                        ],
                       ),
                     ),
                   ),
-                ],
-              );
-            });
-          },
-        ),
-      ),
+                ),
+              ],
+            );
+          }),
+        );
+      },
     );
   }
 

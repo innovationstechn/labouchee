@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/pages/checkout/checkout.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
+import 'package:labouchee/pages/place_order/place_order.dart';
 import 'package:labouchee/pages/product_details/product_details.dart';
 import 'package:labouchee/searchbar.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../cart/cart.dart';
+import '../notifications/notifications.dart';
 
 // The no worry
 class Starting extends StatefulWidget {
@@ -129,8 +132,10 @@ class _StartingState extends State<Starting> {
         children: <Widget>[
           LandingView(),
           SearchBar(),
+          // CheckOut(),
           Cart(),
-          ProductDetailPage()
+          // PlaceOrder(),
+          Notifications()
         ],
       ),
     ),),

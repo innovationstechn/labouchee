@@ -79,6 +79,12 @@ dev_dependencies:
   sliding_up_panel: ^2.0.0+1
   rating_dialog: ^2.0.3
   flutter_zoom_drawer: ^2.3.1
+  group_radio_button: ^1.2.0
+#  flutter_dialogs: ^2.1.1
+
+  sdk:
+    path: C:\Users\umarf\Documents\GitHub\labouchee\sdk\sdk
+
 
   flutter_localizations:
     sdk: flutter
