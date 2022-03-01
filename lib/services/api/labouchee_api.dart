@@ -6,7 +6,12 @@ import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/constants/general.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
+import 'package:labouchee/models/branch.dart';
+import 'package:labouchee/models/cart.dart';
+import 'package:labouchee/models/cart_detail.dart';
+import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/login_model.dart';
+import 'package:labouchee/models/place_order.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
@@ -336,6 +341,121 @@ class LaboucheeAPI implements API {
           .map((e) => ProductReviewModel.fromJson(e))
           .toList()
           .cast<ProductReviewModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<CartModel> getCart() async {
+    try {
+      final response = await _dio.get(
+        '/get-cart',
+      );
+
+      return CartModel.fromJson(response.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<CartDetailModel> getDetailedCart() async {
+    try {
+      final response = await _dio.get(
+        '/cart-info',
+      );
+
+      return CartDetailModel.fromJson(response.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<String> updateCart(CartUpdateModel itemDetails) async {
+    try {
+      final response = await _dio.post(
+        '/update-cart-item',
+        data: itemDetails.toJson(),
+      );
+
+      return response.data['message'] ?? '';
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<List<BranchModel>> getBranches() async {
+    try {
+      final response = await _dio.get(
+        '/branches',
+      );
+
+      return response.data['data']
+          .map((e) => BranchModel.fromJson(e))
+          .toList()
+          .cast<BranchModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    }
+  }
+
+  @override
+  Future<String> placeOrder(PlaceOrderModel order) async {
+    try {
+      final response = await _dio.post(
+        '/place-order',
+        data: order.toJson(),
+      );
+
+      return response.data['message'] ?? '';
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(

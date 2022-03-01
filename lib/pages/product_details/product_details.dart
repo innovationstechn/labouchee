@@ -10,6 +10,7 @@ import 'package:stacked/stacked.dart';
 import '../../models/product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../models/product_review.dart';
 import '../../product_card.dart';
 import '../../widgets/reviews_ui.dart';
 
@@ -30,13 +31,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProductDetailsVM>.reactive(
-      viewModelBuilder: () =>
-          ProductDetailsVM(product: widget.productModel!),
-      onModelReady: (model) => model.loadDetails(),
+      viewModelBuilder: () => ProductDetailsVM(product: widget.productModel!),
+      onModelReady: (model) async {
+        await model.loadDetails();
+
+        selectedSize = model.details.availableSizes!.size;
+      },
       builder: (context, productDetailsVM, _) {
         return Scaffold(
           body: LayoutBuilder(builder: (context, constraints) {
-
             if (productDetailsVM.isBusy) {
               return Center(
                 child: CircularProgressIndicator(
@@ -140,7 +143,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               CustomButton(
                                 size: Size(constraints.maxWidth * 0.5,
                                     constraints.maxWidth * 0.1),
-                                onTap: () {},
+                                onTap: () => productDetailsVM.addToCart(
+                                  quantitySelected,
+                                  selectedSize,
+                                ),
                                 text: "ADD TO CART",
                                 textColor: Colors.white,
                                 buttonColor: Theme.of(context).primaryColor,
@@ -151,7 +157,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          buildReviewCard(constraints, ["Hello", "Umer"]),
+                          buildReviewCard(constraints, productDetailsVM.productReviews),
                           buildSimilarProudcts(constraints)
                         ],
                       ),
@@ -350,7 +356,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget buildReviewCard(
-      BoxConstraints boxConstraints, List<String> reviewModel) {
+      BoxConstraints boxConstraints, List<ProductReviewModel> reviews) {
+
     return Column(
       children: [
         Row(
@@ -362,7 +369,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
             ),
-            if (reviewModel.length > 2)
+            if (reviews.length > 2)
               CustomText(
                 text: "View All",
                 color: Theme.of(context).primaryColor,
@@ -379,13 +386,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
-          itemCount: reviewModel.length > 2 ? 2 : reviewModel.length,
+          itemCount: reviews.length > 2 ? 2 : reviews.length,
           itemBuilder: (context, index) {
+            final review = reviews.elementAt(index);
+
             return ReviewUI(
-              image: "assets/images/flags/sa_flags.jpg",
-              name: "Umer",
-              date: "dasa",
-              comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
+              image: review.avatar!,
+              name: review.name!,
+              date: review.createdAt!.toString(),
+              comment: review.review!,
               rating: 4,
               onPressed: () => print("More Action $index"),
               onTap: () => setState(() {

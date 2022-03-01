@@ -2,15 +2,18 @@ import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/product_review.dart';
+import 'package:labouchee/utils/product_size.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../services/cart_service.dart';
 
 class ProductDetailsVM extends BaseViewModel {
   final _laboucheeAPI = locator<LaboucheeAPI>();
   final _snackbarService = locator<SnackbarService>();
+  final _cartService = locator<CartService>();
   ProductDetailModel _productDetailModel;
 
   ProductDetailModel get details => _productDetailModel;
@@ -37,5 +40,23 @@ class ProductDetailsVM extends BaseViewModel {
     }
 
     await runBusyFuture(_loadDetails());
+  }
+
+  Future<void> addToCart(int quantity, String? size) async {
+    Future<void> _addToCart() async {
+      try {
+        final message = await _cartService.addItem(
+          _productDetailModel.id!,
+          quantity,
+          sizeInText: size!,
+        );
+
+        _snackbarService.showSnackbar(message: message);
+      } catch (e) {
+        _snackbarService.showSnackbar(message: e.toString());
+      }
+    }
+
+    await runBusyFuture(_addToCart());
   }
 }

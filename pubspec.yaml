@@ -80,16 +80,14 @@ dev_dependencies:
   rating_dialog: ^2.0.3
   flutter_zoom_drawer: ^2.3.1
   group_radio_button: ^1.2.0
-#  flutter_dialogs: ^2.1.1
+  #  flutter_dialogs: ^2.1.1
 
   sdk:
-    path: C:\Users\umarf\Documents\GitHub\labouchee\sdk\sdk
+    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
 
 
   flutter_localizations:
     sdk: flutter
-
-
 
   json_serializable:
   injectable_generator:
@@ -108,11 +106,11 @@ flutter:
   generate: true
   uses-material-design: true
 
-   # To add assets to your application, add an assets section, like this:
+  # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/onboarding/
-     - assets/animations/
-     - assets/images/flags/
+    - assets/images/onboarding/
+    - assets/animations/
+    - assets/images/flags/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

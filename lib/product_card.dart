@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
         return GestureDetector(
           onTap: () => _navigationService.navigateTo(
             Routes.productScreenRoute,
-            arguments: ProductDetailPageArguments(productModel: productModel),
+            arguments: ProductDetailPageArguments(productModel: productModel!),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

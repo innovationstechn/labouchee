@@ -40,7 +40,7 @@ class ReviewUI extends StatelessWidget {
                     margin: EdgeInsets.only(right: 16.0),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/flags/sa_flag.jpg"),
+                        image: NetworkImage(image!),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(44.0),
