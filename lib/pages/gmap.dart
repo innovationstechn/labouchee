@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:labouchee/widgets/custom_app_bar.dart';
 
 class GMAP extends StatefulWidget {
   final double? latitude,longitude;
@@ -76,11 +77,7 @@ class _GMAPState extends State<GMAP> {
 
   return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Center(child:  Text('Select Location')),
-          backgroundColor: Theme.of(context).primaryColor,
-          toolbarHeight: 50,
-        ),
+        appBar: CustomAppBar(title:'Select Location'),
         body: Stack(
           children: <Widget>[
             GoogleMap(

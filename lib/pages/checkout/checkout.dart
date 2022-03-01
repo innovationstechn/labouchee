@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -27,13 +28,7 @@ class _CheckOutState extends State<CheckOut> {
     return LayoutBuilder(builder: (context, constraints) {
       return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 50,
-            leading: const BackButton(
-                color: Colors.black
-            ),
-            title: CustomText(text: "Check Out",fontWeight: FontWeight.bold,fontSize: 15.sp,),
-            titleTextStyle:const TextStyle(color: Colors.black),backgroundColor: Colors.white,),
+          appBar: CustomAppBar(title:'Check Out'),
           body: Stack(
             children: [
               SizedBox(

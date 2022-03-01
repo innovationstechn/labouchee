@@ -41,12 +41,21 @@ class Notifications extends StatelessWidget {
                   fontSize: 11.sp,
                   fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 10,),
-                CustomText(text: "Created at ....",fontSize: 10.sp,color: Colors.black,fontWeight: FontWeight.normal,),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomText(
+                  text: "Created at ....",
+                  fontSize: 10.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                ),
               ],
             ),
           ),
-          const Divider(color: Colors.grey,)
+          const Divider(
+            color: Colors.black,
+          )
         ],
       ),
     );

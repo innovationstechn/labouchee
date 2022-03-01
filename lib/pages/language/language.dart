@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labouchee/pages/language/language_viewmodel.dart';
+import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
@@ -24,11 +25,7 @@ class _LanguageViewState extends State<LanguageView> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          centerTitle: true,
-          title: const Text("Select Language"),
-        ),
+        appBar: CustomAppBar(title:'Language'),
         body: ViewModelBuilder<LanguageVM>.reactive(
           viewModelBuilder: () => LanguageVM(),
           builder: (context, languageVM, _) {

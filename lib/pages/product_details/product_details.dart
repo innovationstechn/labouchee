@@ -7,6 +7,9 @@ import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../app/locator.dart';
+import '../../app/routes.gr.dart';
 import '../../models/product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -26,6 +29,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   String? selectedSize = "SMALL";
   int quantitySelected = 1;
   int? selectedImageIndex = 0;
+  final _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +155,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          buildReviewCard(constraints, ["Hello", "Umer"]),
+                          buildReviewCard(constraints, ["Hello", "Umer","Hi"]),
                           buildSimilarProudcts(constraints)
                         ],
                       ),
@@ -370,7 +374,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
                 onTap: () {
-                  print("Tapped");
+                  _navigationService.navigateTo(Routes.reviewsScreenRoute);
                 },
               ),
           ],

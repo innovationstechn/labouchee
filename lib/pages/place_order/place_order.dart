@@ -43,14 +43,19 @@ class _PlaceOrderState extends State<PlaceOrder> {
         child: Form(
       key: _placeOrderFormKey,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: CustomScrollView(slivers: [
             SliverAppBar(
-              leading: BackButton(
-                  color: Colors.black
+              leading: BackButton(color: Colors.black),
+              title: CustomText(
+                text: "Place Order",
+                fontWeight: FontWeight.bold,
+                fontSize: 15.sp,
               ),
-              title: CustomText(text: "Place Order",fontWeight: FontWeight.bold,fontSize: 15.sp,),
-              titleTextStyle:TextStyle(color: Colors.black),backgroundColor: Colors.white,),
+              titleTextStyle: TextStyle(color: Colors.black),
+              backgroundColor: Colors.white,
+            ),
             SliverList(
               delegate: SliverChildListDelegate([
                 Column(

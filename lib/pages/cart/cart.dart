@@ -2,11 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sdk/components/network_helper.dart';
-import 'package:sdk/screens/webview_screen.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:xml/xml.dart';
-import 'package:flutter_dialogs/flutter_dialogs.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../services/api/labouchee_api.dart';
@@ -28,7 +24,7 @@ class _CartState extends State<Cart> {
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
         children: [
-          Container(
+          SizedBox(
             height: constraints.maxHeight-60,
             child: ListView.builder(
               shrinkWrap: true,
