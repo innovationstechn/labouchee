@@ -8,8 +8,6 @@ import 'package:sdk/components/network_helper.dart';
 import 'package:sdk/screens/webview_screen.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:xml/xml.dart';
-import 'package:flutter_dialogs/flutter_dialogs.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/cart.dart';

@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:sdk/components/network_helper.dart';
-import 'package:sdk/screens/home_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:xml/xml.dart';
 
@@ -78,8 +76,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           BasicDialogAction(
               title: Text('Ok'),
               onPressed: () {
-
-print(pop.toString());
+                print(pop.toString());
                 if(pop){
                   print('inside pop');
                   Navigator.pop(context);

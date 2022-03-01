@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:labouchee/pages/branches/branches.dart';
 import 'package:labouchee/pages/checkout/checkout.dart';
+import 'package:labouchee/pages/coupons/coupons.dart';
+import 'package:labouchee/pages/customer_support/customer_support.dart';
 import 'package:labouchee/pages/forgot/forgot_view.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/language/language.dart';
@@ -10,7 +13,9 @@ import 'package:labouchee/pages/otp/otp_view.dart';
 import 'package:labouchee/pages/place_order/place_order.dart';
 import 'package:labouchee/pages/product_details/product_details.dart';
 import 'package:labouchee/pages/register/register_view.dart';
+import 'package:labouchee/pages/review/reviews.dart';
 
+import '../pages/profile/profile.dart';
 import '../pages/starting/starting.dart';
 
 // Defining routes and global transitions
@@ -60,6 +65,27 @@ import '../pages/starting/starting.dart';
       page: PlaceOrder,
       name: 'placeOrderScreenRoute',
     ),
+    MaterialRoute(
+      page: Reviews,
+      name: 'reviewsScreenRoute',
+    ),
+    MaterialRoute(
+      page: Profile,
+      name: 'profileScreenRoute',
+    ),
+    MaterialRoute(
+      page: Branches,
+      name: 'branchesScreenRoute',
+    ),
+    MaterialRoute(
+      page: CustomerSupport,
+      name: 'customerSupportScreenRoute',
+    ),
+    MaterialRoute(
+      page: Coupons,
+      name: 'couponsSupportScreenRoute',
+    ),
+
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,
   durationInMilliseconds: 400,

@@ -78,9 +78,10 @@ dev_dependencies:
   flutter_slider_drawer: ^2.1.1
   sliding_up_panel: ^2.0.0+1
   rating_dialog: ^2.0.3
-  flutter_zoom_drawer: ^2.3.1
+  flutter_advanced_drawer: ^1.3.0
   group_radio_button: ^1.2.0
   #  flutter_dialogs: ^2.1.1
+  coupon_uikit: ^0.0.1
 
   sdk:
     path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
