@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/models/cart.dart';
 import 'package:labouchee/models/cart_item.dart';
-import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/services/cart_service.dart';
 import 'package:labouchee/utils/product_size.dart';
 import 'package:stacked/stacked.dart';
@@ -35,13 +34,13 @@ class CartVM extends BaseViewModel {
     _cartService.addItem(
       id,
       quantity,
-      sizeInText: size,
+      sizeInEnum: productFromString(size),
     );
   }
 
   void decrease(int id, int quantity, String size) => _cartService.decreaseItem(
         id,
         quantity,
-    sizeInText: size,
+        sizeInEnum: productFromString(size),
       );
 }

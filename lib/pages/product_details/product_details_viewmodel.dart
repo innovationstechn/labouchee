@@ -48,7 +48,7 @@ class ProductDetailsVM extends BaseViewModel {
         final message = await _cartService.addItem(
           _productDetailModel.id!,
           quantity,
-          sizeInText: size!,
+          sizeInEnum: productFromString(size!),
         );
 
         _snackbarService.showSnackbar(message: message);

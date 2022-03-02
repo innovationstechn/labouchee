@@ -12,7 +12,7 @@ extension Stringify on ProductSize {
       case ProductSize.large:
         return 'lg';
       case ProductSize.unknown:
-        return 'original';
+        return 'default';
     }
   }
 
@@ -42,7 +42,7 @@ String productSizeToString(ProductSize size) {
     case ProductSize.large:
       return 'lg';
     case ProductSize.unknown:
-      return 'original';
+      return 'default';
   }
 }
 
