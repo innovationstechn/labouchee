@@ -5,13 +5,15 @@ part 'place_order.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PlaceOrderModel {
   String? name;
-  String? phone;
   String? city;
   String? email;
   PaymentMethod? paymentMethod;
   String? branch;
+
   @JsonKey(ignore: true)
   String? addr1, addr2;
+  @JsonKey(ignore: true)
+  String? phone, phone2;
 
   PlaceOrderModel({
     this.name,
@@ -31,16 +33,30 @@ class PlaceOrderModel {
     Map<String, dynamic> map = _$PlaceOrderModelToJson(this);
 
     if (addr2 != null) {
-      map['address[]'] = [addr1, addr2];
+      map['address'] = [addr1, addr2];
     } else {
-      map['address[]'] = [addr1];
+      map['address'] = [addr1];
+    }
+
+    if (phone2 != null) {
+      map['phone'] = [phone, phone2];
+    } else {
+      map['phone'] = [phone];
     }
 
     return map;
   }
 }
 
-enum PaymentMethod { cashOnDelivery, digital, pickup, mada }
+enum PaymentMethod {
+  @JsonValue('cash_on_delivery')
+  cashOnDelivery,
+  @JsonValue('telr')
+  digital,
+  @JsonValue('pick_from_branch')
+  pickup,
+  mada
+}
 
 extension Stringify on PaymentMethod {
   String toJson() {

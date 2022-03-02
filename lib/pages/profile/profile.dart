@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:labouchee/mixins/validator_mixin.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_text.dart';
@@ -9,6 +13,7 @@ import '../../widgets/address_field.dart';
 import '../../widgets/contact_number_field.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_form_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget with ValidatorMixin {
   const Profile({Key? key}) : super(key: key);
@@ -18,6 +23,8 @@ class Profile extends StatefulWidget with ValidatorMixin {
 }
 
 class _ProfileState extends State<Profile> {
+  final ImagePicker _picker = ImagePicker();
+  XFile? pickedFile;
   final TextEditingController email = TextEditingController(text: "Email"),
       name = TextEditingController(text: "Name"),
       address = TextEditingController(text: "Address"),
@@ -28,31 +35,39 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          appBar: CustomAppBar(title: "Profile",),
+      appBar: CustomAppBar(
+        title: "Profile",
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Stack(
                   children: [
-                    const CircleAvatar(
+                    pickedFile!=null?
+                    CircleAvatar(
                       radius: 65,
-                      backgroundImage: AssetImage(
-                        "assets/images/flags/sa_flag.jpg",
-                      ),
-                    ),
+                        backgroundImage:  FileImage(File(pickedFile!.path))):
+                    CircleAvatar(
+                        radius:65,
+                        backgroundImage: AssetImage("assets/images/flags/sa_flag.jpg")),
                     Positioned(
                       width: 40,
                       height: 40,
                       top: 80,
                       right: 0,
                       child: Container(
-                        child: const Icon(
-                          Icons.camera_alt_outlined,
+                        child: IconButton(
                           color: Colors.white,
+                          onPressed: () {
+                            showPicker();
+                          },
+                          icon: Icon(Icons.camera_alt_outlined),
                         ),
                         decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
@@ -132,4 +147,66 @@ class _ProfileState extends State<Profile> {
   }
 
   void onSavePressed() {}
+
+  Future showPicker() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Select option'),
+            content: Container(
+              height: 150,
+              width: 200,
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.camera_alt_outlined),
+                    title: Text("Camera"),
+                    onTap: () async {
+                      await _getFromCamera();
+                      Navigator.pop(context);
+                      setState(() {
+                      });
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.broken_image_outlined),
+                    title: Text("Storage"),
+                    onTap: () async {
+                      await _getFromStorage();
+                      Navigator.pop(context);
+                      setState(() {});
+                    },
+                  )
+                ],
+              ),
+            ),
+            // actions: <Widget>[
+            //   TextButton(
+            //     child: const Text('CANCEL'),
+            //     onPressed: () {
+            //       Navigator.of(context).pop();
+            //     },
+            //   ),
+            // ],
+          );
+        });
+  }
+
+  _getFromCamera() async {
+    pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {}
+  }
+
+  _getFromStorage() async {
+    pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+  }
 }

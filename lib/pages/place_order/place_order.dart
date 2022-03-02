@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labouchee/models/place_order.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
 import 'package:labouchee/pages/register/register_viewmodel.dart';
@@ -36,11 +37,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
       name = TextEditingController(),
       address = TextEditingController(),
       firstPhoneNumber = TextEditingController(),
-      secondPhoneNumber = TextEditingController();
+      secondPhoneNumber = TextEditingController(),
+      city = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PlaceOrderVM>.reactive(
+      onModelReady: (model)=>model.initialize(),
       viewModelBuilder: () => PlaceOrderVM(),
       builder: (context, placeOrderVM, _) {
         if (placeOrderVM.isBusy) {
@@ -85,6 +88,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           validationMethod: (text) =>
                               widget.emailValidator(text),
                         ),
+                        TextFormWidget(
+                          context: context,
+                          textEditingController: city,
+                          labelText: "City",
+                          focusNode: FocusNode(),
+                          validationMethod: (text) =>
+                              widget.nameValidator(text),
+                        ),
                         AddressFormWidget(
                           context: context,
                           textEditingController: address,
@@ -103,6 +114,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           validationMethod: (text) =>
                               widget.contactNoValidator(text),
                         ),
+/*
                         ContactFormWidget(
                           context: context,
                           textEditingController: secondPhoneNumber,
@@ -113,6 +125,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           validationMethod: (text) =>
                               widget.contactNoValidator(text),
                         ),
+*/
                         SizedBox(
                           height: 1.h,
                         ),
@@ -199,7 +212,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           text: "Proceed",
                           size: Size(double.infinity, 50),
                           textFontSize: 12.sp,
-                          onTap: () => onPlaceOrderPressed(),
+                          onTap: () => onPlaceOrderPressed(placeOrderVM),
                         ),
                         SizedBox(
                           height: 1.5.h,
@@ -246,9 +259,24 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
-  Future<void> onPlaceOrderPressed() async {
+  Future<void> onPlaceOrderPressed(PlaceOrderVM placeOrderVM) async {
     if (_placeOrderFormKey.currentState!.validate()) {
-      print("Validated");
+      switch (_verticalGroupValue) {
+        case "Credit or debit card/paypal":
+          placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "Riyadh",
+              email.text, PaymentMethod.digital, "", "Address1", "Address2");
+          break;
+        case "Cash on Delivery":
+          placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "1",
+              email.text, PaymentMethod.cashOnDelivery, "", "Address1", "Address2");
+          break;
+        case "Pick from Branch":
+          if(selectedBranch.isNotEmpty) {
+            placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "Riyadh",
+              email.text, PaymentMethod.pickup, selectedBranch, "asdasd", "asdasdas");
+          }
+          break;
+      }
     }
   }
 }

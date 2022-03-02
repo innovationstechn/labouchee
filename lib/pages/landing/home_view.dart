@@ -54,8 +54,7 @@ class LandingView extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(8.0),
                           child: GFCarousel(
-                            // hasPagination: true,
-                            pagination: true,
+                            hasPagination: true,
                             passiveIndicator: Colors.white.withAlpha(100),
                             activeIndicator: Colors.white.withAlpha(200),
                             viewportFraction: 1.0,
