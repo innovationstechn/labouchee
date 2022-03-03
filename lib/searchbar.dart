@@ -8,7 +8,6 @@ import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'models/product.dart';
 
-// search bar ma by default aik list lagai jae? Are you here?YEs . SMjha nhi Page open ho to jo product wali list show ho rahi wo aa jae
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key}) : super(key: key);
 
@@ -18,16 +17,6 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   final FocusNode focusNode = FocusNode();
-
-  final List<ProductModel> productModel = [
-    ProductModel(
-        name: "Umer",
-        price: 10,
-        images: [
-          "https://cdn-images-1.medium.com/max/2000/1*GqdzzfB_BHorv7V2NV7Jgg.jpeg"
-        ],
-        productRating: 2),
-  ];
 
   @override
   Widget build(BuildContext context) {

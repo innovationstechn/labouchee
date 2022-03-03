@@ -11,18 +11,24 @@ import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
+import 'package:stacked_services/stacked_services.dart';
 
+import '../../app/locator.dart';
+import '../../app/routes.gr.dart';
 import '../../models/product.dart';
 import '../home/carousel_slider.dart';
 import 'package:labouchee/pages/landing/landing_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class LandingView extends StatelessWidget {
+  final NavigationService _navigationService = locator();
+
   LandingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ViewModelBuilder<LandingVM>.reactive(
           viewModelBuilder: () => LandingVM(),
@@ -30,7 +36,8 @@ class LandingView extends StatelessWidget {
           builder: (context, landingVM, _) {
             if (landingVM.isBusy) {
               return Center(
-                child: CircularProgressIndicator(color:Theme.of(context).primaryColor),
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor),
               );
             } else if (landingVM.hasError) {
               return Center(
@@ -84,8 +91,8 @@ class LandingView extends StatelessWidget {
                                   unselectedLabelColor: Colors.redAccent,
                                   indicatorSize: TabBarIndicatorSize.label,
                                   indicator: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      ),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                   tabs: [
                                     Tab(
                                       child: buildCategoryCapsule('FEATURED'),
@@ -110,7 +117,9 @@ class LandingView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Category(),
+                        Category(
+                          categories: landingVM.categories,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
@@ -128,7 +137,8 @@ class LandingView extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final item = landingVM.products[index];
 
-                                return productCard(item,landingVM);
+                                return productCard(
+                                    item, landingVM, landingVM.products);
                               },
                               crossAxisCount:
                                   constraints.maxWidth > 400 ? 2 : 1,
@@ -213,10 +223,18 @@ class LandingView extends StatelessWidget {
               (item) {
                 return Container(
                   margin: const EdgeInsets.all(4),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: Image.network(item.images!.first,
-                        fit: BoxFit.cover, width: 1000.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(Routes.productScreenRoute,
+                          arguments: ProductDetailPageArguments(
+                              productModel: item, similarProducts: products));
+                    },
+                    child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                      child: Image.network(item.images!.first,
+                          fit: BoxFit.cover, width: 1000.0),
+                    ),
                   ),
                 );
               },
@@ -227,10 +245,11 @@ class LandingView extends StatelessWidget {
     );
   }
 
-  Widget productCard(ProductModel item,LandingVM landingVM) {
+  Widget productCard(ProductModel item, LandingVM landingVM,
+      List<ProductModel> similarProduct) {
     return GestureDetector(
-      onTap:(){
-        landingVM.goToProductDetailPage(item);
+      onTap: () {
+        landingVM.goToProductDetailPage(item, similarProduct);
       },
       child: Container(
         constraints: const BoxConstraints(maxWidth: 300),
@@ -252,8 +271,8 @@ class LandingView extends StatelessWidget {
                 const Spacer(),
                 Text(
                   item.productRating?.toStringAsFixed(1) ?? "-",
-                  style:
-                      const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 Icon(
                   Icons.star,
@@ -331,14 +350,37 @@ class LandingView extends StatelessWidget {
   }
 
   Widget buildCategoryCapsule(String name, {Color? color}) {
-    return Builder(
-      builder: (context) {
-        return Container(
+    return Builder(builder: (context) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        height: 50,
+        decoration: BoxDecoration(
+            color: color ?? Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(50)),
+        child: Align(
+          alignment: Alignment.center,
+          child: FittedBox(
+            child: Text(
+              name,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget buildSizeCapsule(String name) {
+    return Builder(builder: (context) {
+      return FittedBox(
+        child: Container(
+          margin: const EdgeInsets.only(right: 10),
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          height: 50,
+          height: 25,
           decoration: BoxDecoration(
-              color: color ?? Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(50)),
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(50),
+          ),
           child: Align(
             alignment: Alignment.center,
             child: FittedBox(
@@ -348,35 +390,8 @@ class LandingView extends StatelessWidget {
               ),
             ),
           ),
-        );
-      }
-    );
-  }
-
-  Widget buildSizeCapsule(String name) {
-    return Builder(
-      builder: (context) {
-        return FittedBox(
-          child: Container(
-            margin: const EdgeInsets.only(right: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            height: 25,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Align(
-              alignment: Alignment.center,
-              child: FittedBox(
-                child: Text(
-                  name,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }

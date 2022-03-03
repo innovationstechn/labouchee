@@ -11,10 +11,11 @@ import 'models/product.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel? productModel;
+  final List<ProductModel>? similarModel;
   final bool isSmall;
   final NavigationService _navigationService = locator<NavigationService>();
 
-  ProductCard({Key? key, this.productModel, required this.isSmall})
+  ProductCard({Key? key, this.productModel, required this.isSmall, this.similarModel})
       : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class ProductCard extends StatelessWidget {
         return GestureDetector(
           onTap: () => _navigationService.navigateTo(
             Routes.productScreenRoute,
-            arguments: ProductDetailPageArguments(productModel: productModel!),
+            arguments: ProductDetailPageArguments(productModel: productModel!,similarProducts: similarModel),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

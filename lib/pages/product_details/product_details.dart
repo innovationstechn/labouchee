@@ -19,9 +19,10 @@ import '../../widgets/reviews_ui.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final ProductModel? productModel;
+  final List<ProductModel>? similarProducts;
 
-
-  const ProductDetailPage({Key? key, this.productModel}) : super(key: key);
+  const ProductDetailPage({Key? key, this.productModel, this.similarProducts})
+      : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -520,13 +521,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: 5,
+            itemCount: widget.similarProducts!.length,
             itemBuilder: (context, index) {
               return Container(
                   width: boxConstraints.maxWidth * 0.4,
                   padding: const EdgeInsetsDirectional.only(end: 10),
                   child: ProductCard(
-                      isSmall: false, productModel: widget.productModel));
+                    isSmall: false,
+                    productModel: widget.similarProducts![index],
+                    similarModel: widget.similarProducts,
+                  ));
             },
           ),
         ),

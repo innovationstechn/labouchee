@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:labouchee/pages/branches/branches.dart';
+import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/checkout/checkout.dart';
 import 'package:labouchee/pages/coupons/coupons.dart';
 import 'package:labouchee/pages/customer_support/customer_support.dart';
@@ -85,7 +86,10 @@ import '../pages/starting/starting.dart';
       page: Coupons,
       name: 'couponsSupportScreenRoute',
     ),
-
+    MaterialRoute(
+      page: CategoriesListing,
+      name: 'categoriesListingScreenRoute',
+    ),
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,
   durationInMilliseconds: 400,

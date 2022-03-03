@@ -12,6 +12,7 @@ import 'package:labouchee/models/cart.dart';
 import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/category.dart';
+import 'package:labouchee/models/coupon.dart';
 import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/mark_read_notification.dart';
 import 'package:labouchee/models/notification.dart';
@@ -543,7 +544,7 @@ class LaboucheeAPI implements API {
       return response.data['coupons']
           .map((e) => AvailableCouponModel.fromJson(e))
           .toList()
-          .cast<BranchModel>();
+          .cast<AvailableCouponModel>();
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(

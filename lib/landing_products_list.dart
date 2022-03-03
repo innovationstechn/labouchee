@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'models/product.dart';
 
 class LandingProductList extends StatelessWidget {
-  final List<ProductModel?>? items;
+  final List<ProductModel>? items;
 
   const LandingProductList({Key? key, required this.items}) : super(key: key);
 
@@ -22,7 +22,7 @@ class LandingProductList extends StatelessWidget {
           (context, index) {
             return Container(
                 child:
-                    ProductCard(productModel: items![index], isSmall: false));
+                    ProductCard(productModel: items![index], isSmall: false,similarModel: items,));
           },
           childCount: items!.length,
         ),

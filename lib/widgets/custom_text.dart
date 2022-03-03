@@ -25,19 +25,32 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding!,
-      child: GestureDetector(
-        onTap:(){
-          if(onTap!=null) {
-            onTap!();
-          }
-        },
-        child: Text(
-          text!,
-          maxLines: maxLines,
-          style:
-              TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color,overflow: TextOverflow.ellipsis),
-        ),
-      ),
+      child: onTap == null
+          ? Text(
+              text!,
+              maxLines: maxLines,
+              style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: fontWeight,
+                  color: color,
+                  overflow: TextOverflow.ellipsis),
+            )
+          : GestureDetector(
+              onTap: () {
+                if (onTap != null) {
+                  onTap!();
+                }
+              },
+              child: Text(
+                text!,
+                maxLines: maxLines,
+                style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: fontWeight,
+                    color: color,
+                    overflow: TextOverflow.ellipsis),
+              ),
+            ),
     );
   }
 }

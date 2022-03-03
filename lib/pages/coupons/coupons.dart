@@ -73,7 +73,7 @@ class _CouponsState extends State<Coupons> {
                       '${coupon.amount ?? 0} RAYAL',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -81,7 +81,7 @@ class _CouponsState extends State<Coupons> {
                       'OFF',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

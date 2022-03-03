@@ -3,24 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../models/category.dart';
+
 class CategoriesListing extends StatefulWidget {
-  const CategoriesListing({Key? key}) : super(key: key);
+  final List<CategoryModel> categories;
+  const CategoriesListing({Key? key, required this.categories}) : super(key: key);
 
   @override
   _CategoriesListingState createState() => _CategoriesListingState();
 }
 
 class _CategoriesListingState extends State<CategoriesListing> {
-
-  List<String> items = [
-    "HELLO",
-    "easdsa",
-    "SDASDA",
-    "SASDASDAS",
-    "ASDADASDAS",
-    "ASDASDSAD",
-    "ASDASDSAD",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +26,8 @@ class _CategoriesListingState extends State<CategoriesListing> {
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-              ...items.map((item) =>
-                  Container(height: 15.h, width: 32.w, child: categoryCard()))
+              ...widget.categories.map((item) =>
+                  Container(height: 15.h, width: 32.w, child: categoryCard(item)))
             ],
           ),
         ),
@@ -42,20 +35,17 @@ class _CategoriesListingState extends State<CategoriesListing> {
     );
   }
 
-  Widget categoryCard() {
+  Widget categoryCard(CategoryModel categoryModel) {
     return GestureDetector(
       onTap: () {},
       child: Column(
         children: [
-          Icon(
-            Icons.access_time_outlined,
-            size: 9.h,
-          ),
+          Image.network(categoryModel.photo!,width: 32.w,height:10.h),
           const SizedBox(
-            height: 5,
+            height: 8,
           ),
           Text(
-            "Product Name",
+            categoryModel.name!,
             overflow: TextOverflow.fade,
             style: TextStyle(
               fontSize: 10.sp,
