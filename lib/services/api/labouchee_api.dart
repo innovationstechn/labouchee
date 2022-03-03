@@ -13,6 +13,9 @@ import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/category.dart';
 import 'package:labouchee/models/login_model.dart';
+import 'package:labouchee/models/mark_read_notification.dart';
+import 'package:labouchee/models/notification.dart';
+import 'package:labouchee/models/notification_filter.dart';
 import 'package:labouchee/models/place_order.dart';
 import 'package:labouchee/models/place_order_error.dart';
 import 'package:labouchee/models/product.dart';
@@ -596,7 +599,7 @@ class LaboucheeAPI implements API {
       return response.data['data']
           .map((e) => CategoryModel.fromJson(e))
           .toList()
-          .cast<ShippingLocationModel>();
+          .cast<CategoryModel>();
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
@@ -620,6 +623,61 @@ class LaboucheeAPI implements API {
       final response = await _dio.post(
         '/post-review',
         data: review.toJson(),
+      );
+
+      return response.data['message'] ?? '';
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<List<NotificationModel>> getNotifications(NotificationFilterModel filter) async {
+    try {
+      final response = await _dio.get(
+        '/get-notification',
+        queryParameters: filter.toJson(),
+      );
+
+      return response.data['data']
+          .map((e) => NotificationModel.fromJson(e))
+          .toList()
+          .cast<NotificationModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<String> markNotificationAsRead(MarkReadNotificationModel notifications) async {
+    try {
+      final response = await _dio.post(
+        '/mark-as-read',
+        data: notifications.toJson(),
       );
 
       return response.data['message'] ?? '';

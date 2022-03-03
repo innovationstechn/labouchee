@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/models/notification.dart';
+import 'package:labouchee/pages/notifications/notifications_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
+import 'package:stacked/stacked.dart';
 
 class Notifications extends StatelessWidget {
   Notifications({Key? key}) : super(key: key);
@@ -15,18 +18,27 @@ class Notifications extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return notificationCard(index);
-          },
-          itemCount: 3),
+      child: ViewModelBuilder<NotificationsVM>.reactive(
+        viewModelBuilder: () => NotificationsVM(),
+        builder: (context, notificationsVM, _) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return notificationCard(
+                notificationsVM.notifications[index],
+                notificationsVM.markNotificationsAsRead,
+              );
+            },
+            itemCount: notificationsVM.notifications.length,
+          );
+        },
+      ),
     );
   }
 
-  Widget notificationCard(int? index) {
+  Widget notificationCard(NotificationModel notification, void Function(List<int>) onTap) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => onTap([notification.id!]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +48,7 @@ class Notifications extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: text[index!],
+                  text: notification.notification?.message ?? "",
                   maxLines: 10,
                   fontSize: 11.sp,
                   fontWeight: FontWeight.bold,
@@ -45,7 +57,7 @@ class Notifications extends StatelessWidget {
                   height: 10,
                 ),
                 CustomText(
-                  text: "Created at ....",
+                  text: "Created at ${notification.createdDate ?? '-'}",
                   fontSize: 10.sp,
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
