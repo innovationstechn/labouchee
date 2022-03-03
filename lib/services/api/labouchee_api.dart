@@ -4,14 +4,17 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/constants/general.dart';
+import 'package:labouchee/models/available_coupon.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
 import 'package:labouchee/models/branch.dart';
 import 'package:labouchee/models/cart.dart';
 import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_update.dart';
+import 'package:labouchee/models/category.dart';
 import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/place_order.dart';
+import 'package:labouchee/models/place_order_error.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
@@ -19,6 +22,8 @@ import 'package:labouchee/models/product_review.dart';
 import 'package:labouchee/models/register_model.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/models/reset_password_error_model.dart';
+import 'package:labouchee/models/shipping_location.dart';
+import 'package:labouchee/models/submit_review.dart';
 import 'package:labouchee/models/user.dart';
 import 'package:labouchee/services/api/api.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
@@ -86,6 +91,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -120,6 +128,9 @@ class LaboucheeAPI implements API {
           "Oops! We could not serve your request.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -151,6 +162,9 @@ class LaboucheeAPI implements API {
           "Oops! We could not serve your request.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -181,6 +195,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -208,6 +225,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -228,6 +248,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -248,6 +271,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -274,6 +300,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -300,6 +329,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -327,6 +359,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -352,6 +387,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -374,6 +412,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -396,6 +437,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -419,6 +463,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -444,6 +491,9 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
   }
 
@@ -458,6 +508,41 @@ class LaboucheeAPI implements API {
       return response.data['message'] ?? '';
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response?.statusCode == 422) {
+          throw ErrorModelException(
+            e.response!.data['message'],
+            PlaceOrderErrorModel.fromJson(e.response!.data['error']),
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<List<AvailableCouponModel>> getAvailableCoupons() async {
+    try {
+      final response = await _dio.get(
+        '/coupons',
+      );
+
+      return response.data['coupons']
+          .map((e) => AvailableCouponModel.fromJson(e))
+          .toList()
+          .cast<BranchModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
         throw RequestFailureException(
           e.response!.data['message'] ??
               "Oops! We could not serve your request.",
@@ -467,6 +552,92 @@ class LaboucheeAPI implements API {
           "No internet detected. Please check your internet connection and try again.",
         );
       }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
     }
+  }
+
+  @override
+  Future<List<ShippingLocationModel>> getShippingLocations() async {
+    try {
+      final response = await _dio.get(
+        '/shipping-locations',
+      );
+
+      return response.data['data']
+          .map((e) => ShippingLocationModel.fromJson(e))
+          .toList()
+          .cast<ShippingLocationModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<List<CategoryModel>> getCategories() async {
+    try {
+      final response = await _dio.get(
+        '/categories',
+      );
+
+      return response.data['data']
+          .map((e) => CategoryModel.fromJson(e))
+          .toList()
+          .cast<ShippingLocationModel>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<String> postProductReview(SubmitReviewModel review) async {
+    try {
+      final response = await _dio.post(
+        '/post-review',
+        data: review.toJson(),
+      );
+
+      return response.data['message'] ?? '';
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+
   }
 }

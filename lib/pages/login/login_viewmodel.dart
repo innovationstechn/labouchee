@@ -23,11 +23,7 @@ class LoginVM extends BaseViewModel {
 
         await _localStorage.token(token: token);
 
-        if(await _localStorage.isOtpVerified()) {
-          _navigationService.navigateTo(Routes.startingScreenRoute);
-        } else {
-          _navigationService.navigateTo(Routes.otpScreenRoute);
-        }
+        _navigationService.navigateTo(Routes.startingScreenRoute);
       } on RequestFailureException catch (e) {
         _snackbarService.showSnackbar(
           message: e.toString(),

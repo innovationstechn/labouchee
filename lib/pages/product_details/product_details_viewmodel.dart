@@ -2,6 +2,7 @@ import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_detail.dart';
 import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/product_review.dart';
+import 'package:labouchee/models/submit_review.dart';
 import 'package:labouchee/utils/product_size.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -48,7 +49,7 @@ class ProductDetailsVM extends BaseViewModel {
         final message = await _cartService.addItem(
           _productDetailModel.id!,
           quantity,
-          sizeInEnum: productFromString(size!),
+          sizeInEnum: productFromString(size!.toLowerCase()),
         );
 
         _snackbarService.showSnackbar(message: message);
@@ -58,5 +59,23 @@ class ProductDetailsVM extends BaseViewModel {
     }
 
     await runBusyFuture(_addToCart());
+  }
+
+  Future<void> postProductReview(String review, int rating) async {
+    Future<void> _postProductReview() async {
+      try {
+        final submitReview = SubmitReviewModel(
+          productId: _productDetailModel.id,
+          review: review,
+          rating: rating,
+        );
+
+        await _laboucheeAPI.postProductReview(submitReview);
+      } catch (e) {
+        _snackbarService.showSnackbar(message: e.toString());
+      }
+    }
+
+    await runBusyFuture(_postProductReview());
   }
 }

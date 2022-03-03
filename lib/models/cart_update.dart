@@ -7,7 +7,6 @@ class CartUpdateModel {
   final int? product, quantity;
   final String? type, size;
 
-
   CartUpdateModel({
     this.product,
     this.quantity,

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/models/branch.dart';
+import 'package:labouchee/pages/branches/branches_viewmodel.dart';
 import 'package:sizer/sizer.dart';
+import 'package:stacked/stacked.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text.dart';
@@ -11,20 +14,33 @@ class Branches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      appBar: CustomAppBar(title: 'Branches'),
-      body: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: branchCard(),
+      child: Scaffold(
+        appBar: CustomAppBar(title: 'Branches'),
+        body: ViewModelBuilder<BranchesVM>.reactive(
+          viewModelBuilder: () => BranchesVM(),
+          onModelReady: (model) => model.initialize(),
+          builder: (context, branchesVM, _) {
+            if (branchesVM.isBusy)
+              return const Center(
+                child: const CircularProgressIndicator(),
+              );
+
+            return ListView.builder(
+              itemCount: branchesVM.branches.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: branchCard(branchesVM.branches[index]),
+                );
+              },
             );
-          }),
-    ));
+          },
+        ),
+      ),
+    );
   }
 
-  Widget branchCard() {
+  Widget branchCard(BranchModel branch) {
     return Card(
       color: Colors.white54,
       child: Padding(
@@ -38,13 +54,13 @@ class Branches extends StatelessWidget {
                   Icons.home,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'HOME', fontSize: 12.sp),
+                CustomText(text: branch.name!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -54,13 +70,13 @@ class Branches extends StatelessWidget {
                   Icons.phone,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'Settings', fontSize: 12.sp),
+                CustomText(text: branch.contactNo!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -70,13 +86,13 @@ class Branches extends StatelessWidget {
                   Icons.phone,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'Settings', fontSize: 12.sp),
+                CustomText(text: branch.whatsapp!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -86,13 +102,13 @@ class Branches extends StatelessWidget {
                   Icons.watch_later_outlined,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'Settings', fontSize: 12.sp),
+                CustomText(text: branch.timing!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -102,13 +118,13 @@ class Branches extends StatelessWidget {
                   Icons.email,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'Settings', fontSize: 12.sp),
+                CustomText(text: branch.email!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -118,13 +134,13 @@ class Branches extends StatelessWidget {
                   Icons.pin_drop,
                   size: 17.sp,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CustomText(text: 'Settings', fontSize: 12.sp),
+                CustomText(text: branch.address!, fontSize: 12.sp),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
           ],

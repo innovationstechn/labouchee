@@ -85,7 +85,8 @@ dev_dependencies:
   image_picker: ^0.8.4+10
 
   sdk:
-    path: C:\Users\umarf\Documents\GitHub\labouchee\sdk\sdk
+    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
+#    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
 
 
   flutter_localizations:

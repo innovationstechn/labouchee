@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:labouchee/app/routes.gr.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
+import 'package:labouchee/models/category.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/user.dart';
@@ -38,6 +39,9 @@ class LandingVM extends LanguageAwareBaseView {
 
   List<ProductModel> get mostViewed => _mostViewed;
 
+  List<CategoryModel> _categories = [];
+  List<CategoryModel> get categories => _categories;
+
   Future<void> initialize() async {
     Future<void> _initialize() async {
       try {
@@ -52,7 +56,8 @@ class LandingVM extends LanguageAwareBaseView {
           _laboucheeAPI.fetchBanners(BannerFilterModel(type: 'main')),
           _laboucheeAPI.fetchProducts(ProductFilterModel(featured: true)),
           _laboucheeAPI.fetchProducts(ProductFilterModel(hotSale: true)),
-          _laboucheeAPI.fetchProducts(ProductFilterModel(mostViewed: true))
+          _laboucheeAPI.fetchProducts(ProductFilterModel(mostViewed: true)),
+          _laboucheeAPI.getCategories(),
         ]);
 
         _products = data[0] as List<ProductModel>;
@@ -60,6 +65,7 @@ class LandingVM extends LanguageAwareBaseView {
         _featured = data[2] as List<ProductModel>;
         _hotSale = data[3] as List<ProductModel>;
         _mostViewed = data[4] as List<ProductModel>;
+        _categories = data[5] as List<CategoryModel>;
       } catch (e) {
         setError(e.toString());
         _snackbarService.showSnackbar(

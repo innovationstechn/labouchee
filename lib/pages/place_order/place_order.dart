@@ -31,7 +31,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
     "Pick from Branch"
   ];
 
-  String selectedBranch = "";
+  int selectedBranch = 0;
 
   final TextEditingController email = TextEditingController(),
       name = TextEditingController(),
@@ -43,7 +43,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PlaceOrderVM>.reactive(
-      onModelReady: (model)=>model.initialize(),
+      onModelReady: (model) => model.initialize(),
       viewModelBuilder: () => PlaceOrderVM(),
       builder: (context, placeOrderVM, _) {
         if (placeOrderVM.isBusy) {
@@ -173,6 +173,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                     itemBuilder: (context, index) {
                                       return branchCard(
                                         placeOrderVM.branches[index].name!,
+                                        index,
                                       );
                                     },
                                   ),
@@ -229,12 +230,12 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
-  Widget branchCard(String? text) {
-    bool branchSelect = text == selectedBranch;
+  Widget branchCard(String? text, int index) {
+    bool branchSelect = index == selectedBranch;
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedBranch = text!;
+          selectedBranch = index;
         });
       },
       child: Container(
@@ -263,17 +264,50 @@ class _PlaceOrderState extends State<PlaceOrder> {
     if (_placeOrderFormKey.currentState!.validate()) {
       switch (_verticalGroupValue) {
         case "Credit or debit card/paypal":
-          placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "Riyadh",
-              email.text, PaymentMethod.digital, "", "Address1", "Address2");
+          placeOrderVM.placeOrder(
+            name.text,
+            firstPhoneNumber.text,
+            1,
+            email.text,
+            PaymentMethod.digital,
+            null,
+            "Address1",
+            "Address2",
+            "booking date",
+            'booking time',
+            "NO NOTES",
+          );
           break;
         case "Cash on Delivery":
-          placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "1",
-              email.text, PaymentMethod.cashOnDelivery, "", "Address1", "Address2");
+          placeOrderVM.placeOrder(
+            name.text,
+            firstPhoneNumber.text,
+            1,
+            email.text,
+            PaymentMethod.cashOnDelivery,
+            null,
+            "Address1",
+            "Address2",
+            "booking date",
+            'booking time',
+            "NO NOTES",
+          );
           break;
         case "Pick from Branch":
-          if(selectedBranch.isNotEmpty) {
-            placeOrderVM.placeOrder(name.text, firstPhoneNumber.text, "Riyadh",
-              email.text, PaymentMethod.pickup, selectedBranch, "asdasd", "asdasdas");
+          if (selectedBranch != 0) {
+            placeOrderVM.placeOrder(
+              name.text,
+              firstPhoneNumber.text,
+              1,
+              email.text,
+              PaymentMethod.pickup,
+              selectedBranch,
+              "asdasd",
+              "asdasdas",
+              "booking date",
+              'booking time',
+              "NO NOTES",
+            );
           }
           break;
       }

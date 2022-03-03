@@ -172,9 +172,10 @@ class _StartingState extends State<Starting> {
                     color: Colors.black26,
                     shape: BoxShape.circle,
                   ),
-                  child: Image.asset(
-                    'assets/images/flutter_logo.png',
-                  ),
+                  // child: Image.asset(
+                  //   'assets/images/flutter_logo.png',
+                  // ),
+                  child: const FlutterLogo(),
                 ),
                 const CustomText(
                   text: "NAME",
