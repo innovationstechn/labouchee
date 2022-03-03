@@ -10,11 +10,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = 'Title',
   });
 
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
         toolbarHeight: 50,
+        elevation: 0,
         leading: const BackButton(
             color: Colors.black
         ),

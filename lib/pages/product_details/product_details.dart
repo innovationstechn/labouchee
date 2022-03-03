@@ -20,6 +20,7 @@ import '../../widgets/reviews_ui.dart';
 class ProductDetailPage extends StatefulWidget {
   final ProductModel? productModel;
 
+
   const ProductDetailPage({Key? key, this.productModel}) : super(key: key);
 
   @override
@@ -50,7 +51,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     color: Theme.of(context).primaryColor),
               );
             }
-
             return Stack(
               children: <Widget>[
                 SizedBox(
@@ -161,7 +161,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          buildReviewCard(constraints, productDetailsVM.productReviews),
+                          buildReviewCard(
+                              constraints, productDetailsVM.productReviews),
                           buildSimilarProudcts(constraints)
                         ],
                       ),
@@ -361,7 +362,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget buildReviewCard(
       BoxConstraints boxConstraints, List<ProductReviewModel> reviews) {
-
     return Column(
       children: [
         Row(
@@ -381,7 +381,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
                 onTap: () {
-                  _navigationService.navigateTo(Routes.reviewsScreenRoute);
+                  _navigationService.navigateTo(Routes.reviewsScreenRoute,
+                      arguments: ReviewsArguments(reviewsModel: reviews));
                 },
               ),
           ],

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
@@ -78,7 +77,6 @@ final xmlFile = '''<?xml version="1.0" encoding="UTF-8"?>
 
   Future completed(XmlDocument xml) async {
     String url = 'https://secure.telr.com/gateway/mobile_complete.xml';
-    var data = {xml};
 
     var body = xml.toString();
     // print('body = $body');

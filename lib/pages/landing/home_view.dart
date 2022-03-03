@@ -110,6 +110,7 @@ class LandingView extends StatelessWidget {
                             ],
                           ),
                         ),
+                        Category(),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(

@@ -4,8 +4,6 @@ import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/cart/cart_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sdk/components/network_helper.dart';
-import 'package:sdk/screens/webview_screen.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
@@ -36,51 +34,66 @@ class _CartState extends State<Cart> {
         return LayoutBuilder(
           builder: (context, constraints) {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: constraints.maxHeight - 60,
-                  child: StreamBuilder(
-                    stream: cartVM.cart,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<CartModel> snapshot) {
-                      if (!snapshot.hasData) return CircularProgressIndicator();
+                StreamBuilder(
+                  stream: cartVM.cart,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<CartModel> snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
 
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                        itemCount: snapshot.data?.items?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              displayCard(
-                                snapshot.data!.items!.elementAt(index),
-                                constraints,
-                                cartVM,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Divider(
-                                  thickness: 1.0,
-                                  color: Colors.black12,
-                                ),
-                              )
-                            ],
-                          );
-                        },
+                    if (snapshot.data!.items!.isEmpty) {
+                      return Center(
+                        child: CustomText(
+                          text: "Cart is Empty",
+                          fontSize: 12.sp,
+                        ),
                       );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 10),
-                CustomButton(
-                  size: Size(constraints.maxWidth * 0.9, 40),
-                  text: "CHECK OUT",
-                  textFontSize: 14.sp,
-                  // circularSize: 20,
-                  onTap: () {
-                    _navigationService.navigateTo(Routes.checkoutScreenRoute);
+                    }
+
+                    return Column(
+                      children: [
+                        Container(
+                          height: constraints.maxHeight - 60,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                            itemCount: snapshot.data?.items?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  displayCard(
+                                    snapshot.data!.items!.elementAt(index),
+                                    constraints,
+                                    cartVM,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Divider(
+                                      thickness: 1.0,
+                                      color: Colors.black12,
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        CustomButton(
+                          size: Size(constraints.maxWidth * 0.9, 40),
+                          text: "CHECK OUT",
+                          textFontSize: 14.sp,
+                          // circularSize: 20,
+                          onTap: () {
+                            _navigationService.navigateTo(Routes.checkoutScreenRoute);
+                          },
+                        )
+                      ],
+                    );
                   },
-                )
+                ),
               ],
             );
           },
@@ -117,7 +130,7 @@ class _CartState extends State<Cart> {
                       ),
                     ),
                     Container(
-                      width: constraints.maxWidth * 0.65,
+                      width: constraints.maxWidth * 0.7,
                       height: constraints.maxWidth * 0.28,
                       padding: const EdgeInsetsDirectional.only(start: 10),
                       child: Column(
@@ -149,11 +162,13 @@ class _CartState extends State<Cart> {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
+                                      height: 25,
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 1),
+                                          horizontal: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(25.0),
@@ -163,57 +178,54 @@ class _CartState extends State<Cart> {
                                                 Theme.of(context).primaryColor),
                                       ),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          IconButton(
-                                            icon: Icon(
+                                          InkWell(
+                                            onTap: () => vm.increase(
+                                              item.id!,
+                                              1,
+                                              e.type!,
+                                            ),
+                                            child: Icon(
                                               Icons.add,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size: 18.sp,
-                                            ),
-                                            onPressed: () => vm.increase(
-                                              item.id!,
-                                              1,
-                                              e.type!,
                                             ),
                                           ),
                                           CustomText(
-                                            text:
-                                                e.quantity!.toString(),
+                                            text: e.quantity!.toString(),
                                             fontSize: 14.sp,
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 3,
+                                              horizontal: 4,
                                             ),
                                           ),
-                                          IconButton(
-                                            onPressed: () => vm.decrease(
+                                          InkWell(
+                                            onTap: () => vm.decrease(
                                               item.id!,
                                               1,
                                               e.type!,
                                             ),
-                                            icon: Icon(
+                                            child: Icon(
                                               Icons.remove,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size: 18.sp,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
-                                    IconButton(
-                                      onPressed: () => vm.remove(item, e.type!),
-                                      icon: Icon(
+                                    const SizedBox(width: 5),
+                                    InkWell(
+                                      onTap: () => vm.remove(item, e.type!),
+                                      child: Icon(
                                         Icons.delete,
                                         color: Theme.of(context).primaryColor,
-                                        size: 20.sp,
+                                        size: 30,
                                       ),
                                     ),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ),

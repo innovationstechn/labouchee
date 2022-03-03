@@ -2,62 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../models/product_review.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/reviews_ui.dart';
 
-class ReviewModel {
-  String? image, name, date, comment;
-  double? rating;
-
-  ReviewModel({this.image, this.date, this.name, this.comment, this.rating});
-}
-
 class Reviews extends StatefulWidget {
-  const Reviews({Key? key}) : super(key: key);
-
+  const Reviews({Key? key,required this.reviewsModel}) : super(key: key);
+  final List<ProductReviewModel> reviewsModel;
   @override
   _ReviewsState createState() => _ReviewsState();
 }
 
 class _ReviewsState extends State<Reviews> {
-  final List<ReviewModel> reviewModel = [
-    ReviewModel(
-      image: "assets/images/flags/sa_flags.jpg",
-      name: "Umer",
-      date: "dasa",
-      comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
-      rating: 4,
-    ),
-    ReviewModel(
-      image: "assets/images/flags/sa_flags.jpg",
-      name: "Umer",
-      date: "dasa",
-      comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
-      rating: 4,
-    ),
-    ReviewModel(
-      image: "assets/images/flags/sa_flags.jpg",
-      name: "Umer",
-      date: "dasa",
-      comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
-      rating: 4,
-    ),
-    ReviewModel(
-      image: "assets/images/flags/sa_flags.jpg",
-      name: "Umer",
-      date: "dasa",
-      comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
-      rating: 4,
-    ),
-    ReviewModel(
-      image: "assets/images/flags/sa_flags.jpg",
-      name: "Umer",
-      date: "dasa",
-      comment: "asjkdaskjdasjkdjaksdkjasdkhasdhkaskdh",
-      rating: 4,
-    ),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,16 +35,16 @@ class _ReviewsState extends State<Reviews> {
             ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-              itemCount: reviewModel.length,
+              itemCount: widget.reviewsModel.length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
                     ReviewUI(
-                      image: reviewModel[index].image,
-                      name: reviewModel[index].name,
-                      date: reviewModel[index].date,
-                      comment: reviewModel[index].comment,
-                      rating: reviewModel[index].rating,
+                      image: widget.reviewsModel[index].avatar,
+                      name: widget.reviewsModel[index].name,
+                      date: widget.reviewsModel[index].createdAt.toString(),
+                      comment: widget.reviewsModel[index].review,
+                      rating: 5,
                       onPressed: () => print("More Action $index"),
                       onTap: () => setState(() {}),
                       isLess: false,
