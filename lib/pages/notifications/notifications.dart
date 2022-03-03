@@ -20,6 +20,7 @@ class Notifications extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: ViewModelBuilder<NotificationsVM>.reactive(
         viewModelBuilder: () => NotificationsVM(),
+        onModelReady: (model) => model.loadData(),
         builder: (context, notificationsVM, _) {
           return ListView.builder(
             shrinkWrap: true,
