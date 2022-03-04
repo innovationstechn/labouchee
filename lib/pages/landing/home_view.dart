@@ -9,6 +9,7 @@ import 'package:getwidget/components/tabs/gf_tabbar.dart';
 import 'package:getwidget/components/tabs/gf_tabbar_view.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
+import 'package:labouchee/services/navigator.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -21,7 +22,7 @@ import 'package:labouchee/pages/landing/landing_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class LandingView extends StatelessWidget {
-  final NavigationService _navigationService = locator();
+  final NavigatorService _navigationService = locator();
 
   LandingView({Key? key}) : super(key: key);
 
@@ -225,9 +226,10 @@ class LandingView extends StatelessWidget {
                   margin: const EdgeInsets.all(4),
                   child: GestureDetector(
                     onTap: () {
-                      _navigationService.navigateTo(Routes.productScreenRoute,
-                          arguments: ProductDetailPageArguments(
-                              productModel: item, similarProducts: products));
+                      _navigationService.router.navigate(
+                        ProductScreenRoute(
+                            productModel: item, similarProducts: products),
+                      );
                     },
                     child: ClipRRect(
                       borderRadius:

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/constants/general.dart';
+import 'package:labouchee/models/apply_coupon.dart';
 import 'package:labouchee/models/available_coupon.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
@@ -13,6 +14,7 @@ import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/category.dart';
 import 'package:labouchee/models/coupon.dart';
+import 'package:labouchee/models/inquiry.dart';
 import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/mark_read_notification.dart';
 import 'package:labouchee/models/notification.dart';
@@ -82,7 +84,8 @@ class LaboucheeAPI implements API {
       if (e.response != null) {
         if (e.response!.statusCode == 401) {
           throw UnauthorisedException(
-            e.response!.data['message'],
+            e.response!.data['message'] ??
+                "There was a problem while logging in.",
           );
         } else {
           throw RequestFailureException(
@@ -645,7 +648,8 @@ class LaboucheeAPI implements API {
   }
 
   @override
-  Future<List<NotificationModel>> getNotifications(NotificationFilterModel filter) async {
+  Future<List<NotificationModel>> getNotifications(
+      NotificationFilterModel filter) async {
     try {
       final response = await _dio.get(
         '/get-notification',
@@ -674,7 +678,8 @@ class LaboucheeAPI implements API {
   }
 
   @override
-  Future<String> markNotificationAsRead(MarkReadNotificationModel notifications) async {
+  Future<String> markNotificationAsRead(
+      MarkReadNotificationModel notifications) async {
     try {
       final response = await _dio.post(
         '/mark-as-read',
@@ -697,6 +702,57 @@ class LaboucheeAPI implements API {
       log(e.toString());
       throw 'Sorry, we encountered an unknown error';
     }
+  }
 
+  @override
+  Future<bool> applyCoupon(ApplyCouponModel couponModel) async {
+    try {
+      final response = await _dio.post(
+        '/apply-coupon',
+        data: couponModel.toJson(),
+      );
+
+      return response.data['available'] ?? false;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<String> submitInquiry(InquiryModel inquiry) async {
+    try {
+      final response = await _dio.post(
+        '/submit-feedback',
+        data: inquiry.toJson(),
+      );
+
+      return response.data['message'] ?? "";
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw RequestFailureException(
+          e.response!.data['message'] ??
+              "Oops! We could not serve your request.",
+        );
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
   }
 }

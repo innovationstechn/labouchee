@@ -11,6 +11,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
+import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
 import 'package:xml/xml.dart';
 import 'package:sdk/components/network_helper.dart';
@@ -25,7 +26,7 @@ class CheckOut extends StatefulWidget {
 
 class _CheckOutState extends State<CheckOut> {
   PanelController panelController = PanelController();
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +192,7 @@ class _CheckOutState extends State<CheckOut> {
           textFontSize: 14.sp,
           // circularSize: 20,
           onTap: () {
-            _navigationService.navigateTo(Routes.placeOrderScreenRoute);
+            _navigationService.router.navigate(PlaceOrderScreenRoute(),);
           },
         ),
       ],

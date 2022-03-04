@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/pages/language/language_viewmodel.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
@@ -7,7 +8,7 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageView extends StatefulWidget {
-  String nextPage;
+  PageRouteInfo nextPage;
 
   LanguageView({Key? key, required this.nextPage}) : super(key: key);
 

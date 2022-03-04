@@ -4,6 +4,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/routes.gr.dart';
 import '../../services/local_storage/hive_local_storage.dart';
+import '../../services/navigator.dart';
 
 class OnboardingVM extends BaseViewModel {
   List<String> get images => [
@@ -12,7 +13,7 @@ class OnboardingVM extends BaseViewModel {
         'assets/images/onboarding/onboarding_3.jpg',
       ];
 
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
   final _storageService = locator<HiveLocalStorage>();
 
   Future<void> init() async {
@@ -20,7 +21,7 @@ class OnboardingVM extends BaseViewModel {
       final onboardingDone = await _storageService.onboardingDone();
 
       if (onboardingDone) {
-        await _navigationService.navigateTo(Routes.languageScreenRoute);
+        await _navigationService.router.navigate(LandingScreenRoute());
       }
     }
 
@@ -29,7 +30,10 @@ class OnboardingVM extends BaseViewModel {
 
   void onUserDone() async {
     await _storageService.onboardingDone(isDone: true);
-    await _navigationService.clearStackAndShow(Routes.languageScreenRoute,
-        arguments: LanguageViewArguments(nextPage: Routes.loginScreenRoute));
+    _navigationService.router.replace(
+      LanguageScreenRoute(
+        nextPage: LoginScreenRoute(),
+      ),
+    );
   }
 }

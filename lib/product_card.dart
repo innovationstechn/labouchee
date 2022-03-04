@@ -8,14 +8,16 @@ import 'package:stacked_services/stacked_services.dart';
 import 'app/locator.dart';
 import 'app/routes.gr.dart';
 import 'models/product.dart';
+import 'services/navigator.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel? productModel;
   final List<ProductModel>? similarModel;
   final bool isSmall;
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigatorService _navigationService = locator<NavigatorService>();
 
-  ProductCard({Key? key, this.productModel, required this.isSmall, this.similarModel})
+  ProductCard(
+      {Key? key, this.productModel, required this.isSmall, this.similarModel})
       : super(key: key);
 
   @override
@@ -26,9 +28,13 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: LayoutBuilder(builder: (context, cosntraints) {
         return GestureDetector(
-          onTap: () => _navigationService.navigateTo(
-            Routes.productScreenRoute,
-            arguments: ProductDetailPageArguments(productModel: productModel!,similarProducts: similarModel),
+          // onTap: () => _navigationService.navigateTo(
+          //   Routes.productScreenRoute,
+          //   // arguments: ProductDetailPageArguments(productModel: productModel!,similarProducts: similarModel),
+          // ),
+          onTap: () => _navigationService.router.navigate(
+            ProductScreenRoute(
+                productModel: productModel, similarProducts: similarModel),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

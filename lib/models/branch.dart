@@ -4,10 +4,12 @@ part 'branch.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class BranchModel {
+  final int id;
   final String? name, address, timing, contactNo, whatsapp, email, googleMapUrl;
   final DateTime? createdAt, updatedAt;
 
   BranchModel({
+    required this.id,
     this.name,
     this.address,
     this.timing,

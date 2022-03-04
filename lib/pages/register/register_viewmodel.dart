@@ -8,8 +8,10 @@ import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../services/navigator.dart';
+
 class RegisterVM extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
   final _localStorage = locator<HiveLocalStorage>();
   final _laboucheeAPI = locator<LaboucheeAPI>();
   final _snackbarService = locator<SnackbarService>();
@@ -61,7 +63,7 @@ class RegisterVM extends BaseViewModel {
 
 
   void navigateToOTPVerification(){
-    _navigationService.navigateTo(Routes.otpScreenRoute);
+    _navigationService.router.navigate(OtpScreenRoute());
   }
 
   void setState(){

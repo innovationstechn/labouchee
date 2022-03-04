@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:labouchee/models/reset_password_model.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
+import 'package:labouchee/services/navigator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +14,7 @@ import '../../services/api/labouchee_api.dart';
 
 class ForgotVM extends BaseViewModel {
   final API _api = locator<LaboucheeAPI>();
-  final NavigationService _navigationService = locator();
+  final NavigatorService _navigationService = locator();
   final SnackbarService _snackbarService = locator();
 
   bool _takeOTPCode = false;
@@ -49,7 +50,7 @@ class ForgotVM extends BaseViewModel {
 
         await _api.resetPassword(model);
 
-        _navigationService.clearStackAndShow(Routes.loginScreenRoute);
+        _navigationService.router.replaceAll([LoginScreenRoute()]);
       } on ErrorModelException<ResetPasswordErrorModel> catch (e) {
         _snackbarService.showSnackbar(message: e.toString());
         setError(e.error);

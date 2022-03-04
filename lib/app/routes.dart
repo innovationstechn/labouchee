@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:auto_route/auto_route_annotations.dart';
 import 'package:labouchee/pages/branches/branches.dart';
 import 'package:labouchee/pages/categories_listing/categories_listing.dart';
+import 'package:labouchee/pages/categories_product_listing/categories_product_listing.dart';
 import 'package:labouchee/pages/checkout/checkout.dart';
 import 'package:labouchee/pages/coupons/coupons.dart';
 import 'package:labouchee/pages/customer_support/customer_support.dart';
@@ -18,6 +18,7 @@ import 'package:labouchee/pages/review/reviews.dart';
 
 import '../pages/profile/profile.dart';
 import '../pages/starting/starting.dart';
+import 'auth_guard.dart';
 
 // Defining routes and global transitions
 @CustomAutoRouter(
@@ -89,6 +90,9 @@ import '../pages/starting/starting.dart';
     MaterialRoute(
       page: CategoriesListing,
       name: 'categoriesListingScreenRoute',
+    ),MaterialRoute(
+      page: CategoryProductListing,
+      name: 'categoryProductListingScreenRoute',
     ),
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,

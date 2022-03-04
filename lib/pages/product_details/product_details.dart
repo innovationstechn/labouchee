@@ -15,6 +15,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../models/product_review.dart';
 import '../../product_card.dart';
+import '../../services/navigator.dart';
 import '../../widgets/reviews_ui.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   String? selectedSize = "SMALL";
   int quantitySelected = 1;
   int? selectedImageIndex = 0;
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
@@ -382,8 +383,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
                 onTap: () {
-                  _navigationService.navigateTo(Routes.reviewsScreenRoute,
-                      arguments: ReviewsArguments(reviewsModel: reviews));
+                  _navigationService.router.navigate(
+                    ReviewsScreenRoute(
+                      reviewsModel: reviews,
+                    ),
+                  );
                 },
               ),
           ],

@@ -6,6 +6,7 @@ import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
 import 'package:labouchee/services/api/labouchee_api.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/local_storage/local_storage.dart';
+import 'package:labouchee/services/navigator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +14,7 @@ import '../../app/routes.gr.dart';
 
 class OtpVM extends BaseViewModel {
   final API _api = locator<LaboucheeAPI>();
-  final NavigationService _navigationService = locator();
+  final NavigatorService _navigationService = locator();
   final SnackbarService _snackbarService = locator();
   final LocalStorage _localStorage = locator<HiveLocalStorage>();
 
@@ -43,7 +44,7 @@ class OtpVM extends BaseViewModel {
         await _api.verifyUser();
         await _localStorage.isOtpVerified(isVerified: true);
 
-        await _navigationService.clearStackAndShow(Routes.startingScreenRoute);
+        _navigationService.router.replace(StartingScreenRoute());
       } else {
         _snackbarService.showSnackbar(message: 'Sorry, that OTP didn\'t match');
       }

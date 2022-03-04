@@ -10,6 +10,7 @@ import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/cart.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../services/navigator.dart';
 import '../../widgets/custom_button.dart';
 
 class Cart extends StatefulWidget {
@@ -21,7 +22,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final _laboucheeAPI = locator<LaboucheeAPI>();
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,7 @@ class _CartState extends State<Cart> {
                           textFontSize: 14.sp,
                           // circularSize: 20,
                           onTap: () {
-                            _navigationService.navigateTo(Routes.checkoutScreenRoute);
+                            _navigationService.router.navigate(CheckoutScreenRoute());
                           },
                         )
                       ],

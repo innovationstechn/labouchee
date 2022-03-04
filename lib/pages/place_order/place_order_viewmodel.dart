@@ -1,3 +1,4 @@
+import 'package:labouchee/models/apply_coupon.dart';
 import 'package:labouchee/models/branch.dart';
 import 'package:labouchee/models/order.dart';
 import 'package:labouchee/models/shipping_location.dart';
@@ -9,6 +10,7 @@ import '../../models/place_order.dart';
 import '../../models/place_order_error.dart';
 import '../../services/api/exceptions/api_exceptions.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../utils/helpers.dart';
 
 class PlaceOrderVM extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
@@ -97,5 +99,30 @@ class PlaceOrderVM extends BaseViewModel {
 
   Future<bool> payUsingDigital(PlaceOrderModel order) async {
     return await Future.delayed(Duration.zero, () => true);
+  }
+
+  Future<void> applyCoupon(String coupon) async {
+    Future<void> _applyCoupon() async {
+      try {
+        final available = await _api.applyCoupon(
+          ApplyCouponModel(
+            coupon: coupon,
+            mobileId: await uniqueDeviceIdentifier(),
+          ),
+        );
+
+        if (available) {
+          _snackbarService.showSnackbar(message: 'Successfully applied coupon');
+          await initialize();
+        } else {
+          _snackbarService.showSnackbar(
+              message: 'That coupon is not available');
+        }
+      } catch (e) {
+        _snackbarService.showSnackbar(message: e.toString());
+      }
+    }
+
+    await runBusyFuture(_applyCoupon());
   }
 }

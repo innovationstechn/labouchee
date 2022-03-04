@@ -1,3 +1,4 @@
+import 'package:labouchee/models/apply_coupon.dart';
 import 'package:labouchee/models/available_coupon.dart';
 import 'package:labouchee/models/banner.dart';
 import 'package:labouchee/models/banner_filter.dart';
@@ -6,6 +7,7 @@ import 'package:labouchee/models/cart.dart';
 import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/category.dart';
+import 'package:labouchee/models/inquiry.dart';
 import 'package:labouchee/models/mark_read_notification.dart';
 import 'package:labouchee/models/notification.dart';
 import 'package:labouchee/models/notification_filter.dart';
@@ -68,4 +70,8 @@ abstract class API {
 
   Future<String> markNotificationAsRead(
       MarkReadNotificationModel notifications);
+
+  Future<bool> applyCoupon(ApplyCouponModel couponModel);
+
+  Future<String> submitInquiry(InquiryModel inquiry);
 }

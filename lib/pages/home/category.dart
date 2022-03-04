@@ -6,6 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/category.dart';
+import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
 
 class Category extends StatefulWidget {
@@ -18,7 +19,7 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +39,10 @@ class _CategoryState extends State<Category> {
                   text: "View All",
                   color: Theme.of(context).primaryColor,
                   onTap: () {
-                    _navigationService.navigateTo(
-                        Routes.categoriesListingScreenRoute,
-                        arguments: CategoriesListingArguments(
-                            categories: widget.categories));
+                    _navigationService.router.navigate(
+                      CategoriesListingScreenRoute(
+                          categories: widget.categories),
+                    );
                   }),
             ],
           ),

@@ -8,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
+import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
 import '../cart/cart.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -41,7 +42,7 @@ class _StartingState extends State<Starting> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final navigationService = locator<NavigationService>();
+    final navigationService = locator<NavigatorService>();
 
     return AdvancedDrawer(
       backdropColor: Colors.blueGrey,
@@ -88,10 +89,8 @@ class _StartingState extends State<Starting> {
                     Icons.language,
                     color: primaryColor,
                   ),
-                  onPressed: () => navigationService.navigateTo(
-                    Routes.languageScreenRoute,
-                    arguments: LanguageViewArguments(
-                        nextPage: Routes.startingScreenRoute),
+                  onPressed: () => navigationService.router.navigate(
+                    LanguageScreenRoute(nextPage: StartingScreenRoute()),
                   ),
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -181,10 +180,11 @@ class _StartingState extends State<Starting> {
                   text: "NAME",
                   padding: EdgeInsets.only(bottom: 10),
                 ),
-                const CustomText(text: "EMAIL", padding: EdgeInsets.only(bottom: 10)),
+                const CustomText(
+                    text: "EMAIL", padding: EdgeInsets.only(bottom: 10)),
                 ListTile(
                   onTap: () {
-                    navigationService.navigateTo(Routes.profileScreenRoute);
+                    navigationService.router.navigate(ProfileScreenRoute());
                   },
                   leading: const Icon(Icons.account_circle_rounded),
                   title: const Text('Profile'),
@@ -199,15 +199,15 @@ class _StartingState extends State<Starting> {
                 ),
                 ListTile(
                   onTap: () {
-                    navigationService.navigateTo(Routes.branchesScreenRoute);
+                    navigationService.router.navigate(BranchesScreenRoute());
                   },
                   leading: const Icon(Icons.description),
                   title: const Text('Branches'),
                 ),
                 ListTile(
                   onTap: () {
-                    navigationService
-                        .navigateTo(Routes.customerSupportScreenRoute);
+                    navigationService.router
+                        .navigate(CustomerSupportScreenRoute());
                   },
                   leading: const Icon(Icons.message),
                   title: const Text('Inquiry Form'),
@@ -215,17 +215,17 @@ class _StartingState extends State<Starting> {
                 ListTile(
                   onTap: () {
                     navigationService
-                        .navigateTo(Routes.couponsSupportScreenRoute);
+                        .router.navigate(CouponsSupportScreenRoute());
                   },
                   leading: const Icon(Icons.card_giftcard),
                   title: const Text('Coupons'),
                 ),
                 ListTile(
                   onTap: () {
-                    navigationService.navigateTo(
-                      Routes.languageScreenRoute,
-                      arguments: LanguageViewArguments(
-                          nextPage: Routes.startingScreenRoute),
+                    navigationService.router.navigate(
+                      LanguageScreenRoute(
+                        nextPage: StartingScreenRoute(),
+                      ),
                     );
                   },
                   leading: const Icon(Icons.language),

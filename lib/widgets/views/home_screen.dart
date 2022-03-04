@@ -6,6 +6,8 @@ import 'package:labouchee/widgets/views/snackbar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../services/navigator.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
   @override
@@ -16,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // IMPLEMENTATION NOTE: Services should never be used directly in a view refer to
   // https://www.filledstacks.com/post/flutter-and-provider-architecture-using-stacked/#how-does-stacked-work
   // for more details.
-  NavigationService _navigationService = locator<NavigationService>();
+  NavigatorService _navigationService = locator<NavigatorService>();
 
   int currentIndex = 0;
 
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: getViewForIndex(currentIndex),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await _navigationService.navigateTo(Routes.loginScreenRoute);
+          await _navigationService.router.navigate(LoginScreenRoute());
         },
         child: Icon(Icons.arrow_forward),
       ),

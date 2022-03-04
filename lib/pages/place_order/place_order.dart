@@ -173,7 +173,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                     itemBuilder: (context, index) {
                                       return branchCard(
                                         placeOrderVM.branches[index].name!,
-                                        index,
+                                        placeOrderVM.branches[index].id,
                                       );
                                     },
                                   ),
@@ -230,12 +230,12 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
-  Widget branchCard(String? text, int index) {
-    bool branchSelect = index == selectedBranch;
+  Widget branchCard(String? text, int branchID) {
+    bool branchSelect = branchID == selectedBranch;
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedBranch = index;
+          selectedBranch = branchID;
         });
       },
       child: Container(
@@ -270,7 +270,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             1,
             email.text,
             PaymentMethod.digital,
-            null,
+            selectedBranch,
             "Address1",
             "Address2",
             "booking date",
@@ -285,7 +285,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             1,
             email.text,
             PaymentMethod.cashOnDelivery,
-            null,
+            selectedBranch,
             "Address1",
             "Address2",
             "booking date",

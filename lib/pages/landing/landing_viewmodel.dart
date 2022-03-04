@@ -13,11 +13,12 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../services/navigator.dart';
 
 class LandingVM extends LanguageAwareBaseView {
   final _laboucheeAPI = locator<LaboucheeAPI>();
   final _snackbarService = locator<SnackbarService>();
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigatorService>();
 
   List<ProductModel> _products = [];
 
@@ -40,6 +41,7 @@ class LandingVM extends LanguageAwareBaseView {
   List<ProductModel> get mostViewed => _mostViewed;
 
   List<CategoryModel> _categories = [];
+
   List<CategoryModel> get categories => _categories;
 
   Future<void> initialize() async {
@@ -48,7 +50,7 @@ class LandingVM extends LanguageAwareBaseView {
         UserModel user = await _laboucheeAPI.getUser();
 
         if (user.numberVerifiedAt == null) {
-          _navigationService.clearStackAndShow(Routes.otpScreenRoute);
+          _navigationService.router.replaceAll([OtpScreenRoute()]);
         }
 
         final data = await Future.wait([
@@ -84,10 +86,13 @@ class LandingVM extends LanguageAwareBaseView {
     initialize();
   }
 
-  void goToProductDetailPage(ProductModel productModel,List<ProductModel> similarProduct) {
-    _navigationService.navigateTo(
-      Routes.productScreenRoute,
-      arguments: ProductDetailPageArguments(productModel: productModel,similarProducts: similarProduct),
+  void goToProductDetailPage(
+      ProductModel productModel, List<ProductModel> similarProduct) {
+    _navigationService.router.navigate(
+      ProductScreenRoute(
+        productModel: productModel,
+        similarProducts: similarProduct,
+      ),
     );
   }
 }

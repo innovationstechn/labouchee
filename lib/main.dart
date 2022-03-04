@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:labouchee/constants/general.dart';
 import 'package:labouchee/language_view_model.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
+import 'package:labouchee/services/navigator.dart';
 import 'package:labouchee/utils/helpers.dart';
 import 'package:labouchee/widgets/setup_bottom_sheet_ui.dart';
 import 'package:labouchee/widgets/setup_dialog_ui.dart';
@@ -26,7 +29,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   await HiveLocalStorage.init();
 
-  final String initialRoute = await generateInitRoute();
+  final PageRouteInfo initialRoute = await generateInitRoute();
 
   runApp(
     MyApp(
@@ -36,18 +39,19 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final String initialRoute;
-
-  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
+  final PageRouteInfo initialRoute;
+  final NavigatorService _navigatorService = locator<NavigatorService>();
+  MyApp({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Sizer(
       builder: (context, orientation, deviceType) {
         return ViewModelBuilder<LanguageVM>.reactive(
           viewModelBuilder: () => LanguageVM(),
           builder: (context, languageVM, _) {
-            return MaterialApp(
+            return MaterialApp.router(
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
@@ -56,16 +60,12 @@ class MyApp extends StatelessWidget {
               ],
               locale: languageVM.locale,
               supportedLocales: L10n.all,
-              navigatorObservers: [
-                StackedService.routeObserver,
-                //_LoggingObserver(),
-              ],
-              navigatorKey: StackedService.navigatorKey,
-              initialRoute: initialRoute,
-              onGenerateRoute: auto_router.Router().onGenerateRoute,
+              routerDelegate: _navigatorService.router.delegate(initialRoutes: [initialRoute]),
+
               theme:
                   ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),
               title: 'Flutter Demo',
+              routeInformationParser: _navigatorService.router.defaultRouteParser(),
             );
           },
         );

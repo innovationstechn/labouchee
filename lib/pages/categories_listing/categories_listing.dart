@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:stacked_services/stacked_services.dart';
 
+import '../../app/routes.gr.dart';
 import '../../models/category.dart';
 
 class CategoriesListing extends StatefulWidget {
@@ -37,7 +40,7 @@ class _CategoriesListingState extends State<CategoriesListing> {
 
   Widget categoryCard(CategoryModel categoryModel) {
     return GestureDetector(
-      onTap: () {},
+      // onTap: () => navigator.navigateTo(Routes),
       child: Column(
         children: [
           Image.network(categoryModel.photo!,width: 32.w,height:10.h),
