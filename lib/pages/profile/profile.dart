@@ -37,169 +37,291 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: "Profile",
-        ),
-        body: SingleChildScrollView(
-          child: ViewModelBuilder<ProfileVM>.reactive(
-              viewModelBuilder: () => ProfileVM(),
-              onModelReady: (model) async {
-                await model.loadData();
-              },
-              builder: (context, profileVM, _) {
-                if (profileVM.isBusy) {
+        child: Scaffold(
+      appBar: CustomAppBar(
+        title: "Profile",
+      ),
+      body: SingleChildScrollView(
+        child: ViewModelBuilder<ProfileVM>.reactive(
+            viewModelBuilder: () => ProfileVM(),
+            onModelReady: (model) async {
+              await model.loadData();
+            },
+            builder: (context, profileVM, _) {
+              if (profileVM.isBusy || profileVM.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              email.text = profileVM.data?.email ?? "";
+              name.text = profileVM.data?.name ?? "";
+              address.text = profileVM.data?.address?.first ?? "";
+              phoneNumber.text = profileVM.data?.contactNo ?? "";
+              postalCode.text = profileVM.data?.zipCode ?? "";
+
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          pickedFile != null
+                              ? CircleAvatar(
+                              radius: 65,
+                              backgroundImage:
+                              FileImage(File(pickedFile!.path)))
+                              : CircleAvatar(
+                            radius: 65,
+                            backgroundImage:
+                            profileVM.data!.avatar != null
+                                ? NetworkImage(
+                              profileVM.data!.avatar!,
+                            )
+                                : const AssetImage(
+                                'assets/images/logo.png')
+                            as ImageProvider,
+                          ),
+                          Positioned(
+                            width: 40,
+                            height: 40,
+                            top: 80,
+                            right: 0,
+                            child: Container(
+                              child: IconButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  showPicker();
+                                },
+                                icon: const Icon(Icons.camera_alt_outlined),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormWidget(
+                    context: context,
+                    textEditingController: name,
+                    labelText: AppLocalizations.of(context)!.name,
+                    focusNode: FocusNode(),
+                    // errorText: registerValidationErrorModel.name != null
+                    //     ? registerValidationErrorModel.name!.first
+                    //     : null,
+                    validationMethod: (text) => widget.nameValidator(text),
+                  ),
+                  TextFormWidget(
+                    context: context,
+                    textEditingController: email,
+                    labelText: AppLocalizations.of(context)!.email,
+                    focusNode: FocusNode(),
+                    // errorText: registerValidationErrorModel.email != null
+                    //     ? registerValidationErrorModel.email!.first
+                    //     : null,
+                    validationMethod: (text) => widget.emailValidator(text),
+                  ),
+                  AddressFormWidget(
+                    context: context,
+                    textEditingController: address,
+                    labelText: "Address",
+                    focusNode: FocusNode(),
+                    // errorText:
+                    // registerValidationErrorModel.address1 != null
+                    //     ? registerValidationErrorModel.address1!.first
+                    //     : null,
+                    validationMethod: (text) => widget.addressValidator(text),
+                  ),
+                  ContactFormWidget(
+                    context: context,
+                    textEditingController: phoneNumber,
+                    labelText: AppLocalizations.of(context)!.contactNo,
+                    bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                    initialValue: "0966",
+                    // errorText: registerValidationErrorModel.contactNo !=
+                    //     null
+                    //     ? registerValidationErrorModel.contactNo!.first
+                    //     : null,
+                    focusNode: FocusNode(),
+                    validationMethod: (text) =>
+                        widget.contactNoValidator(text),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  CustomButton(
+                    padding: EdgeInsets.all(2.w),
+                    buttonColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    text: "Save",
+                    size: Size(80.w, 7.h),
+                    textFontSize: 12.sp,
+                    // TODO, add fields marked with '-'
+                    onTap: () => profileVM.update(
+                      name.text,
+                      '-',
+                      phoneNumber.text,
+                      '-',
+                      address.text,
+                      '-',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1.5.h,
+                  ),
+                ],
+              );
+
+              return StreamBuilder<UserModel>(
+                stream: profileVM.stream,
+                  builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.hasError) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
 
-                return StreamBuilder<UserModel>(
-                    stream: profileVM.userState,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData || snapshot.hasError) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                email.text = snapshot.data?.email ?? "";
+                name.text = snapshot.data?.name ?? "";
+                address.text = snapshot.data?.address?.first ?? "";
+                phoneNumber.text = snapshot.data?.contactNo ?? "";
+                postalCode.text = snapshot.data?.zipCode ?? "";
 
-                      email.text = snapshot.data?.email ?? "";
-                      name.text = snapshot.data?.name ?? "";
-                      address.text = snapshot.data?.address?.first ?? "";
-                      phoneNumber.text = snapshot.data?.contactNo ?? "";
-                      postalCode.text = snapshot.data?.zipCode ?? "";
-
-                      return Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Stack(
-                                children: [
-                                  pickedFile != null
-                                      ? CircleAvatar(
-                                          radius: 65,
-                                          backgroundImage:
-                                              FileImage(File(pickedFile!.path)))
-                                      : CircleAvatar(
-                                          radius: 65,
-                                          backgroundImage: snapshot
-                                                      .data!.avatar !=
-                                                  null
-                                              ? NetworkImage(
-                                                  snapshot.data!.avatar!,
-                                                )
-                                              : const AssetImage(
-                                                      'assets/images/logo.png')
-                                                  as ImageProvider,
-                                        ),
-                                  Positioned(
-                                    width: 40,
-                                    height: 40,
-                                    top: 80,
-                                    right: 0,
-                                    child: Container(
-                                      child: IconButton(
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          showPicker();
-                                        },
-                                        icon: const Icon(
-                                            Icons.camera_alt_outlined),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).primaryColor,
-                                          shape: BoxShape.circle),
-                                    ),
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Stack(
+                          children: [
+                            pickedFile != null
+                                ? CircleAvatar(
+                                    radius: 65,
+                                    backgroundImage:
+                                        FileImage(File(pickedFile!.path)))
+                                : CircleAvatar(
+                                    radius: 65,
+                                    backgroundImage:
+                                        snapshot.data!.avatar != null
+                                            ? NetworkImage(
+                                                snapshot.data!.avatar!,
+                                              )
+                                            : const AssetImage(
+                                                    'assets/images/logo.png')
+                                                as ImageProvider,
                                   ),
-                                ],
+                            Positioned(
+                              width: 40,
+                              height: 40,
+                              top: 80,
+                              right: 0,
+                              child: Container(
+                                child: IconButton(
+                                  color: Colors.white,
+                                  onPressed: () {
+                                    showPicker();
+                                  },
+                                  icon: const Icon(Icons.camera_alt_outlined),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    shape: BoxShape.circle),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormWidget(
-                            context: context,
-                            textEditingController: name,
-                            labelText: AppLocalizations.of(context)!.name,
-                            focusNode: FocusNode(),
-                            // errorText: registerValidationErrorModel.name != null
-                            //     ? registerValidationErrorModel.name!.first
-                            //     : null,
-                            validationMethod: (text) =>
-                                widget.nameValidator(text),
-                          ),
-                          TextFormWidget(
-                            context: context,
-                            textEditingController: email,
-                            labelText: AppLocalizations.of(context)!.email,
-                            focusNode: FocusNode(),
-                            // errorText: registerValidationErrorModel.email != null
-                            //     ? registerValidationErrorModel.email!.first
-                            //     : null,
-                            validationMethod: (text) =>
-                                widget.emailValidator(text),
-                          ),
-                          AddressFormWidget(
-                            context: context,
-                            textEditingController: address,
-                            labelText: "Address",
-                            focusNode: FocusNode(),
-                            // errorText:
-                            // registerValidationErrorModel.address1 != null
-                            //     ? registerValidationErrorModel.address1!.first
-                            //     : null,
-                            validationMethod: (text) =>
-                                widget.addressValidator(text),
-                          ),
-                          ContactFormWidget(
-                            context: context,
-                            textEditingController: phoneNumber,
-                            labelText: AppLocalizations.of(context)!.contactNo,
-                            bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
-                            initialValue: "0966",
-                            // errorText: registerValidationErrorModel.contactNo !=
-                            //     null
-                            //     ? registerValidationErrorModel.contactNo!.first
-                            //     : null,
-                            focusNode: FocusNode(),
-                            validationMethod: (text) =>
-                                widget.contactNoValidator(text),
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          CustomButton(
-                            padding: EdgeInsets.all(2.w),
-                            buttonColor: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
-                            text: "Save",
-                            size: Size(80.w, 7.h),
-                            textFontSize: 12.sp,
-                            // TODO, add fields marked with '-'
-                            onTap: () => profileVM.update(
-                              name.text,
-                              '-',
-                              phoneNumber.text,
-                              '-',
-                              address.text,
-                              '-',
                             ),
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                        ],
-                      );
-                    });
-              }),
-        ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormWidget(
+                      context: context,
+                      textEditingController: name,
+                      labelText: AppLocalizations.of(context)!.name,
+                      focusNode: FocusNode(),
+                      // errorText: registerValidationErrorModel.name != null
+                      //     ? registerValidationErrorModel.name!.first
+                      //     : null,
+                      validationMethod: (text) => widget.nameValidator(text),
+                    ),
+                    TextFormWidget(
+                      context: context,
+                      textEditingController: email,
+                      labelText: AppLocalizations.of(context)!.email,
+                      focusNode: FocusNode(),
+                      // errorText: registerValidationErrorModel.email != null
+                      //     ? registerValidationErrorModel.email!.first
+                      //     : null,
+                      validationMethod: (text) => widget.emailValidator(text),
+                    ),
+                    AddressFormWidget(
+                      context: context,
+                      textEditingController: address,
+                      labelText: "Address",
+                      focusNode: FocusNode(),
+                      // errorText:
+                      // registerValidationErrorModel.address1 != null
+                      //     ? registerValidationErrorModel.address1!.first
+                      //     : null,
+                      validationMethod: (text) => widget.addressValidator(text),
+                    ),
+                    ContactFormWidget(
+                      context: context,
+                      textEditingController: phoneNumber,
+                      labelText: AppLocalizations.of(context)!.contactNo,
+                      bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                      initialValue: "0966",
+                      // errorText: registerValidationErrorModel.contactNo !=
+                      //     null
+                      //     ? registerValidationErrorModel.contactNo!.first
+                      //     : null,
+                      focusNode: FocusNode(),
+                      validationMethod: (text) =>
+                          widget.contactNoValidator(text),
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    CustomButton(
+                      padding: EdgeInsets.all(2.w),
+                      buttonColor: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      text: "Save",
+                      size: Size(80.w, 7.h),
+                      textFontSize: 12.sp,
+                      // TODO, add fields marked with '-'
+                      onTap: () => profileVM.update(
+                        name.text,
+                        '-',
+                        phoneNumber.text,
+                        '-',
+                        address.text,
+                        '-',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                  ],
+                );
+              });
+            }),
       ),
-    );
+    ));
   }
 
   Future showPicker() {

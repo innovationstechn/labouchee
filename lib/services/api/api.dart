@@ -9,6 +9,7 @@ import 'package:labouchee/models/cart_update.dart';
 import 'package:labouchee/models/category.dart';
 import 'package:labouchee/models/inquiry.dart';
 import 'package:labouchee/models/mark_read_notification.dart';
+import 'package:labouchee/models/my_order_detail.dart';
 import 'package:labouchee/models/notification.dart';
 import 'package:labouchee/models/notification_filter.dart';
 import 'package:labouchee/models/place_order.dart';
@@ -80,4 +81,6 @@ abstract class API {
   Future<String> updateProfile(UpdateProfileModel update);
 
   Future<List<MyOrderModel>> myOrders();
+
+  Future<MyOrderDetailModel> getOrderDetail(int id);
 }
