@@ -762,7 +762,7 @@ class LaboucheeAPI implements API {
   Future<List<MyOrderModel>> myOrders() async {
     try {
       final response = await _dio.get(
-        '/get-notification',
+        '/my-orders',
       );
 
       return response.data

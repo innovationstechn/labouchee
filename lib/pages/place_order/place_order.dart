@@ -1,9 +1,11 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/place_order.dart';
 import 'package:labouchee/models/register_error_model.dart';
 import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
 import 'package:labouchee/pages/register/register_viewmodel.dart';
 import 'package:labouchee/widgets/address_field.dart';
+import 'package:labouchee/widgets/booking_date_time_ui.dart';
 import 'package:labouchee/widgets/contact_number_field.dart';
 import 'package:stacked/stacked.dart';
 import 'package:labouchee/mixins/validator_mixin.dart';
@@ -13,6 +15,9 @@ import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+
+import '../../models/place_order_error.dart';
 
 class PlaceOrder extends StatefulWidget with ValidatorMixin {
   const PlaceOrder({Key? key}) : super(key: key);
@@ -31,14 +36,28 @@ class _PlaceOrderState extends State<PlaceOrder> {
     "Pick from Branch"
   ];
 
+  String selectedDate = "";
+  String selectedTime = "";
   int selectedBranch = 0;
+  int selectedCity = -1;
 
   final TextEditingController email = TextEditingController(),
       name = TextEditingController(),
       address = TextEditingController(),
       firstPhoneNumber = TextEditingController(),
       secondPhoneNumber = TextEditingController(),
-      city = TextEditingController();
+      notes = TextEditingController();
+
+  PlaceOrderErrorModel placeOrderValidationErrorModel = PlaceOrderErrorModel(
+      name: null,
+      email: null,
+      phone: null,
+      city: null,
+      paymentMethod: null,
+      branch: null,
+      notes: null,
+      bookingDate: null,
+      bookingTime: null);
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +77,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
             body: Center(
               child: CustomScrollView(slivers: [
                 SliverAppBar(
-                  leading: BackButton(color: Colors.black),
+                  leading: const BackButton(color: Colors.black),
                   title: CustomText(
                     text: "Place Order",
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp,
                   ),
-                  titleTextStyle: TextStyle(color: Colors.black),
+                  titleTextStyle: const TextStyle(color: Colors.black),
                   backgroundColor: Colors.white,
                 ),
                 SliverList(
@@ -85,21 +104,22 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           textEditingController: email,
                           labelText: AppLocalizations.of(context)!.email,
                           focusNode: FocusNode(),
+                          errorText:
+                              placeOrderValidationErrorModel.email != null
+                                  ? placeOrderValidationErrorModel.email!.first
+                                  : null,
                           validationMethod: (text) =>
                               widget.emailValidator(text),
                         ),
-                        TextFormWidget(
-                          context: context,
-                          textEditingController: city,
-                          labelText: "City",
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.nameValidator(text),
-                        ),
+                        cityWidget(),
                         AddressFormWidget(
                           context: context,
                           textEditingController: address,
                           labelText: "Address",
+                          errorText: placeOrderValidationErrorModel.address !=
+                                  null
+                              ? placeOrderValidationErrorModel.address!.first
+                              : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.addressValidator(text),
@@ -110,22 +130,20 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           labelText: AppLocalizations.of(context)!.contactNo,
                           bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
                           initialValue: "0966",
+                          errorText:
+                              placeOrderValidationErrorModel.phone != null
+                                  ? placeOrderValidationErrorModel.phone!.first
+                                  : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.contactNoValidator(text),
                         ),
-/*
-                        ContactFormWidget(
-                          context: context,
-                          textEditingController: secondPhoneNumber,
-                          labelText: AppLocalizations.of(context)!.contactNo,
-                          bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
-                          initialValue: "0966",
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.contactNoValidator(text),
-                        ),
-*/
+                        BookingDateAndTime(
+                            selectDate:()=> _selectDate(context, placeOrderVM),
+                            selectTime: ()=> _selectBookingTime(context, placeOrderVM),
+                            selectedDate: selectedDate,
+                            selectedTime: selectedTime,
+                            placeOrderValidationErrorModel: placeOrderValidationErrorModel),
                         SizedBox(
                           height: 1.h,
                         ),
@@ -152,7 +170,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           ),
                         ),
                         if (_verticalGroupValue == _status[2])
-                          Container(
+                          SizedBox(
                             height: 100,
                             child: Column(
                               children: [
@@ -166,7 +184,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 ),
                                 Container(
                                   height: 40,
-                                  margin: EdgeInsetsDirectional.all(10),
+                                  margin: const EdgeInsetsDirectional.all(10),
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: placeOrderVM.branches.length,
@@ -190,6 +208,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: TextFormField(
+                              controller: notes,
                               maxLines: 7,
                               style: TextStyle(
                                   fontSize: 14.sp,
@@ -211,7 +230,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           buttonColor: Theme.of(context).primaryColor,
                           textColor: Colors.white,
                           text: "Proceed",
-                          size: Size(double.infinity, 50),
+                          size: const Size(double.infinity, 50),
                           textFontSize: 12.sp,
                           onTap: () => onPlaceOrderPressed(placeOrderVM),
                         ),
@@ -260,56 +279,130 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
+
+  Widget cityWidget(){
+    return Container(
+      height: 60,
+      margin: EdgeInsets.symmetric(horizontal: 14,vertical: 2.w),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+            color: Theme.of(context).primaryColor),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          isExpanded: true,
+          elevation: 0,
+          hint: CustomText(
+              text: "Select City",
+              color: Theme.of(context).primaryColor,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w300),
+          items: <String>['A', 'B', 'C', 'D']
+              .map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: CustomText(
+                text: value,
+              ),
+            );
+          }).toList(),
+          onChanged: (_) {},
+        ),
+      ),
+    );
+  }
+
+  Future _selectDate(
+      BuildContext context, PlaceOrderVM placeOrderVM) async {
+    final now = DateTime.now();
+    String formatter = DateFormat('yMd').format(now);
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: now,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      selectedDate = DateFormat('yyyy-MM-dd').format(picked);
+      placeOrderVM.notifyListeners();
+    }
+  }
+
+  Future _selectBookingTime(
+      BuildContext context, PlaceOrderVM placeOrderVM) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.dial,
+        confirmText: "CONFIRM",
+        cancelText: "NOT NOW",
+        helpText: "BOOKING TIME");
+    if (timeOfDay != null) {
+      selectedTime = timeOfDay.format(context).toString();
+      placeOrderVM.notifyListeners();
+    }
+  }
+
   Future<void> onPlaceOrderPressed(PlaceOrderVM placeOrderVM) async {
     if (_placeOrderFormKey.currentState!.validate()) {
       switch (_verticalGroupValue) {
         case "Credit or debit card/paypal":
-          placeOrderVM.placeOrder(
+          await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
             1,
             email.text,
             PaymentMethod.digital,
             selectedBranch,
-            "Address1",
-            "Address2",
-            "booking date",
-            'booking time',
+            address.text,
+            address.text,
+            selectedDate,
+            selectedTime,
             "NO NOTES",
           );
           break;
         case "Cash on Delivery":
-          placeOrderVM.placeOrder(
+          await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
             1,
             email.text,
             PaymentMethod.cashOnDelivery,
             selectedBranch,
-            "Address1",
+            address.text,
             "Address2",
-            "booking date",
-            'booking time',
-            "NO NOTES",
+            selectedDate,
+            selectedTime,
+            notes.text,
           );
           break;
         case "Pick from Branch":
           if (selectedBranch != 0) {
-            placeOrderVM.placeOrder(
+            await placeOrderVM.placeOrder(
               name.text,
               firstPhoneNumber.text,
               1,
               email.text,
               PaymentMethod.pickup,
               selectedBranch,
-              "asdasd",
-              "asdasdas",
-              "booking date",
-              'booking time',
-              "NO NOTES",
+              address.text,
+              "Address2",
+              selectedDate,
+              selectedTime,
+              notes.text,
             );
           }
           break;
+      }
+
+      if (placeOrderVM.hasError) {
+        placeOrderValidationErrorModel =
+            placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
+        placeOrderVM.notifyListeners();
+      } else {
+        // registerVM.navigateToOTPVerification();
       }
     }
   }
