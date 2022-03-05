@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/orders_detail.dart';
 import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
+import 'package:labouchee/pages/my_orders.dart';
 import 'package:labouchee/searchbar.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -115,8 +117,9 @@ class _StartingState extends State<Starting> {
                 children: <Widget>[
                   LandingView(),
                   SearchBar(),
-                  // CategoriesListing(),
-                  const Cart(),
+                  OrderDetails(),
+                  // MyOrders(),
+ /*                 const Cart(),*/
                   Notifications()
                 ],
               ),
