@@ -24,7 +24,14 @@ class _CategoryProductListingState extends State<CategoryProductListing> {
     return ViewModelBuilder<CategoryProductListingVM>.reactive(
       viewModelBuilder: () =>
           CategoryProductListingVM(categoryModel: widget.category),
+      onModelReady: (model) => model.initialize(),
       builder: (context, categoryVM, _) {
+        if (categoryVM.isBusy) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         return CustomScrollView(
           slivers: [
             LandingProductList(items: categoryVM.products),

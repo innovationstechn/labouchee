@@ -18,9 +18,11 @@ import 'package:labouchee/models/product_filter.dart';
 import 'package:labouchee/models/product_review.dart';
 import 'package:labouchee/models/reset_password_model.dart';
 import 'package:labouchee/models/shipping_location.dart';
+import 'package:labouchee/models/update_profile.dart';
 import 'package:labouchee/models/user.dart';
 
 import '../../models/login_model.dart';
+import '../../models/my_order.dart';
 import '../../models/register_model.dart';
 import '../../models/submit_review.dart';
 
@@ -74,4 +76,8 @@ abstract class API {
   Future<bool> applyCoupon(ApplyCouponModel couponModel);
 
   Future<String> submitInquiry(InquiryModel inquiry);
+
+  Future<String> updateProfile(UpdateProfileModel update);
+
+  Future<List<MyOrderModel>> myOrders();
 }

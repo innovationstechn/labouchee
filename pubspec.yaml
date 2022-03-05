@@ -94,7 +94,7 @@ dev_dependencies:
     sdk: flutter
 
   json_serializable:
-  injectable_generator:
+  injectable_generator: ^1.5.3
   auto_route_generator:
   build_runner:
 
