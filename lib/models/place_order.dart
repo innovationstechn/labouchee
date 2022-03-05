@@ -4,7 +4,7 @@ part 'place_order.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PlaceOrderModel {
-  String? name, email, notes, bookingTime, bookingDate;
+  String? name, email, orderNote, bookingTime, bookingDate;
   int? city, branch;
   PaymentMethod? paymentMethod;
 
@@ -22,7 +22,7 @@ class PlaceOrderModel {
     this.branch,
     this.addr1,
     this.addr2,
-    this.notes,
+    this.orderNote,
     this.bookingDate,
     this.bookingTime,
   });

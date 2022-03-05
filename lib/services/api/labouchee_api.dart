@@ -18,6 +18,7 @@ import 'package:labouchee/models/inquiry.dart';
 import 'package:labouchee/models/login_model.dart';
 import 'package:labouchee/models/mark_read_notification.dart';
 import 'package:labouchee/models/my_order.dart';
+import 'package:labouchee/models/my_order_detail.dart';
 import 'package:labouchee/models/notification.dart';
 import 'package:labouchee/models/notification_filter.dart';
 import 'package:labouchee/models/place_order.dart';
@@ -32,6 +33,7 @@ import 'package:labouchee/models/reset_password_error_model.dart';
 import 'package:labouchee/models/shipping_location.dart';
 import 'package:labouchee/models/submit_review.dart';
 import 'package:labouchee/models/update_profile.dart';
+import 'package:labouchee/models/update_profile_error.dart';
 import 'package:labouchee/models/user.dart';
 import 'package:labouchee/services/api/api.dart';
 import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
@@ -795,6 +797,40 @@ class LaboucheeAPI implements API {
       );
 
       return response.data['message'] ?? "";
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response?.statusCode == 422) {
+          throw ErrorModelException<UpdateProfileErrorModel>(
+            e.response?.data['message'],
+            UpdateProfileErrorModel.fromJson(
+              e.response?.data['errors'],
+            ),
+          );
+        } else {
+          throw RequestFailureException(
+            e.response!.data['message'] ??
+                "Oops! We could not serve your request.",
+          );
+        }
+      } else {
+        throw RequestFailureException(
+          "No internet detected. Please check your internet connection and try again.",
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+      throw 'Sorry, we encountered an unknown error';
+    }
+  }
+
+  @override
+  Future<MyOrderDetailModel> getOrderDetail(int id) async {
+    try {
+      final response = await _dio.get(
+        '/my-order/$id',
+      );
+
+      return MyOrderDetailModel.fromJson(response.data['data']);
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(

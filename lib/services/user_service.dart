@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:labouchee/models/update_profile.dart';
 import 'package:labouchee/models/user.dart';
 import 'package:labouchee/services/api/api.dart';
+import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
 import 'package:labouchee/services/api/labouchee_api.dart';
 
 import '../app/locator.dart';
@@ -18,12 +19,12 @@ class UserService {
 
   Future<void> fetch() async {
     try {
-      _userStreamController.add(
-        await _api.getUser(),
-      );
+      final user = await _api.getUser();
+
+          _userStreamController.add(user);
     } catch (e) {
       _userStreamController.addError(
-        e.toString(),
+        e
       );
     }
   }
@@ -37,8 +38,12 @@ class UserService {
       return message;
     } catch (e) {
       _userStreamController.addError(
-        e.toString(),
+        e,
       );
+
+      if(e is ErrorModelException) {
+        return e.message;
+      }
 
       return e.toString();
     }

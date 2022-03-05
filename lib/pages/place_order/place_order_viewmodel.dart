@@ -61,7 +61,7 @@ class PlaceOrderVM extends BaseViewModel {
       addr2: addr2,
       bookingDate: bookingDate,
       bookingTime: bookingTime,
-      notes: notes,
+      orderNote: notes,
     );
 
     switch (paymentMethod) {
