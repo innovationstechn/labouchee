@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/pages/my_orders/my_orders_vm.dart';
+import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,24 +18,26 @@ class MyOrders extends StatefulWidget {
 class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MyOrdersVM>.reactive(
-        viewModelBuilder: () => MyOrdersVM(),
-        onModelReady: (model)=> model.loadData(),
-        builder: (context, ordersVM, _) {
+    return Scaffold(
+      appBar: CustomAppBar(title: "My Orders",),
+      body: ViewModelBuilder<MyOrdersVM>.reactive(
+          viewModelBuilder: () => MyOrdersVM(),
+          onModelReady: (model)=> model.loadData(),
+          builder: (context, ordersVM, _) {
 
-          if(ordersVM.isBusy) {
-            return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
-          }
-
-          return ListView.builder(
-              itemCount: ordersVM.orders.length,
-              itemBuilder: (context, index) {
-                return orderCard(ordersVM.orders[index]);
-              });
-        });
+            if(ordersVM.isBusy) {
+              return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
+            }
+            return ListView.builder(
+                itemCount: ordersVM.orders.length,
+                itemBuilder: (context, index) {
+                  return orderCard(ordersVM.orders[index],ordersVM);
+                });
+          }),
+    );
   }
 
-  Widget orderCard(MyOrderModel myOrderModel) {
+  Widget orderCard(MyOrderModel myOrderModel,MyOrdersVM myOrdersVM) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -116,7 +119,7 @@ class _MyOrdersState extends State<MyOrders> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0))),
                   ),
-                  onPressed: () async {},
+                  onPressed: () =>myOrdersVM.navigateToOrderDetailPage(myOrderModel),
                   child: CustomText(
                     text: "Details",
                     color: Colors.brown,

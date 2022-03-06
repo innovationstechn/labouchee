@@ -370,7 +370,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             1,
             email.text,
             PaymentMethod.cashOnDelivery,
-            selectedBranch,
+            null,
             address.text,
             "Address2",
             selectedDate,

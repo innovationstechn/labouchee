@@ -1,12 +1,15 @@
+import 'package:labouchee/app/routes.gr.dart';
 import 'package:labouchee/models/my_order.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../services/navigator.dart';
 
 class MyOrdersVM extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
+  final _navigationService = locator<NavigatorService>();
   final _api = locator<LaboucheeAPI>();
 
   List<MyOrderModel> _orders = [];
@@ -22,5 +25,11 @@ class MyOrdersVM extends BaseViewModel {
     }
 
     await runBusyFuture(_loadData());
+  }
+
+  void navigateToOrderDetailPage(MyOrderModel myOrderModel){
+    _navigationService.router.navigate(
+      MyOrdersDetailScreenRoute(order: myOrderModel)
+    );
   }
 }

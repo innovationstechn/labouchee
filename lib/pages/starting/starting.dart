@@ -149,8 +149,8 @@ class _StartingState extends State<Starting> {
                 BottomNavyBarItem(
                     activeColor: Theme.of(context).primaryColor,
                     inactiveColor: Colors.grey,
-                    title: const Text('Item Four'),
-                    icon: const Icon(Icons.settings)),
+                    title: const Text('Notifications'),
+                    icon: const Icon(Icons.notifications)),
               ],
             ),
           )),
@@ -199,6 +199,14 @@ class _StartingState extends State<Starting> {
                   },
                   leading: const Icon(Icons.shopping_cart),
                   title: const Text('Cart'),
+                ),
+                ListTile(
+                  onTap: () {
+                    navigationService
+                        .router.navigateNamed('/my-orders');
+                  },
+                  leading: const Icon(Icons.receipt_long_outlined ),
+                  title: const Text('My Orders'),
                 ),
                 ListTile(
                   onTap: () {
