@@ -791,9 +791,15 @@ class LaboucheeAPI implements API {
   @override
   Future<String> updateProfile(UpdateProfileModel update) async {
     try {
+      final data = FormData.fromMap({
+        ...update.toJson(),
+        if (update.avatar != null)
+          'avatar': await MultipartFile.fromFile(update.avatar!.path)
+      });
+
       final response = await _dio.post(
         '/update-profile',
-        data: update.toJson(),
+        data: data,
       );
 
       return response.data['message'] ?? "";

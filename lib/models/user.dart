@@ -5,15 +5,23 @@ part 'user.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UserModel {
   final int? id;
-  final String? name, email, avatar, contactNo, zipCode, city;
+  final String? name, email, avatar, zipCode, city;
   final DateTime? numberVerifiedAt,
       emailVerifiedAt,
       deletedAt,
       createdAt,
       updatedAt;
+
+  final String? contactNo;
+
+  @JsonKey(name: 'address[]', readValue: _getAddress)
   final List<String>? address;
   @JsonKey(fromJson: _boolFromString, toJson: _boolToString)
   final bool? isBlocked, welcomeUser, signupCouponUsed;
+
+  static List<Object>? _getAddress(Map map, String _) {
+    return map['address'];
+  }
 
   UserModel({
     this.id,

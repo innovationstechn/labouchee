@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'update_profile.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UpdateProfileModel {
-  final String? name, avatar;
+  final String? name;
+  @JsonKey(ignore: true)
+  final File? avatar;
   @JsonKey(ignore: true)
   final String? contactNo1, contactNo2, address1, address2;
 
@@ -24,9 +28,9 @@ class UpdateProfileModel {
     final map = _$UpdateProfileModelToJson(this);
 
     if(address2 != null) {
-      map['address'] = [address1, address2];
+      map['address[]'] = [address1, address2];
     } else {
-      map['address'] = [address1];
+      map['address[]'] = [address1];
     }
 
     if(contactNo2 != null) {
