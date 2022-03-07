@@ -9,6 +9,8 @@ import 'package:labouchee/pages/forgot/forgot_view.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/language/language.dart';
 import 'package:labouchee/pages/login/login_view.dart';
+import 'package:labouchee/pages/my_order_detail/my_order_detail.dart';
+import 'package:labouchee/pages/my_orders/my_orders.dart';
 import 'package:labouchee/pages/onboarding/onboarding_view.dart';
 import 'package:labouchee/pages/otp/otp_view.dart';
 import 'package:labouchee/pages/place_order/place_order.dart';
@@ -94,6 +96,15 @@ import 'auth_guard.dart';
       page: CategoryProductListing,
       name: 'categoryProductListingScreenRoute',
     ),
+    MaterialRoute(
+      page: MyOrders,
+      name: 'myOrdersScreenRoute',
+    ),
+    MaterialRoute(
+      page: MyOrderDetailPage,
+      name: 'myOrdersDetailScreenRoute',
+    ),
+
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,
   durationInMilliseconds: 400,

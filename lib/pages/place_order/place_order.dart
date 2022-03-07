@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/place_order.dart';
-import 'package:labouchee/models/register_error_model.dart';
+import 'package:labouchee/models/shipping_location.dart';
 import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
-import 'package:labouchee/pages/register/register_viewmodel.dart';
 import 'package:labouchee/widgets/address_field.dart';
+import 'package:labouchee/widgets/booking_date_time_ui.dart';
 import 'package:labouchee/widgets/contact_number_field.dart';
 import 'package:stacked/stacked.dart';
 import 'package:labouchee/mixins/validator_mixin.dart';
@@ -13,6 +13,8 @@ import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import '../../models/place_order_error.dart';
 
 class PlaceOrder extends StatefulWidget with ValidatorMixin {
   const PlaceOrder({Key? key}) : super(key: key);
@@ -31,14 +33,28 @@ class _PlaceOrderState extends State<PlaceOrder> {
     "Pick from Branch"
   ];
 
+  String selectedDate = "";
+  String selectedTime = "";
   int selectedBranch = 0;
+  ShippingLocationModel? selectedCity;
 
   final TextEditingController email = TextEditingController(),
       name = TextEditingController(),
       address = TextEditingController(),
       firstPhoneNumber = TextEditingController(),
       secondPhoneNumber = TextEditingController(),
-      city = TextEditingController();
+      notes = TextEditingController();
+
+  PlaceOrderErrorModel placeOrderValidationErrorModel = PlaceOrderErrorModel(
+      name: null,
+      email: null,
+      phone: null,
+      city: null,
+      paymentMethod: null,
+      branch: null,
+      notes: null,
+      bookingDate: null,
+      bookingTime: null);
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +68,25 @@ class _PlaceOrderState extends State<PlaceOrder> {
           );
         }
 
+        if (placeOrderVM.hasError) {
+          placeOrderValidationErrorModel =
+              placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
+        }
+
         return Form(
           key: _placeOrderFormKey,
           child: Scaffold(
+            backgroundColor: Colors.white,
             body: Center(
               child: CustomScrollView(slivers: [
                 SliverAppBar(
-                  leading: BackButton(color: Colors.black),
+                  leading: const BackButton(color: Colors.black),
                   title: CustomText(
                     text: "Place Order",
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp,
                   ),
-                  titleTextStyle: TextStyle(color: Colors.black),
+                  titleTextStyle: const TextStyle(color: Colors.black),
                   backgroundColor: Colors.white,
                 ),
                 SliverList(
@@ -85,21 +107,22 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           textEditingController: email,
                           labelText: AppLocalizations.of(context)!.email,
                           focusNode: FocusNode(),
+                          errorText:
+                              placeOrderValidationErrorModel.email != null
+                                  ? placeOrderValidationErrorModel.email!.first
+                                  : null,
                           validationMethod: (text) =>
                               widget.emailValidator(text),
                         ),
-                        TextFormWidget(
-                          context: context,
-                          textEditingController: city,
-                          labelText: "City",
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.nameValidator(text),
-                        ),
+                        cityWidget(placeOrderVM),
                         AddressFormWidget(
                           context: context,
                           textEditingController: address,
                           labelText: "Address",
+                          errorText: placeOrderValidationErrorModel.address !=
+                                  null
+                              ? placeOrderValidationErrorModel.address!.first
+                              : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.addressValidator(text),
@@ -110,22 +133,23 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           labelText: AppLocalizations.of(context)!.contactNo,
                           bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
                           initialValue: "0966",
+                          errorText:
+                              placeOrderValidationErrorModel.phone != null
+                                  ? placeOrderValidationErrorModel.phone!.first
+                                  : null,
                           focusNode: FocusNode(),
                           validationMethod: (text) =>
                               widget.contactNoValidator(text),
                         ),
-/*
-                        ContactFormWidget(
-                          context: context,
-                          textEditingController: secondPhoneNumber,
-                          labelText: AppLocalizations.of(context)!.contactNo,
-                          bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
-                          initialValue: "0966",
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.contactNoValidator(text),
-                        ),
-*/
+                        BookingDateAndTime(
+                            selectDate: () =>
+                                _selectDate(context, placeOrderVM),
+                            selectTime: () =>
+                                _selectBookingTime(context, placeOrderVM),
+                            selectedDate: selectedDate,
+                            selectedTime: selectedTime,
+                            placeOrderValidationErrorModel:
+                                placeOrderValidationErrorModel),
                         SizedBox(
                           height: 1.h,
                         ),
@@ -141,9 +165,10 @@ class _PlaceOrderState extends State<PlaceOrder> {
                               start: 20, top: 20, bottom: 20),
                           child: RadioGroup<String>.builder(
                             groupValue: _verticalGroupValue,
-                            onChanged: (value) => setState(() {
+                            onChanged: (value) {
                               _verticalGroupValue = value!;
-                            }),
+                              placeOrderVM.notifyListeners();
+                            },
                             items: _status,
                             itemBuilder: (item) => RadioButtonBuilder(
                               item,
@@ -152,7 +177,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           ),
                         ),
                         if (_verticalGroupValue == _status[2])
-                          Container(
+                          SizedBox(
                             height: 100,
                             child: Column(
                               children: [
@@ -166,7 +191,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 ),
                                 Container(
                                   height: 40,
-                                  margin: EdgeInsetsDirectional.all(10),
+                                  margin: const EdgeInsetsDirectional.all(10),
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: placeOrderVM.branches.length,
@@ -190,6 +215,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: TextFormField(
+                              controller: notes,
                               maxLines: 7,
                               style: TextStyle(
                                   fontSize: 14.sp,
@@ -211,7 +237,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           buttonColor: Theme.of(context).primaryColor,
                           textColor: Colors.white,
                           text: "Proceed",
-                          size: Size(double.infinity, 50),
+                          size: const Size(double.infinity, 50),
                           textFontSize: 12.sp,
                           onTap: () => onPlaceOrderPressed(placeOrderVM),
                         ),
@@ -260,53 +286,138 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
+  Widget cityWidget(PlaceOrderVM placeOrderVM) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 1.5.w, vertical: 2.w),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButtonFormField<ShippingLocationModel>(
+          decoration: InputDecoration(
+            errorText: placeOrderValidationErrorModel.city != null
+                ? placeOrderValidationErrorModel.city!.first
+                : null,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.0,
+              ),
+            ),
+          ),
+          validator: (_) {
+            if (selectedCity == null) {
+              return "City is not selected";
+            }
+          },
+          isExpanded: true,
+          elevation: 0,
+          hint: CustomText(
+              text: "Select City",
+              color: Theme.of(context).primaryColor,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w300),
+          value: selectedCity,
+          items: placeOrderVM.locations.map((item) {
+            return DropdownMenuItem<ShippingLocationModel>(
+              value: item,
+              child: CustomText(
+                text: item.location,
+              ),
+            );
+          }).toList(),
+          onChanged: (ShippingLocationModel? item) {
+            selectedCity = item;
+            placeOrderVM.notifyListeners();
+          },
+        ),
+      ),
+    );
+  }
+
+  Future _selectDate(BuildContext context, PlaceOrderVM placeOrderVM) async {
+    final now = DateTime.now();
+    String formatter = DateFormat('yMd').format(now);
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: now,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      selectedDate = DateFormat('yyyy-MM-dd').format(picked);
+      placeOrderVM.notifyListeners();
+    }
+  }
+
+  Future _selectBookingTime(
+      BuildContext context, PlaceOrderVM placeOrderVM) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.dial,
+        confirmText: "CONFIRM",
+        cancelText: "NOT NOW",
+        helpText: "BOOKING TIME");
+    if (timeOfDay != null) {
+      selectedTime = timeOfDay.format(context).toString();
+      placeOrderVM.notifyListeners();
+    }
+  }
+
   Future<void> onPlaceOrderPressed(PlaceOrderVM placeOrderVM) async {
     if (_placeOrderFormKey.currentState!.validate()) {
       switch (_verticalGroupValue) {
         case "Credit or debit card/paypal":
-          placeOrderVM.placeOrder(
+          await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
-            1,
+            selectedCity!.id,
             email.text,
             PaymentMethod.digital,
             selectedBranch,
-            "Address1",
-            "Address2",
-            "booking date",
-            'booking time',
+            address.text,
+            address.text,
+            selectedDate,
+            selectedTime,
             "NO NOTES",
           );
           break;
         case "Cash on Delivery":
-          placeOrderVM.placeOrder(
+          await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
-            1,
+            selectedCity!.id,
             email.text,
             PaymentMethod.cashOnDelivery,
-            selectedBranch,
-            "Address1",
-            "Address2",
-            "booking date",
-            'booking time',
-            "NO NOTES",
+            null,
+            address.text,
+            null,
+            selectedDate,
+            selectedTime,
+            notes.text,
           );
           break;
         case "Pick from Branch":
           if (selectedBranch != 0) {
-            placeOrderVM.placeOrder(
+            await placeOrderVM.placeOrder(
               name.text,
               firstPhoneNumber.text,
-              1,
+              selectedCity!.id,
               email.text,
               PaymentMethod.pickup,
               selectedBranch,
-              "asdasd",
-              "asdasdas",
-              "booking date",
-              'booking time',
-              "NO NOTES",
+              address.text,
+              "Address2",
+              selectedDate,
+              selectedTime,
+              notes.text,
             );
           }
           break;

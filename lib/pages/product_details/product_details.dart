@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
 import 'package:labouchee/pages/product_details/product_details_viewmodel.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:labouchee/widgets/custom_text.dart';
@@ -164,7 +165,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             height: 10,
                           ),
                           buildReviewCard(
-                              constraints, productDetailsVM.productReviews),
+                              constraints, productDetailsVM.productReviews,productDetailsVM),
                           buildSimilarProudcts(constraints)
                         ],
                       ),
@@ -271,10 +272,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               color: Theme.of(context).primaryColor),
           child: Center(
-            child: IconButton(
-              alignment: Alignment.center,
-              icon: const Icon(Icons.add, color: Colors.white),
-              onPressed: () {
+            child: InkWell(
+              child: const Icon(Icons.add, color: Colors.white),
+              onTap: () {
                 quantitySelected++;
                 productDetailsVM.notifyListeners();
               },
@@ -293,10 +293,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               color: Theme.of(context).primaryColor),
           child: Center(
-            child: IconButton(
-              alignment: Alignment.center,
-              icon: const Icon(Icons.remove, color: Colors.white),
-              onPressed: () {
+            child: InkWell(
+              // alignment: Alignment.center,
+              child: const Icon(Icons.remove, color: Colors.white),
+              onTap: () {
                 if (quantitySelected > 0) {
                   quantitySelected--;
                   productDetailsVM.notifyListeners();
@@ -363,7 +363,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget buildReviewCard(
-      BoxConstraints boxConstraints, List<ProductReviewModel> reviews) {
+      BoxConstraints boxConstraints, List<ProductReviewModel> reviews,ProductDetailsVM productDetailsVM) {
     return Column(
       children: [
         Row(
@@ -423,7 +423,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         Center(
           child: CustomButton(
             text: "ADD REVIEW",
-            onTap: () => _showRatingAppDialog(boxConstraints),
+            onTap: () => _showRatingAppDialog(
+              boxConstraints,productDetailsVM
+            ),
             buttonColor: Theme.of(context).primaryColor,
           ),
         ),
@@ -431,7 +433,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  void _showRatingAppDialog(BoxConstraints boxConstraints) {
+  void _showRatingAppDialog(
+      BoxConstraints boxConstraints, ProductDetailsVM productDetailsVM) {
+    final TextEditingController comment = TextEditingController();
+    double? rating = 3;
+
     final _dialog = AlertDialog(
       content: SingleChildScrollView(
         child: Container(
@@ -458,6 +464,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 text:
                     "Tap a star to set your rating. Add more description here if you want.",
                 fontSize: 12.sp,
+                maxLines: 3,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 fontWeight: FontWeight.normal,
               ),
@@ -473,22 +480,34 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   color: Color(0xffDE970B),
                 ),
                 itemSize: 0.08 * boxConstraints.maxWidth,
-                onRatingUpdate: (rating) {
-                  print(rating);
+                onRatingUpdate: (rate) {
+                  rating = rate;
                 },
               ),
               TextFormField(
+                  controller: comment,
                   decoration: InputDecoration(
-                hintText: 'Coment',
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                ),
-              )),
+                    hintText: 'Comment',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
+                  )),
               CustomButton(
-                onTap: () {},
+                onTap: () async {
+                  if(comment.text.isEmpty) {
+                    productDetailsVM.postProductReview(
+                        "N/A", rating!.toInt());
+                  } else {
+                    productDetailsVM.postProductReview(
+                        comment.text, rating!.toInt());
+                  }
+                  Navigator.of(context).pop();
+                },
                 text: "Submit",
                 padding: const EdgeInsetsDirectional.only(top: 10),
               )

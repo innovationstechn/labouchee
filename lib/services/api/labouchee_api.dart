@@ -522,7 +522,7 @@ class LaboucheeAPI implements API {
         if (e.response?.statusCode == 422) {
           throw ErrorModelException(
             e.response!.data['message'],
-            PlaceOrderErrorModel.fromJson(e.response!.data['error']),
+            PlaceOrderErrorModel.fromJson(e.response!.data['errors']),
           );
         } else {
           throw RequestFailureException(
@@ -764,7 +764,7 @@ class LaboucheeAPI implements API {
   Future<List<MyOrderModel>> myOrders() async {
     try {
       final response = await _dio.get(
-        '/get-notification',
+        '/my-orders',
       );
 
       return response.data

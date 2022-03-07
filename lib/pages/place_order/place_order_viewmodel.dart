@@ -1,3 +1,4 @@
+import 'package:labouchee/app/routes.gr.dart';
 import 'package:labouchee/models/apply_coupon.dart';
 import 'package:labouchee/models/branch.dart';
 import 'package:labouchee/models/order.dart';
@@ -10,11 +11,13 @@ import '../../models/place_order.dart';
 import '../../models/place_order_error.dart';
 import '../../services/api/exceptions/api_exceptions.dart';
 import '../../services/api/labouchee_api.dart';
+import '../../services/navigator.dart';
 import '../../utils/helpers.dart';
 
 class PlaceOrderVM extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   final _api = locator<LaboucheeAPI>();
+  final _navigationService = locator<NavigatorService>();
 
   List<BranchModel> _branches = [];
 
@@ -87,6 +90,10 @@ class PlaceOrderVM extends BaseViewModel {
     try {
       final message = await _api.placeOrder(order);
       _snackbarService.showSnackbar(message: message);
+      _navigationService.router.popAndPushAll([
+        StartingScreenRoute(),
+        MyOrdersScreenRoute(),
+      ]);
     } catch (e) {
       if (e is ErrorModelException) {
         setError(e.error as PlaceOrderErrorModel);
@@ -124,5 +131,9 @@ class PlaceOrderVM extends BaseViewModel {
     }
 
     await runBusyFuture(_applyCoupon());
+  }
+
+  void displayMessage(String message){
+    _snackbarService.showSnackbar(message: message);
   }
 }

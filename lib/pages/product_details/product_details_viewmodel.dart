@@ -71,6 +71,7 @@ class ProductDetailsVM extends BaseViewModel {
         );
 
         await _laboucheeAPI.postProductReview(submitReview);
+        await loadDetails();
       } catch (e) {
         _snackbarService.showSnackbar(message: e.toString());
       }

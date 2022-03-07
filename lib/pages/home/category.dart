@@ -37,7 +37,9 @@ class _CategoryState extends State<Category> {
               ),
               CustomText(
                   text: "View All",
-                  color: Theme.of(context).primaryColor,
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
                   onTap: () {
                     _navigationService.router.navigate(
                       CategoriesListingScreenRoute(
@@ -69,7 +71,11 @@ class _CategoryState extends State<Category> {
 
   Widget categoryCard(CategoryModel categoryModel) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () =>
+          _navigationService.router.navigate(
+           CategoryProductListingScreenRoute(
+                category: categoryModel),
+          ),
       child: Column(
         children: [
           Image.network(categoryModel.photo!, width: 32.w, height: 10.h),

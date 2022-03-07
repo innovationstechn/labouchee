@@ -42,7 +42,7 @@ class Branches extends StatelessWidget {
 
   Widget branchCard(BranchModel branch) {
     return Card(
-      color: Colors.white54,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(

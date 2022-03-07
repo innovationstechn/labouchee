@@ -9,6 +9,7 @@ class CustomText extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final Function? onTap;
   final int? maxLines;
+  final bool underline;
 
   const CustomText(
       {Key? key,
@@ -18,6 +19,7 @@ class CustomText extends StatelessWidget {
       this.fontWeight,
       this.onTap,
       this.maxLines,
+      this.underline = false,
       this.padding = EdgeInsets.zero})
       : super(key: key);
 
@@ -30,6 +32,7 @@ class CustomText extends StatelessWidget {
               text!,
               maxLines: maxLines,
               style: TextStyle(
+                  decoration: underline?TextDecoration.underline:null,
                   fontSize: fontSize,
                   fontWeight: fontWeight,
                   color: color,
@@ -45,6 +48,7 @@ class CustomText extends StatelessWidget {
                 text!,
                 maxLines: maxLines,
                 style: TextStyle(
+                    decoration: underline?TextDecoration.underline:null,
                     fontSize: fontSize,
                     fontWeight: fontWeight,
                     color: color,

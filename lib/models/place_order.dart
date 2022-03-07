@@ -34,15 +34,15 @@ class PlaceOrderModel {
     Map<String, dynamic> map = _$PlaceOrderModelToJson(this);
 
     if (addr2 != null) {
-      map['address[]'] = [addr1, addr2];
+      map['address'] = [addr1, addr2];
     } else {
-      map['address[]'] = [addr1];
+      map['address'] = [addr1];
     }
 
     if (phone2 != null) {
-      map['phone[]'] = [phone, phone2];
+      map['phone'] = [phone, phone2];
     } else {
-      map['phone[]'] = [phone];
+      map['phone'] = [phone];
     }
 
     return map;
