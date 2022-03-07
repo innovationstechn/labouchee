@@ -1,3 +1,5 @@
+import 'package:labouchee/app/auth_guard.dart';
+
 import '../app/routes.gr.dart' as auto_router;
 
 class NavigatorService {

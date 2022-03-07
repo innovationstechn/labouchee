@@ -5,7 +5,9 @@ import 'package:labouchee/orders_detail.dart';
 import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/my_orders/my_orders.dart';
+import 'package:labouchee/pages/starting/starting_viewmodel.dart';
 import 'package:labouchee/searchbar.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import '../../app/locator.dart';
@@ -151,26 +153,49 @@ class _StartingState extends State<Starting> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: 128.0,
-                height: 128.0,
-                margin: const EdgeInsets.only(
-                  top: 24.0,
-                  bottom: 20.0,
-                ),
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                  color: Colors.black26,
-                  shape: BoxShape.circle,
-                ),
-                child: const FlutterLogo(),
+              ViewModelBuilder<StartingStreamVM>.reactive(
+                viewModelBuilder: () => StartingStreamVM(),
+                onModelReady: (model) => model.refresh(),
+                builder: (context, startingVM, _) {
+                  if (startingVM.isBusy) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (startingVM.hasError || startingVM.data == null) {
+                    return const Icon(Icons.error);
+                  }
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 128.0,
+                        height: 128.0,
+                        margin: const EdgeInsets.only(
+                          top: 24.0,
+                          bottom: 20.0,
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        decoration: const BoxDecoration(
+                          color: Colors.black26,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.network(startingVM.data!.avatar!),
+                      ),
+                      CustomText(
+                        text: startingVM.data!.name,
+                        padding: EdgeInsets.only(bottom: 10),
+                      ),
+                      CustomText(
+                        text: startingVM.data!.email,
+                        padding: EdgeInsets.only(bottom: 10),
+                      ),
+                    ],
+                  );
+                },
               ),
-              const CustomText(
-                text: "NAME",
-                padding: EdgeInsets.only(bottom: 10),
-              ),
-              const CustomText(
-                  text: "EMAIL", padding: EdgeInsets.only(bottom: 10)),
               ListTile(
                 onTap: () => navigationService.router
                     .navigate(const ProfileScreenRoute()),
@@ -224,6 +249,19 @@ class _StartingState extends State<Starting> {
                 },
                 leading: const Icon(Icons.language),
                 title: const Text('Languages'),
+              ),
+              ViewModelBuilder<StartingStreamVM>.reactive(
+                viewModelBuilder: () => StartingStreamVM(),
+                onModelReady: (model) => model.refresh(),
+                builder: (context, startingVM, _) {
+                  return               ListTile(
+                    onTap: () {
+                      startingVM.logout();
+                    },
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                  );
+                }
               ),
               const Spacer(),
               DefaultTextStyle(

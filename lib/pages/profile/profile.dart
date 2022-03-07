@@ -5,8 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:labouchee/mixins/validator_mixin.dart';
+import 'package:labouchee/models/update_profile_error.dart';
 import 'package:labouchee/models/user.dart';
+import 'package:labouchee/pages/profile/profile_stream_viewmodel.dart';
 import 'package:labouchee/pages/profile/profile_viewmodel.dart';
+import 'package:labouchee/services/api/exceptions/api_exceptions.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
@@ -42,16 +45,32 @@ class _ProfileState extends State<Profile> {
         title: "Profile",
       ),
       body: SingleChildScrollView(
-        child: ViewModelBuilder<ProfileVM>.reactive(
-            viewModelBuilder: () => ProfileVM(),
+        child: ViewModelBuilder<ProfileStreamVM>.reactive(
+            viewModelBuilder: () => ProfileStreamVM(),
             onModelReady: (model) async {
-              await model.loadData();
+              await model.refresh();
             },
             builder: (context, profileVM, _) {
               if (profileVM.isBusy) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
+              }
+
+              if(profileVM.hasError) {
+                if(profileVM.error((profileVM)) is ErrorModelException<UpdateProfileErrorModel>) {
+                  // Set field errors error here.
+
+                  // -- Placeholder --
+                  return Center(
+                    child: Text(profileVM.error(profileVM).message),
+                  );
+                  // -- Placeholder --
+                } else {
+                  return Center(
+                    child: Text(profileVM.error(profileVM).toString()),
+                  );
+                }
               }
 
               email.text = profileVM.data?.email ?? "";
