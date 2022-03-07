@@ -55,4 +55,9 @@ class HiveLocalStorage implements LocalStorage {
           () => _prefsBox!.get('otp_verified') ?? false,
     );
   }
+
+  @override
+  Future<void> clearToken() async {
+    await _prefsBox!.delete('token');
+  }
 }

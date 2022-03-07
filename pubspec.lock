@@ -899,7 +899,7 @@ packages:
   sdk:
     dependency: "direct dev"
     description:
-      path: "C:\\Users\\umarf\\Documents\\GitHub\\labouchee\\sdk\\sdk"
+      path: "F:\\TelrSDK_Flutter_17072021\\TelrSDK_Flutter\\sdk"
       relative: false
     source: path
     version: "1.0.0+1"

@@ -21,11 +21,9 @@ class UserService {
     try {
       final user = await _api.getUser();
 
-          _userStreamController.add(user);
+      _userStreamController.add(user);
     } catch (e) {
-      _userStreamController.addError(
-        e
-      );
+      _userStreamController.addError(e);
     }
   }
 
@@ -41,7 +39,7 @@ class UserService {
         e,
       );
 
-      if(e is ErrorModelException) {
+      if (e is ErrorModelException) {
         return e.message;
       }
 

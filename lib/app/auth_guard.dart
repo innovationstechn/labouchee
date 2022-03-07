@@ -6,14 +6,7 @@ import 'package:labouchee/services/local_storage/local_storage.dart';
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    final _storage = locator<LocalStorage>();
-    final hasOTP = await _storage.isOtpVerified();
-
-    if (hasOTP) {
-      resolver.next(true);
-    } else {
-      final initRoute = await generateInitRoute();
-      // router.pushNamed(initRoute);
-    }
+    final initRoute = await generateInitRoute();
+    router.replaceAll([initRoute]);
   }
 }
