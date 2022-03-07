@@ -33,11 +33,7 @@ class UpdateProfileModel {
       map['address[]'] = [address1];
     }
 
-    if(contactNo2 != null) {
-      map['contact_no'] = [contactNo1, contactNo2];
-    } else {
-      map['contact_no'] = [contactNo1];
-    }
+    map['contact_no'] = contactNo1;
 
     return map;
   }
