@@ -62,12 +62,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
       onModelReady: (model) => model.initialize(),
       viewModelBuilder: () => PlaceOrderVM(),
       builder: (context, placeOrderVM, _) {
-        if (placeOrderVM.isBusy) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
         if (placeOrderVM.hasError) {
           placeOrderValidationErrorModel =
               placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
@@ -78,178 +72,195 @@ class _PlaceOrderState extends State<PlaceOrder> {
           child: Scaffold(
             backgroundColor: Colors.white,
             body: Center(
-              child: CustomScrollView(slivers: [
-                SliverAppBar(
-                  leading: const BackButton(color: Colors.black),
-                  title: CustomText(
-                    text: "Place Order",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.sp,
-                  ),
-                  titleTextStyle: const TextStyle(color: Colors.black),
-                  backgroundColor: Colors.white,
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextFormWidget(
-                          context: context,
-                          textEditingController: name,
-                          labelText: AppLocalizations.of(context)!.name,
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.nameValidator(text),
-                        ),
-                        TextFormWidget(
-                          context: context,
-                          textEditingController: email,
-                          labelText: AppLocalizations.of(context)!.email,
-                          focusNode: FocusNode(),
-                          errorText:
-                              placeOrderValidationErrorModel.email != null
-                                  ? placeOrderValidationErrorModel.email!.first
-                                  : null,
-                          validationMethod: (text) =>
-                              widget.emailValidator(text),
-                        ),
-                        cityWidget(placeOrderVM),
-                        AddressFormWidget(
-                          context: context,
-                          textEditingController: address,
-                          labelText: "Address",
-                          errorText: placeOrderValidationErrorModel.address !=
-                                  null
-                              ? placeOrderValidationErrorModel.address!.first
-                              : null,
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.addressValidator(text),
-                        ),
-                        ContactFormWidget(
-                          context: context,
-                          textEditingController: firstPhoneNumber,
-                          labelText: AppLocalizations.of(context)!.contactNo,
-                          bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
-                          initialValue: "0966",
-                          errorText:
-                              placeOrderValidationErrorModel.phone != null
-                                  ? placeOrderValidationErrorModel.phone!.first
-                                  : null,
-                          focusNode: FocusNode(),
-                          validationMethod: (text) =>
-                              widget.contactNoValidator(text),
-                        ),
-                        BookingDateAndTime(
-                            selectDate: () =>
-                                _selectDate(context, placeOrderVM),
-                            selectTime: () =>
-                                _selectBookingTime(context, placeOrderVM),
-                            selectedDate: selectedDate,
-                            selectedTime: selectedTime,
-                            placeOrderValidationErrorModel:
-                                placeOrderValidationErrorModel),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Center(
-                          child: CustomText(
-                            text: "Payment Method",
-                            fontSize: 14.sp,
+                child: placeOrderVM.isBusy
+                    ? const CircularProgressIndicator()
+                    : CustomScrollView(slivers: [
+                        SliverAppBar(
+                          leading: const BackButton(color: Colors.black),
+                          title: CustomText(
+                            text: "Place Order",
                             fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
                           ),
+                          titleTextStyle: const TextStyle(color: Colors.black),
+                          backgroundColor: Colors.white,
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 20, top: 20, bottom: 20),
-                          child: RadioGroup<String>.builder(
-                            groupValue: _verticalGroupValue,
-                            onChanged: (value) {
-                              _verticalGroupValue = value!;
-                              placeOrderVM.notifyListeners();
-                            },
-                            items: _status,
-                            itemBuilder: (item) => RadioButtonBuilder(
-                              item,
-                            ),
-                            activeColor: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        if (_verticalGroupValue == _status[2])
-                          SizedBox(
-                            height: 100,
-                            child: Column(
+                        SliverList(
+                          delegate: SliverChildListDelegate([
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CustomText(
-                                  text: "Select Branch",
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
+                                TextFormWidget(
+                                  context: context,
+                                  textEditingController: name,
+                                  labelText: AppLocalizations.of(context)!.name,
+                                  focusNode: FocusNode(),
+                                  validationMethod: (text) =>
+                                      widget.nameValidator(text),
                                 ),
-                                const SizedBox(
-                                  height: 10,
+                                TextFormWidget(
+                                  context: context,
+                                  textEditingController: email,
+                                  labelText:
+                                      AppLocalizations.of(context)!.email,
+                                  focusNode: FocusNode(),
+                                  errorText:
+                                      placeOrderValidationErrorModel.email !=
+                                              null
+                                          ? placeOrderValidationErrorModel
+                                              .email!.first
+                                          : null,
+                                  validationMethod: (text) =>
+                                      widget.emailValidator(text),
                                 ),
-                                Container(
-                                  height: 40,
-                                  margin: const EdgeInsetsDirectional.all(10),
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: placeOrderVM.branches.length,
-                                    itemBuilder: (context, index) {
-                                      return branchCard(
-                                        placeOrderVM.branches[index].name!,
-                                        placeOrderVM.branches[index].id,
-                                      );
-                                    },
+                                cityWidget(placeOrderVM),
+                                AddressFormWidget(
+                                  context: context,
+                                  textEditingController: address,
+                                  labelText: "Address",
+                                  errorText:
+                                      placeOrderValidationErrorModel.address !=
+                                              null
+                                          ? placeOrderValidationErrorModel
+                                              .address!.first
+                                          : null,
+                                  focusNode: FocusNode(),
+                                  validationMethod: (text) =>
+                                      widget.addressValidator(text),
+                                ),
+                                ContactFormWidget(
+                                  context: context,
+                                  textEditingController: firstPhoneNumber,
+                                  labelText:
+                                      AppLocalizations.of(context)!.contactNo,
+                                  bottomText:
+                                      "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                                  initialValue: "0966",
+                                  errorText:
+                                      placeOrderValidationErrorModel.phone !=
+                                              null
+                                          ? placeOrderValidationErrorModel
+                                              .phone!.first
+                                          : null,
+                                  focusNode: FocusNode(),
+                                  validationMethod: (text) =>
+                                      widget.contactNoValidator(text),
+                                ),
+                                BookingDateAndTime(
+                                    selectDate: () =>
+                                        _selectDate(context, placeOrderVM),
+                                    selectTime: () => _selectBookingTime(
+                                        context, placeOrderVM),
+                                    selectedDate: selectedDate,
+                                    selectedTime: selectedTime,
+                                    placeOrderValidationErrorModel:
+                                        placeOrderValidationErrorModel),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Center(
+                                  child: CustomText(
+                                    text: "Payment Method",
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                )
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 20, top: 20, bottom: 20),
+                                  child: RadioGroup<String>.builder(
+                                    groupValue: _verticalGroupValue,
+                                    onChanged: (value) {
+                                      _verticalGroupValue = value!;
+                                      placeOrderVM.notifyListeners();
+                                    },
+                                    items: _status,
+                                    itemBuilder: (item) => RadioButtonBuilder(
+                                      item,
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                if (_verticalGroupValue == _status[2])
+                                  SizedBox(
+                                    height: 100,
+                                    child: Column(
+                                      children: [
+                                        CustomText(
+                                          text: "Select Branch",
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          margin:
+                                              const EdgeInsetsDirectional.all(
+                                                  10),
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount:
+                                                placeOrderVM.branches.length,
+                                            itemBuilder: (context, index) {
+                                              return branchCard(
+                                                placeOrderVM
+                                                    .branches[index].name!,
+                                                placeOrderVM.branches[index].id,
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:
+                                              Theme.of(context).primaryColor)),
+                                  height: 150,
+                                  width: 90.w,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: TextFormField(
+                                      controller: notes,
+                                      maxLines: 7,
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          letterSpacing: 1.0,
+                                          height: 1.5),
+                                      keyboardType: TextInputType.multiline,
+                                      decoration: InputDecoration.collapsed(
+                                        hintText: "Note",
+                                        hintStyle: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 14.sp),
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                CustomButton(
+                                  padding: EdgeInsets.all(2.w),
+                                  buttonColor: Theme.of(context).primaryColor,
+                                  textColor: Colors.white,
+                                  text: "Proceed",
+                                  size: const Size(double.infinity, 50),
+                                  textFontSize: 12.sp,
+                                  onTap: () =>
+                                      onPlaceOrderPressed(placeOrderVM),
+                                ),
+                                SizedBox(
+                                  height: 1.5.h,
+                                ),
                               ],
-                            ),
-                          ),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor)),
-                          height: 150,
-                          width: 90.w,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: TextFormField(
-                              controller: notes,
-                              maxLines: 7,
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  letterSpacing: 1.0,
-                                  height: 1.5),
-                              keyboardType: TextInputType.multiline,
-                              decoration: InputDecoration.collapsed(
-                                hintText: "Note",
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 14.sp),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                        CustomButton(
-                          padding: EdgeInsets.all(2.w),
-                          buttonColor: Theme.of(context).primaryColor,
-                          textColor: Colors.white,
-                          text: "Proceed",
-                          size: const Size(double.infinity, 50),
-                          textFontSize: 12.sp,
-                          onTap: () => onPlaceOrderPressed(placeOrderVM),
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                      ],
-                    )
-                  ]),
-                )
-              ]),
-            ),
+                            )
+                          ]),
+                        )
+                      ])),
           ),
         );
       },

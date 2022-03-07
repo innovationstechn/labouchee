@@ -74,7 +74,10 @@ class _CheckOutState extends State<CheckOut> {
                           topRight: Radius.circular(18.0)),
                       maxHeight: 200,
                       minHeight: 200,
-                      panelBuilder: (sc) => _panel(sc, checkoutVM.details!.cartInfo!,),
+                      panelBuilder: (sc) => _panel(
+                        sc,
+                        checkoutVM.details!.cartInfo!,
+                      ),
                       onPanelSlide: (double pos) => setState(() {}),
                     )
                   ],
@@ -192,7 +195,9 @@ class _CheckOutState extends State<CheckOut> {
           textFontSize: 14.sp,
           // circularSize: 20,
           onTap: () {
-            _navigationService.router.navigate(PlaceOrderScreenRoute(),);
+            _navigationService.router.navigate(
+              PlaceOrderScreenRoute(),
+            );
           },
         ),
       ],
@@ -231,7 +236,7 @@ class _CheckOutState extends State<CheckOut> {
                         Column(
                           children: [
                             CustomText(
-                              text: item.title!,
+                              text: item.totalAmount.toString(),
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
                             ),
@@ -278,7 +283,7 @@ class _CheckOutState extends State<CheckOut> {
                     ),
                     CustomText(
                       padding: const EdgeInsetsDirectional.only(top: 10),
-                      text: e.type!,
+                      text: item.title!,
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -296,159 +301,159 @@ class _CheckOutState extends State<CheckOut> {
     );
   }
 
-  void telrPayment() {
-    final builder = XmlBuilder();
-    builder.processing('xml', 'version="1.0"');
-    builder.element('mobile', nest: () {
-      builder.element('store', nest: () {
-        builder.text('15996');
-      });
-      builder.element('key', nest: () {
-        builder.text('pQ6nP-7rHt@5WRFv');
-      });
-
-      builder.element('device', nest: () {
-        builder.element('type', nest: () {
-          builder.text('iOS');
-        });
-        builder.element('id', nest: () {
-          builder.text('37fb44a2ec8202a3');
-        });
-      });
-
-// app
-      builder.element('app', nest: () {
-        builder.element('name', nest: () {
-          builder.text('Telr');
-        });
-        builder.element('version', nest: () {
-          builder.text('1.1.6');
-        });
-        builder.element('user', nest: () {
-          builder.text('2');
-        });
-        builder.element('id', nest: () {
-          builder.text('123');
-        });
-      });
-
-//tran
-      builder.element('tran', nest: () {
-        builder.element('test', nest: () {
-          builder.text('1');
-        });
-        builder.element('type', nest: () {
-          builder.text('auth');
-        });
-        builder.element('class', nest: () {
-          builder.text('paypage');
-        });
-        builder.element('cartid', nest: () {
-          builder.text(100000000 + 1321);
-        });
-        builder.element('description', nest: () {
-          builder.text('Test for Mobile API order');
-        });
-        builder.element('currency', nest: () {
-          builder.text("aed");
-        });
-        builder.element('amount', nest: () {
-          builder.text("3");
-        });
-        builder.element('language', nest: () {
-          builder.text("en");
-        });
-        builder.element('firstref', nest: () {
-          builder.text('first');
-        });
-        builder.element('ref', nest: () {
-          builder.text('null');
-        });
-      });
-
-//billing
-      builder.element('billing', nest: () {
-// name
-        builder.element('name', nest: () {
-          builder.element('title', nest: () {
-            builder.text('Hellosass');
-          });
-          builder.element('first', nest: () {
-            builder.text('Div');
-          });
-          builder.element('last', nest: () {
-            builder.text('V');
-          });
-        });
-//custref savedcard
-        builder.element('custref', nest: () {
-          builder.text('231');
-        });
-
-// address
-        builder.element('address', nest: () {
-          builder.element('line1', nest: () {
-            builder.text('Dubai');
-          });
-          builder.element('city', nest: () {
-            builder.text('Dubai');
-          });
-          builder.element('region', nest: () {
-            builder.text('');
-          });
-          builder.element('country', nest: () {
-            builder.text('AE');
-          });
-        });
-
-        builder.element('phone', nest: () {
-          builder.text('551188269');
-        });
-        builder.element('email', nest: () {
-          builder.text('divya.thampi@telr.com');
-        });
-      });
-    });
-
-    final bookshelfXml = builder.buildDocument();
-
-// print(bookshelfXml);
-    pay(bookshelfXml);
-  }
-
-  void pay(XmlDocument xml) async {
-    NetworkHelper _networkHelper = NetworkHelper();
-    var response = await _networkHelper.pay(xml);
-    print(response);
-    if (response == 'failed' || response == null) {
-// failed
-//       alertShow('Failed');
-    } else {
-      var _url;
-      final doc = XmlDocument.parse(response);
-      final url = doc.findAllElements('start').map((node) => node.text);
-      final code = doc.findAllElements('code').map((node) => node.text);
-      print(url);
-      _url = url.toString();
-      String _code = code.toString();
-      if (_url.length > 2) {
-        _url = _url.replaceAll('(', '');
-        _url = _url.replaceAll(')', '');
-        _code = _code.replaceAll('(', '');
-        _code = _code.replaceAll(')', '');
-        _launchURL(_url, _code);
-      }
-      print(_url);
-      final message = doc.findAllElements('message').map((node) => node.text);
-      print('Message =  $message');
-      if (message.toString().length > 2) {
-        String msg = message.toString();
-        msg = msg.replaceAll('(', '');
-        msg = msg.replaceAll(')', '');
-        // alertShow(msg);
-      }
-    }
-  }
+//   void telrPayment() {
+//     final builder = XmlBuilder();
+//     builder.processing('xml', 'version="1.0"');
+//     builder.element('mobile', nest: () {
+//       builder.element('store', nest: () {
+//         builder.text('15996');
+//       });
+//       builder.element('key', nest: () {
+//         builder.text('pQ6nP-7rHt@5WRFv');
+//       });
+//
+//       builder.element('device', nest: () {
+//         builder.element('type', nest: () {
+//           builder.text('iOS');
+//         });
+//         builder.element('id', nest: () {
+//           builder.text('37fb44a2ec8202a3');
+//         });
+//       });
+//
+// // app
+//       builder.element('app', nest: () {
+//         builder.element('name', nest: () {
+//           builder.text('Telr');
+//         });
+//         builder.element('version', nest: () {
+//           builder.text('1.1.6');
+//         });
+//         builder.element('user', nest: () {
+//           builder.text('2');
+//         });
+//         builder.element('id', nest: () {
+//           builder.text('123');
+//         });
+//       });
+//
+// //tran
+//       builder.element('tran', nest: () {
+//         builder.element('test', nest: () {
+//           builder.text('1');
+//         });
+//         builder.element('type', nest: () {
+//           builder.text('auth');
+//         });
+//         builder.element('class', nest: () {
+//           builder.text('paypage');
+//         });
+//         builder.element('cartid', nest: () {
+//           builder.text(100000000 + 1321);
+//         });
+//         builder.element('description', nest: () {
+//           builder.text('Test for Mobile API order');
+//         });
+//         builder.element('currency', nest: () {
+//           builder.text("aed");
+//         });
+//         builder.element('amount', nest: () {
+//           builder.text("3");
+//         });
+//         builder.element('language', nest: () {
+//           builder.text("en");
+//         });
+//         builder.element('firstref', nest: () {
+//           builder.text('first');
+//         });
+//         builder.element('ref', nest: () {
+//           builder.text('null');
+//         });
+//       });
+//
+// //billing
+//       builder.element('billing', nest: () {
+// // name
+//         builder.element('name', nest: () {
+//           builder.element('title', nest: () {
+//             builder.text('Hellosass');
+//           });
+//           builder.element('first', nest: () {
+//             builder.text('Div');
+//           });
+//           builder.element('last', nest: () {
+//             builder.text('V');
+//           });
+//         });
+// //custref savedcard
+//         builder.element('custref', nest: () {
+//           builder.text('231');
+//         });
+//
+// // address
+//         builder.element('address', nest: () {
+//           builder.element('line1', nest: () {
+//             builder.text('Dubai');
+//           });
+//           builder.element('city', nest: () {
+//             builder.text('Dubai');
+//           });
+//           builder.element('region', nest: () {
+//             builder.text('');
+//           });
+//           builder.element('country', nest: () {
+//             builder.text('AE');
+//           });
+//         });
+//
+//         builder.element('phone', nest: () {
+//           builder.text('551188269');
+//         });
+//         builder.element('email', nest: () {
+//           builder.text('divya.thampi@telr.com');
+//         });
+//       });
+//     });
+//
+//     final bookshelfXml = builder.buildDocument();
+//
+// // print(bookshelfXml);
+//     pay(bookshelfXml);
+//   }
+//
+//   void pay(XmlDocument xml) async {
+//     NetworkHelper _networkHelper = NetworkHelper();
+//     var response = await _networkHelper.pay(xml);
+//     print(response);
+//     if (response == 'failed' || response == null) {
+// // failed
+// //       alertShow('Failed');
+//     } else {
+//       var _url;
+//       final doc = XmlDocument.parse(response);
+//       final url = doc.findAllElements('start').map((node) => node.text);
+//       final code = doc.findAllElements('code').map((node) => node.text);
+//       print(url);
+//       _url = url.toString();
+//       String _code = code.toString();
+//       if (_url.length > 2) {
+//         _url = _url.replaceAll('(', '');
+//         _url = _url.replaceAll(')', '');
+//         _code = _code.replaceAll('(', '');
+//         _code = _code.replaceAll(')', '');
+//         _launchURL(_url, _code);
+//       }
+//       print(_url);
+//       final message = doc.findAllElements('message').map((node) => node.text);
+//       print('Message =  $message');
+//       if (message.toString().length > 2) {
+//         String msg = message.toString();
+//         msg = msg.replaceAll('(', '');
+//         msg = msg.replaceAll(')', '');
+//         // alertShow(msg);
+//       }
+//     }
+//   }
 
   void _launchURL(String url, String code) async {
     Navigator.push(

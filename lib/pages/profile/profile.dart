@@ -78,7 +78,8 @@ class _ProfileState extends State<Profile> {
                               : CircleAvatar(
                                   radius: 65,
                                   backgroundImage: pickedFile != null
-                                      ? Image.file(File(pickedFile!.path)) as ImageProvider
+                                      ? Image.file(File(pickedFile!.path))
+                                          as ImageProvider
                                       : profileVM.data!.avatar != null
                                           ? NetworkImage(
                                               profileVM.data!.avatar!,

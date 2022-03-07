@@ -87,10 +87,10 @@ class LandingVM extends LanguageAwareBaseView {
   }
 
   void goToProductDetailPage(
-      ProductModel productModel, List<ProductModel> similarProduct) {
+      int selectedIndex, List<ProductModel> similarProduct) {
     _navigationService.router.navigate(
       ProductScreenRoute(
-        productModel: productModel,
+        selectedIndex: selectedIndex,
         similarProducts: similarProduct,
       ),
     );

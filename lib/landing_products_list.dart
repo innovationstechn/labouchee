@@ -20,9 +20,11 @@ class LandingProductList extends StatelessWidget {
       return SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return Container(
-                child:
-                    ProductCard(productModel: items![index], isSmall: false,similarModel: items,));
+            return ProductCard(
+              selectedItemIndex: index,
+              isSmall: false,
+              similarModel: items!,
+            );
           },
           childCount: items!.length,
         ),

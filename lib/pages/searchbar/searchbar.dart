@@ -6,7 +6,7 @@ import 'package:labouchee/pages/searchbar/search_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
-import 'models/product.dart';
+import '../../models/product.dart';
 
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key}) : super(key: key);

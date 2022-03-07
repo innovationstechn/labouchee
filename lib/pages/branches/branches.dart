@@ -20,10 +20,11 @@ class Branches extends StatelessWidget {
           viewModelBuilder: () => BranchesVM(),
           onModelReady: (model) => model.initialize(),
           builder: (context, branchesVM, _) {
-            if (branchesVM.isBusy)
+            if (branchesVM.isBusy) {
               return const Center(
-                child: const CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               );
+            }
 
             return ListView.builder(
               itemCount: branchesVM.branches.length,

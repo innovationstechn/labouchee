@@ -1,29 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
 import 'package:labouchee/pages/product_details/product_details_viewmodel.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../../models/product_review.dart';
 import '../../product_card.dart';
 import '../../services/navigator.dart';
 import '../../widgets/reviews_ui.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final ProductModel? productModel;
-  final List<ProductModel>? similarProducts;
+  final int selectedIndex;
+  final List<ProductModel> similarProducts;
 
-  const ProductDetailPage({Key? key, this.productModel, this.similarProducts})
+  const ProductDetailPage(
+      {Key? key, required this.selectedIndex, required this.similarProducts})
       : super(key: key);
 
   @override
@@ -31,18 +29,25 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+  final _navigationService = locator<NavigatorService>();
+  ProductModel? selectedItem;
   String? selectedSize = "SMALL";
   int quantitySelected = 1;
   int? selectedImageIndex = 0;
-  final _navigationService = locator<NavigatorService>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedItem = widget.similarProducts[widget.selectedIndex];
+  }
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProductDetailsVM>.reactive(
-      viewModelBuilder: () => ProductDetailsVM(product: widget.productModel!),
+      viewModelBuilder: () => ProductDetailsVM(product: selectedItem!),
       onModelReady: (model) async {
         await model.loadDetails();
-
         selectedSize = model.details.availableSizes!.size;
       },
       builder: (context, productDetailsVM, _) {
@@ -95,15 +100,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomText(
-                                text: "Cake",
+                                text: productDetailsVM.details.name,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
                               ),
-                              Icon(
-                                Icons.favorite,
-                                size: 15.sp,
-                                color: Colors.redAccent,
-                              ),
+                              // Icon(
+                              //   Icons.favorite,
+                              //   size: 15.sp,
+                              //   color: Colors.redAccent,
+                              // ),
                             ],
                           ),
                           const SizedBox(
@@ -136,6 +141,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                               CustomText(
                                   fontSize: 12.sp,
+                                  maxLines: 100,
                                   text: productDetailsVM.details.description),
                             ],
                           ),
@@ -165,7 +171,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             height: 10,
                           ),
                           buildReviewCard(
-                              constraints, productDetailsVM.productReviews,productDetailsVM),
+                              constraints,
+                              productDetailsVM.productReviews,
+                              productDetailsVM),
                           buildSimilarProudcts(constraints)
                         ],
                       ),
@@ -343,27 +351,28 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         productDetailsVM.notifyListeners();
       },
       child: Container(
-        width: constraints.maxWidth * 0.25,
-        height: constraints.maxWidth * 0.2,
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            border: Border.all(
-                color: selectedImageIndex == index
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey)),
-        child: Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: Image.network(
-            productDetailsVM.details.images![index],
-            fit: BoxFit.fill,
-          ),
-        ),
-      ),
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxWidth * 0.2,
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              border: Border.all(
+                  color: selectedImageIndex == index
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey)),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            child: SizedBox.expand(
+              child: Image.network(
+                productDetailsVM.details.images![index],
+                fit: BoxFit.fill,
+              ),
+            ),
+          )),
     );
   }
 
-  Widget buildReviewCard(
-      BoxConstraints boxConstraints, List<ProductReviewModel> reviews,ProductDetailsVM productDetailsVM) {
+  Widget buildReviewCard(BoxConstraints boxConstraints,
+      List<ProductReviewModel> reviews, ProductDetailsVM productDetailsVM) {
     return Column(
       children: [
         Row(
@@ -423,9 +432,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         Center(
           child: CustomButton(
             text: "ADD REVIEW",
-            onTap: () => _showRatingAppDialog(
-              boxConstraints,productDetailsVM
-            ),
+            onTap: () => _showRatingAppDialog(boxConstraints, productDetailsVM),
             buttonColor: Theme.of(context).primaryColor,
           ),
         ),
@@ -449,7 +456,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 height: boxConstraints.maxHeight * 0.2,
                 child: SizedBox.expand(
                   child: Image.network(
-                    widget.productModel!.images!.elementAt(0),
+                    widget.similarProducts[widget.selectedIndex].images!
+                        .elementAt(0),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -499,9 +507,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   )),
               CustomButton(
                 onTap: () async {
-                  if(comment.text.isEmpty) {
-                    productDetailsVM.postProductReview(
-                        "N/A", rating!.toInt());
+                  if (comment.text.isEmpty) {
+                    productDetailsVM.postProductReview("N/A", rating!.toInt());
                   } else {
                     productDetailsVM.postProductReview(
                         comment.text, rating!.toInt());
@@ -539,21 +546,34 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         const SizedBox(
           height: 10,
         ),
-        Container(
+        SizedBox(
           height: boxHeight,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: widget.similarProducts!.length,
+            itemCount: widget.similarProducts.length,
             itemBuilder: (context, index) {
-              return Container(
-                  width: boxConstraints.maxWidth * 0.4,
-                  padding: const EdgeInsetsDirectional.only(end: 10),
-                  child: ProductCard(
-                    isSmall: false,
-                    productModel: widget.similarProducts![index],
-                    similarModel: widget.similarProducts,
-                  ));
+              return index == widget.selectedIndex
+                  ? Container()
+                  : Container(
+                      width: boxConstraints.maxWidth * 0.4,
+                      padding: const EdgeInsetsDirectional.only(end: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          _navigationService.router.popAndPush(
+                            ProductScreenRoute(
+                                selectedIndex: index,
+                                similarProducts: widget.similarProducts),
+                          );
+                        },
+                        child: ProductCard(
+                          disableOnTap: true,
+                          isSmall: false,
+                          selectedItemIndex: index,
+                          similarModel: widget.similarProducts,
+                        ),
+                      ),
+                    );
             },
           ),
         ),

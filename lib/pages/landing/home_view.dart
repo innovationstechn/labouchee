@@ -1,23 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:labouchee/landing_products_list.dart';
+
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:getwidget/components/card/gf_card.dart';
+
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:getwidget/components/carousel/gf_items_carousel.dart';
-import 'package:getwidget/components/tabs/gf_tabbar.dart';
-import 'package:getwidget/components/tabs/gf_tabbar_view.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
 import 'package:labouchee/services/navigator.dart';
-import 'package:labouchee/widgets/custom_text.dart';
-import 'package:sizer/sizer.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
-import '../home/carousel_slider.dart';
+
 import 'package:labouchee/pages/landing/landing_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -136,10 +131,8 @@ class LandingView extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
-                                final item = landingVM.products[index];
-
                                 return productCard(
-                                    item, landingVM, landingVM.products);
+                                    index, landingVM, landingVM.products);
                               },
                               crossAxisCount:
                                   constraints.maxWidth > 400 ? 2 : 1,
@@ -165,50 +158,6 @@ class LandingView extends StatelessWidget {
           },
         ),
       ),
-      //
-      //     return Padding(
-      //       padding: const EdgeInsets.all(10.0),
-      //       child: CustomScrollView(
-      //         slivers: [
-      //           SliverList(
-      //             delegate: SliverChildListDelegate([
-      //               CarouselSlider(),
-      //               SizedBox(
-      //                 height: 10,
-      //               ),
-      //               Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: [
-      //                   CustomText(
-      //                     text: "Categories",
-      //                     fontSize: 14.sp,
-      //                     fontWeight: FontWeight.bold,
-      //                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      //                   ),
-      //                   CustomText(
-      //                     text: "All Categories",
-      //                     fontSize: 11.sp,
-      //                     fontWeight: FontWeight.normal,
-      //                     color: Theme.of(context).primaryColor,
-      //                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      //                   ),
-      //                 ],
-      //               ),
-      //               Category(),
-      //               SizedBox(
-      //                 height: 20,
-      //               ),
-      //               CarouselSlider(),
-      //               SizedBox(
-      //                 height: 10,
-      //               ),
-      //             ]),
-      //           ),
-      //           LandingProductList(items: productModel),
-      //         ],
-      //     },
-      //   ),
-      // ),
     );
   }
 
@@ -228,7 +177,8 @@ class LandingView extends StatelessWidget {
                     onTap: () {
                       _navigationService.router.navigate(
                         ProductScreenRoute(
-                            productModel: item, similarProducts: products),
+                            selectedIndex: products.indexOf(item),
+                            similarProducts: products),
                       );
                     },
                     child: ClipRRect(
@@ -247,11 +197,12 @@ class LandingView extends StatelessWidget {
     );
   }
 
-  Widget productCard(ProductModel item, LandingVM landingVM,
+  Widget productCard(int selectedIndex, LandingVM landingVM,
       List<ProductModel> similarProduct) {
+    final item = similarProduct[selectedIndex];
     return GestureDetector(
       onTap: () {
-        landingVM.goToProductDetailPage(item, similarProduct);
+        landingVM.goToProductDetailPage(selectedIndex, similarProduct);
       },
       child: Container(
         constraints: const BoxConstraints(maxWidth: 300),
@@ -272,7 +223,10 @@ class LandingView extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  item.productRating?.toStringAsFixed(1) ?? "-",
+                  similarProduct[selectedIndex]
+                          .productRating
+                          ?.toStringAsFixed(1) ??
+                      "-",
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w500),
                 ),
@@ -291,36 +245,11 @@ class LandingView extends StatelessWidget {
               return ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Image.network(
-                  item.images!.first,
+                  similarProduct[selectedIndex].images!.first,
                   fit: BoxFit.cover,
                 ),
               );
             }),
-            // LayoutBuilder(
-            //   builder: (context, constraints) {
-            //     return Wrap(
-            //       crossAxisAlignment: WrapCrossAlignment.center,
-            //       alignment: WrapAlignment.center,
-            //       children: item.images!
-            //           .map(
-            //             (e) => Container(
-            //               width: constraints.maxWidth < 500 ? double.infinity : 250,
-            //               margin: const EdgeInsets.all(4),
-            //               child: ClipRRect(
-            //                 borderRadius:
-            //                     const BorderRadius.all(Radius.circular(5.0)),
-            //                 child: Image.network(
-            //                   e,
-            //                   fit: BoxFit.cover,
-            //                 ),
-            //               ),
-            //             ),
-            //           )
-            //           .toList(),
-            //     );
-            //   }
-            // ),
-
             const SizedBox(
               height: 10,
             ),
