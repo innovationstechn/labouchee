@@ -7,30 +7,35 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/routes.gr.dart';
 import '../../models/category.dart';
+import '../../services/navigator.dart';
+import '../categories_product_listing/categories_product_listing.dart';
 
 class CategoriesListing extends StatefulWidget {
   final List<CategoryModel> categories;
-  const CategoriesListing({Key? key, required this.categories}) : super(key: key);
+
+  const CategoriesListing({Key? key, required this.categories})
+      : super(key: key);
 
   @override
   _CategoriesListingState createState() => _CategoriesListingState();
 }
 
 class _CategoriesListingState extends State<CategoriesListing> {
+  final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title:"Categories"),
+      appBar: CustomAppBar(title: "Categories"),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(1.w),
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-              ...widget.categories.map((item) =>
-                  Container(height: 15.h, width: 32.w, child: categoryCard(item)))
+              ...widget.categories.map((item) => Container(
+                  height: 15.h, width: 32.w, child: categoryCard(item)))
             ],
           ),
         ),
@@ -40,10 +45,11 @@ class _CategoriesListingState extends State<CategoriesListing> {
 
   Widget categoryCard(CategoryModel categoryModel) {
     return GestureDetector(
-      // onTap: () => navigator.navigateTo(Routes),
+      onTap: () => _navigationService.router
+          .navigate(CategoryProductListingScreenRoute(category: categoryModel)),
       child: Column(
         children: [
-          Image.network(categoryModel.photo!,width: 32.w,height:10.h),
+          Image.network(categoryModel.photo!, width: 32.w, height: 10.h),
           const SizedBox(
             height: 8,
           ),

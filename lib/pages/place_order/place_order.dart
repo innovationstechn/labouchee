@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/place_order.dart';
-import 'package:labouchee/models/register_error_model.dart';
+import 'package:labouchee/models/shipping_location.dart';
 import 'package:labouchee/pages/place_order/place_order_viewmodel.dart';
-import 'package:labouchee/pages/register/register_viewmodel.dart';
 import 'package:labouchee/widgets/address_field.dart';
 import 'package:labouchee/widgets/booking_date_time_ui.dart';
 import 'package:labouchee/widgets/contact_number_field.dart';
@@ -16,7 +14,6 @@ import 'package:sizer/sizer.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-
 import '../../models/place_order_error.dart';
 
 class PlaceOrder extends StatefulWidget with ValidatorMixin {
@@ -39,7 +36,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
   String selectedDate = "";
   String selectedTime = "";
   int selectedBranch = 0;
-  int selectedCity = -1;
+  ShippingLocationModel? selectedCity;
 
   final TextEditingController email = TextEditingController(),
       name = TextEditingController(),
@@ -71,9 +68,15 @@ class _PlaceOrderState extends State<PlaceOrder> {
           );
         }
 
+        if (placeOrderVM.hasError) {
+          placeOrderValidationErrorModel =
+              placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
+        }
+
         return Form(
           key: _placeOrderFormKey,
           child: Scaffold(
+            backgroundColor: Colors.white,
             body: Center(
               child: CustomScrollView(slivers: [
                 SliverAppBar(
@@ -111,7 +114,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           validationMethod: (text) =>
                               widget.emailValidator(text),
                         ),
-                        cityWidget(),
+                        cityWidget(placeOrderVM),
                         AddressFormWidget(
                           context: context,
                           textEditingController: address,
@@ -139,11 +142,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
                               widget.contactNoValidator(text),
                         ),
                         BookingDateAndTime(
-                            selectDate:()=> _selectDate(context, placeOrderVM),
-                            selectTime: ()=> _selectBookingTime(context, placeOrderVM),
+                            selectDate: () =>
+                                _selectDate(context, placeOrderVM),
+                            selectTime: () =>
+                                _selectBookingTime(context, placeOrderVM),
                             selectedDate: selectedDate,
                             selectedTime: selectedTime,
-                            placeOrderValidationErrorModel: placeOrderValidationErrorModel),
+                            placeOrderValidationErrorModel:
+                                placeOrderValidationErrorModel),
                         SizedBox(
                           height: 1.h,
                         ),
@@ -159,9 +165,10 @@ class _PlaceOrderState extends State<PlaceOrder> {
                               start: 20, top: 20, bottom: 20),
                           child: RadioGroup<String>.builder(
                             groupValue: _verticalGroupValue,
-                            onChanged: (value) => setState(() {
+                            onChanged: (value) {
                               _verticalGroupValue = value!;
-                            }),
+                              placeOrderVM.notifyListeners();
+                            },
                             items: _status,
                             itemBuilder: (item) => RadioButtonBuilder(
                               item,
@@ -279,19 +286,36 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
-
-  Widget cityWidget(){
+  Widget cityWidget(PlaceOrderVM placeOrderVM) {
     return Container(
-      height: 60,
-      margin: EdgeInsets.symmetric(horizontal: 14,vertical: 2.w),
+      margin: EdgeInsets.symmetric(horizontal: 1.5.w, vertical: 2.w),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-            color: Theme.of(context).primaryColor),
-      ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
+        child: DropdownButtonFormField<ShippingLocationModel>(
+          decoration: InputDecoration(
+            errorText: placeOrderValidationErrorModel.city != null
+                ? placeOrderValidationErrorModel.city!.first
+                : null,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.0,
+              ),
+            ),
+          ),
+          validator: (_) {
+            if (selectedCity == null) {
+              return "City is not selected";
+            }
+          },
           isExpanded: true,
           elevation: 0,
           hint: CustomText(
@@ -299,23 +323,25 @@ class _PlaceOrderState extends State<PlaceOrder> {
               color: Theme.of(context).primaryColor,
               fontSize: 13.sp,
               fontWeight: FontWeight.w300),
-          items: <String>['A', 'B', 'C', 'D']
-              .map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
+          value: selectedCity,
+          items: placeOrderVM.locations.map((item) {
+            return DropdownMenuItem<ShippingLocationModel>(
+              value: item,
               child: CustomText(
-                text: value,
+                text: item.location,
               ),
             );
           }).toList(),
-          onChanged: (_) {},
+          onChanged: (ShippingLocationModel? item) {
+            selectedCity = item;
+            placeOrderVM.notifyListeners();
+          },
         ),
       ),
     );
   }
 
-  Future _selectDate(
-      BuildContext context, PlaceOrderVM placeOrderVM) async {
+  Future _selectDate(BuildContext context, PlaceOrderVM placeOrderVM) async {
     final now = DateTime.now();
     String formatter = DateFormat('yMd').format(now);
     final DateTime? picked = await showDatePicker(
@@ -352,7 +378,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
           await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
-            1,
+            selectedCity!.id,
             email.text,
             PaymentMethod.digital,
             selectedBranch,
@@ -367,12 +393,12 @@ class _PlaceOrderState extends State<PlaceOrder> {
           await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
-            1,
+            selectedCity!.id,
             email.text,
             PaymentMethod.cashOnDelivery,
             null,
             address.text,
-            "Address2",
+            null,
             selectedDate,
             selectedTime,
             notes.text,
@@ -383,7 +409,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             await placeOrderVM.placeOrder(
               name.text,
               firstPhoneNumber.text,
-              1,
+              selectedCity!.id,
               email.text,
               PaymentMethod.pickup,
               selectedBranch,
@@ -395,14 +421,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
             );
           }
           break;
-      }
-
-      if (placeOrderVM.hasError) {
-        placeOrderValidationErrorModel =
-            placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
-        placeOrderVM.notifyListeners();
-      } else {
-        // registerVM.navigateToOTPVerification();
       }
     }
   }

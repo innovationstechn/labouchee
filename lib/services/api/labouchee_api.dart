@@ -522,7 +522,7 @@ class LaboucheeAPI implements API {
         if (e.response?.statusCode == 422) {
           throw ErrorModelException(
             e.response!.data['message'],
-            PlaceOrderErrorModel.fromJson(e.response!.data['error']),
+            PlaceOrderErrorModel.fromJson(e.response!.data['errors']),
           );
         } else {
           throw RequestFailureException(
