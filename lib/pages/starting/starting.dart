@@ -6,7 +6,6 @@ import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/my_orders/my_orders.dart';
 import 'package:labouchee/pages/starting/starting_viewmodel.dart';
-import 'package:labouchee/searchbar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -17,6 +16,7 @@ import '../../widgets/custom_text.dart';
 import '../cart/cart.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import '../notifications/notifications.dart';
+import '../searchbar/searchbar.dart';
 
 class Starting extends StatefulWidget {
   const Starting({Key? key}) : super(key: key);
