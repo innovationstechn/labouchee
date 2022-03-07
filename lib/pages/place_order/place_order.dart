@@ -392,7 +392,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             selectedCity!.id,
             email.text,
             PaymentMethod.digital,
-            selectedBranch,
+            null,
             address.text,
             address.text,
             selectedDate,

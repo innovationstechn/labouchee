@@ -11,11 +11,9 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
+import '../../models/TelrPaymentModel.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
-import 'package:xml/xml.dart';
-import 'package:sdk/components/network_helper.dart';
-import 'package:sdk/screens/webview_screen.dart';
 
 class CheckOut extends StatefulWidget {
   const CheckOut({Key? key}) : super(key: key);
@@ -27,10 +25,14 @@ class CheckOut extends StatefulWidget {
 class _CheckOutState extends State<CheckOut> {
   PanelController panelController = PanelController();
   final _navigationService = locator<NavigatorService>();
+  late BoxConstraints boxConstraints;
+  bool disableSlidingUI = true;
+  final TextEditingController couponTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
+      boxConstraints = constraints;
       return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -53,11 +55,10 @@ class _CheckOutState extends State<CheckOut> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 return Stack(
                   children: [
                     SizedBox(
-                      height: constraints.maxHeight * 0.8,
+                      height: constraints.maxHeight - 320,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
@@ -72,13 +73,13 @@ class _CheckOutState extends State<CheckOut> {
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(18.0),
                           topRight: Radius.circular(18.0)),
-                      maxHeight: 200,
-                      minHeight: 200,
-                      panelBuilder: (sc) => _panel(
-                        sc,
-                        checkoutVM.details!.cartInfo!,
-                      ),
-                      onPanelSlide: (double pos) => setState(() {}),
+                      maxHeight: 240,
+                      minHeight: 240,
+                      panelBuilder: (sc) =>
+                          _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
+                      onPanelSlide: (double pos) => setState(() {
+                        print("Position:" + pos.toString());
+                      }),
                     )
                   ],
                 );
@@ -88,12 +89,13 @@ class _CheckOutState extends State<CheckOut> {
     });
   }
 
-  Widget _panel(ScrollController controller, CartDetailInfoModel info) {
+  Widget _panel(ScrollController controller, CartDetailInfoModel info,
+      CheckoutVM checkoutVM) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 150,
+          height: 190,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsetsDirectional.all(8.0),
@@ -116,22 +118,73 @@ class _CheckOutState extends State<CheckOut> {
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: "Have you a coupon code?",
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    CustomText(
-                      text: "APPLY COUPON",
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ],
-                ),
+                if(disableSlidingUI && (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0 )
+                     Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: "Have you a coupon code?",
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          CustomText(
+                            text: "APPLY COUPON",
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.normal,
+                            onTap:(){
+                              disableSlidingUI = false;
+                              checkoutVM.notifyListeners();
+                            }
+                          ),
+                        ],
+                      ),
+                if (!disableSlidingUI && (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          side:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        ),
+                        child: SizedBox(
+                          width: boxConstraints.maxWidth * 0.72,
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: TextFormField(
+                              controller: couponTextController,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  letterSpacing: 1.0,
+                                  height: 1.5),
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration.collapsed(
+                                hintText: "Enter your coupon code",
+                                hintStyle: TextStyle(
+                                    // color: Theme.of(context).primaryColor,
+                                    fontSize: 14.sp),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      CustomButton(
+                        text: "APPLY",
+                        textColor: Colors.white,
+                        buttonColor: Theme.of(context).primaryColor,
+                        textFontSize: 10.sp,
+                        size: Size(boxConstraints.maxWidth * 0.2, 35),
+                        onTap: () {
+                          checkoutVM.applyCoupon(couponTextController.text);
+                        },
+                      ),
+                    ],
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -170,20 +223,22 @@ class _CheckOutState extends State<CheckOut> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: "Total Cost:",
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    CustomText(
-                      text: "SAR ${info.totalPrice?.toString() ?? '?'}",
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: "Total Cost:",
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      CustomText(
+                        text: "SAR ${info.totalPrice?.toString() ?? '?'}",
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -301,167 +356,6 @@ class _CheckOutState extends State<CheckOut> {
     );
   }
 
-//   void telrPayment() {
-//     final builder = XmlBuilder();
-//     builder.processing('xml', 'version="1.0"');
-//     builder.element('mobile', nest: () {
-//       builder.element('store', nest: () {
-//         builder.text('15996');
-//       });
-//       builder.element('key', nest: () {
-//         builder.text('pQ6nP-7rHt@5WRFv');
-//       });
-//
-//       builder.element('device', nest: () {
-//         builder.element('type', nest: () {
-//           builder.text('iOS');
-//         });
-//         builder.element('id', nest: () {
-//           builder.text('37fb44a2ec8202a3');
-//         });
-//       });
-//
-// // app
-//       builder.element('app', nest: () {
-//         builder.element('name', nest: () {
-//           builder.text('Telr');
-//         });
-//         builder.element('version', nest: () {
-//           builder.text('1.1.6');
-//         });
-//         builder.element('user', nest: () {
-//           builder.text('2');
-//         });
-//         builder.element('id', nest: () {
-//           builder.text('123');
-//         });
-//       });
-//
-// //tran
-//       builder.element('tran', nest: () {
-//         builder.element('test', nest: () {
-//           builder.text('1');
-//         });
-//         builder.element('type', nest: () {
-//           builder.text('auth');
-//         });
-//         builder.element('class', nest: () {
-//           builder.text('paypage');
-//         });
-//         builder.element('cartid', nest: () {
-//           builder.text(100000000 + 1321);
-//         });
-//         builder.element('description', nest: () {
-//           builder.text('Test for Mobile API order');
-//         });
-//         builder.element('currency', nest: () {
-//           builder.text("aed");
-//         });
-//         builder.element('amount', nest: () {
-//           builder.text("3");
-//         });
-//         builder.element('language', nest: () {
-//           builder.text("en");
-//         });
-//         builder.element('firstref', nest: () {
-//           builder.text('first');
-//         });
-//         builder.element('ref', nest: () {
-//           builder.text('null');
-//         });
-//       });
-//
-// //billing
-//       builder.element('billing', nest: () {
-// // name
-//         builder.element('name', nest: () {
-//           builder.element('title', nest: () {
-//             builder.text('Hellosass');
-//           });
-//           builder.element('first', nest: () {
-//             builder.text('Div');
-//           });
-//           builder.element('last', nest: () {
-//             builder.text('V');
-//           });
-//         });
-// //custref savedcard
-//         builder.element('custref', nest: () {
-//           builder.text('231');
-//         });
-//
-// // address
-//         builder.element('address', nest: () {
-//           builder.element('line1', nest: () {
-//             builder.text('Dubai');
-//           });
-//           builder.element('city', nest: () {
-//             builder.text('Dubai');
-//           });
-//           builder.element('region', nest: () {
-//             builder.text('');
-//           });
-//           builder.element('country', nest: () {
-//             builder.text('AE');
-//           });
-//         });
-//
-//         builder.element('phone', nest: () {
-//           builder.text('551188269');
-//         });
-//         builder.element('email', nest: () {
-//           builder.text('divya.thampi@telr.com');
-//         });
-//       });
-//     });
-//
-//     final bookshelfXml = builder.buildDocument();
-//
-// // print(bookshelfXml);
-//     pay(bookshelfXml);
-//   }
-//
-//   void pay(XmlDocument xml) async {
-//     NetworkHelper _networkHelper = NetworkHelper();
-//     var response = await _networkHelper.pay(xml);
-//     print(response);
-//     if (response == 'failed' || response == null) {
-// // failed
-// //       alertShow('Failed');
-//     } else {
-//       var _url;
-//       final doc = XmlDocument.parse(response);
-//       final url = doc.findAllElements('start').map((node) => node.text);
-//       final code = doc.findAllElements('code').map((node) => node.text);
-//       print(url);
-//       _url = url.toString();
-//       String _code = code.toString();
-//       if (_url.length > 2) {
-//         _url = _url.replaceAll('(', '');
-//         _url = _url.replaceAll(')', '');
-//         _code = _code.replaceAll('(', '');
-//         _code = _code.replaceAll(')', '');
-//         _launchURL(_url, _code);
-//       }
-//       print(_url);
-//       final message = doc.findAllElements('message').map((node) => node.text);
-//       print('Message =  $message');
-//       if (message.toString().length > 2) {
-//         String msg = message.toString();
-//         msg = msg.replaceAll('(', '');
-//         msg = msg.replaceAll(')', '');
-//         // alertShow(msg);
-//       }
-//     }
-//   }
 
-  void _launchURL(String url, String code) async {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => WebViewScreen(
-                  url: url,
-                  code: code,
-                )));
-  }
+
 }

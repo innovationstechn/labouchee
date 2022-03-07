@@ -899,8 +899,8 @@ packages:
   sdk:
     dependency: "direct dev"
     description:
-      path: "F:\\TelrSDK_Flutter_17072021\\TelrSDK_Flutter\\sdk"
-      relative: false
+      path: "sdk/sdk"
+      relative: true
     source: path
     version: "1.0.0+1"
   shared_preferences:

@@ -4,7 +4,7 @@ part 'place_order.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PlaceOrderModel {
-  String? name, email, orderNote, bookingTime, bookingDate;
+  String? name, email, orderNote, bookingTime, bookingDate, telr;
   int? city, branch;
   PaymentMethod? paymentMethod;
 
@@ -25,6 +25,7 @@ class PlaceOrderModel {
     this.orderNote,
     this.bookingDate,
     this.bookingTime,
+    this.telr,
   });
 
   factory PlaceOrderModel.fromJson(Map<String, dynamic> json) =>

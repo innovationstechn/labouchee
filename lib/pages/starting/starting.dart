@@ -6,6 +6,7 @@ import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/my_orders/my_orders.dart';
 import 'package:labouchee/pages/starting/starting_viewmodel.dart';
+import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -182,14 +183,19 @@ class _StartingState extends State<Starting> {
                           color: Colors.black26,
                           shape: BoxShape.circle,
                         ),
-                        child: Image.network(startingVM.data!.avatar!),
+                        child: Image.network(startingVM.data!.avatar!,fit: BoxFit.fill,),
                       ),
                       CustomText(
                         text: startingVM.data!.name,
+                        color:Colors.white,
+                        fontSize:12.sp,
+                        fontWeight:FontWeight.bold,
                         padding: EdgeInsets.only(bottom: 10),
                       ),
                       CustomText(
                         text: startingVM.data!.email,
+                        color:Colors.white,
+                        fontSize:12.sp,
                         padding: EdgeInsets.only(bottom: 10),
                       ),
                     ],

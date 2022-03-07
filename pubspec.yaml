@@ -87,7 +87,7 @@ dev_dependencies:
   dotted_border: ^2.0.0+2
 
   sdk:
-    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
+    path: .\sdk\sdk
 #    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk
 
 

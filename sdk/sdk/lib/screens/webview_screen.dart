@@ -10,7 +10,8 @@ import 'package:xml/xml.dart';
 class WebViewScreen extends StatefulWidget {
   final url;
   final code;
-  WebViewScreen({@required this.url, @required this.code});
+  final void Function(bool, String) onResponse;
+  WebViewScreen({@required this.url, @required this.code, @required this.onResponse});
 
   @override
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -59,6 +60,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           _showedOnce = true;
           alertShow('Your transaction is $msg', true);
         }
+        widget.onResponse(!(response == 'failed' || response == null), doc.toString());
         // https://secure.telr.com/gateway/webview_start.html?code=a8caa483fe7260ace06a255cc32e
       }
     }
