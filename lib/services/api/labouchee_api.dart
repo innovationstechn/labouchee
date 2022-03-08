@@ -709,14 +709,14 @@ class LaboucheeAPI implements API {
   }
 
   @override
-  Future<bool> applyCoupon(ApplyCouponModel couponModel) async {
+  Future<String> applyCoupon(ApplyCouponModel couponModel) async {
     try {
       final response = await _dio.post(
         '/apply-coupon',
         data: couponModel.toJson(),
       );
 
-      return response.data['available'] ?? false;
+      return response.data['message']!;
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(

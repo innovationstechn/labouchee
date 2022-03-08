@@ -25,57 +25,42 @@ class OnboardingView extends StatelessWidget {
             }
 
             return IntroductionScreen(
+              scrollPhysics: const ScrollPhysics(),
               globalBackgroundColor: Colors.white,
               isBottomSafeArea: true,
               isTopSafeArea: true,
-              showNextButton: false,
               pages: onboardingVM.images
                   .map(
                     (e) => PageViewModel(
                       decoration: const PageDecoration(
                         bodyFlex: 0,
                         imageFlex: 1,
+                        fullScreen: true,
+                        imagePadding: EdgeInsets.zero,
+                        contentMargin: EdgeInsets.zero,
                       ),
                       titleWidget: const SizedBox(),
                       bodyWidget: Container(),
-                      image: Center(
-                        child: Image.asset(
-                          e,
-                          fit: BoxFit.fill,
+                      image: SizedBox(
+                        width: double.infinity,
+                        child: GestureDetector(
+                          onTap: () {
+                            if(e == onboardingVM.images.last) onboardingVM.onUserDone();
+                          },
+                          child: Image.asset(
+                            e,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
                   )
                   .toList(),
               onDone: onboardingVM.onUserDone,
-              showSkipButton: true,
-              skip:
-                  Icon(Icons.skip_next, color: Theme.of(context).primaryColor),
-              next: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).primaryColor,
-              ),
-              done: Text(
-                AppLocalizations.of(context)!.login,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              dotsDecorator: DotsDecorator(
-                size: const Size.square(10.0),
-                activeSize: const Size(20.0, 10.0),
-                activeColor: Theme.of(context).primaryColor,
-                color: Colors.black26,
-                spacing: const EdgeInsets.symmetric(
-                  horizontal: 3.0,
-                ),
-                activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-              ),
+              showNextButton: false,
+              showSkipButton: false,
+              showDoneButton: false,
             );
-
           },
         ),
       ),

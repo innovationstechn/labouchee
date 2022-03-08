@@ -31,20 +31,14 @@ class CheckoutVM extends BaseViewModel {
   Future<void> applyCoupon(String coupon) async {
     Future<void> _applyCoupon() async {
       try {
-        final available = await _api.applyCoupon(
+        final message = await _api.applyCoupon(
           ApplyCouponModel(
             coupon: coupon,
             mobileId: await uniqueDeviceIdentifier(),
           ),
         );
 
-        if (available) {
-          _snackbarService.showSnackbar(message: 'Successfully applied coupon');
-          await initialize();
-        } else {
-          _snackbarService.showSnackbar(
-              message: 'That coupon is not available');
-        }
+        _snackbarService.showSnackbar(message: message);
       } catch (e) {
         _snackbarService.showSnackbar(message: e.toString());
       }

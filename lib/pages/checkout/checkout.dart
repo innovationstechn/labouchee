@@ -78,9 +78,10 @@ class _CheckOutState extends State<CheckOut> {
                       minHeight: 220,
                       panelBuilder: (sc) =>
                           _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
-                      onPanelSlide: (double pos) => setState(() {
-                        print("Position:" + pos.toString());
-                      }),
+                      onPanelSlide: (double pos) =>
+                          setState(() {
+                            print("Position:" + pos.toString());
+                          }),
                     )
                   ],
                 );
@@ -112,35 +113,39 @@ class _CheckOutState extends State<CheckOut> {
                       decoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius:
-                              BorderRadius.all(Radius.circular(12.0))),
+                          BorderRadius.all(Radius.circular(12.0))),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                if(disableSlidingUI && (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0 )
-                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomText(
-                            text: AppLocalizations.of(context)!.haveCouponCode,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          CustomText(
-                            text: AppLocalizations.of(context)!.applyCoupon,
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.normal,
-                            onTap:(){
-                              disableSlidingUI = false;
-                              checkoutVM.notifyListeners();
-                            }
-                          ),
-                        ],
+                if(disableSlidingUI &&
+                    (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0 )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: AppLocalizations.of(context)!.haveCouponCode,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.normal,
                       ),
-                if (!disableSlidingUI && (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0)
+                      CustomText(
+                          text: AppLocalizations.of(context)!.applyCoupon,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.normal,
+                          onTap: () {
+                            disableSlidingUI = false;
+                            checkoutVM.notifyListeners();
+                          }
+                      ),
+                    ],
+                  ),
+                if (!disableSlidingUI &&
+                    (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -148,7 +153,9 @@ class _CheckOutState extends State<CheckOut> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           side:
-                              BorderSide(color: Theme.of(context).primaryColor),
+                          BorderSide(color: Theme
+                              .of(context)
+                              .primaryColor),
                         ),
                         child: SizedBox(
                           width: boxConstraints.maxWidth * 0.72,
@@ -164,9 +171,10 @@ class _CheckOutState extends State<CheckOut> {
                                   height: 1.5),
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration.collapsed(
-                                hintText: AppLocalizations.of(context)!.haveCouponCode,
+                                hintText: AppLocalizations.of(context)!
+                                    .haveCouponCode,
                                 hintStyle: TextStyle(
-                                    // color: Theme.of(context).primaryColor,
+                                  // color: Theme.of(context).primaryColor,
                                     fontSize: 14.sp),
                                 border: InputBorder.none,
                               ),
@@ -177,7 +185,9 @@ class _CheckOutState extends State<CheckOut> {
                       CustomButton(
                         text: AppLocalizations.of(context)!.apply,
                         textColor: Colors.white,
-                        buttonColor: Theme.of(context).primaryColor,
+                        buttonColor: Theme
+                            .of(context)
+                            .primaryColor,
                         textFontSize: 10.sp,
                         size: Size(boxConstraints.maxWidth * 0.2, 35),
                         onTap: () {
@@ -198,7 +208,8 @@ class _CheckOutState extends State<CheckOut> {
                       // fontWeight:,
                     ),
                     CustomText(
-                      text: " ${info.discountAmount?.toString() ?? 0}" + " "+AppLocalizations.of(context)!.currency,
+                      text: " ${checkoutVM.details?.cart?.coupon?.toString() ??
+                          0}" " " + AppLocalizations.of(context)!.currency,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.normal,
                     ),
@@ -234,7 +245,8 @@ class _CheckOutState extends State<CheckOut> {
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        text: " ${info.totalPrice?.toString() ?? '?'}" + " "+AppLocalizations.of(context)!.currency,
+                        text: " ${info.totalPrice?.toString() ?? '?'}" + " " +
+                            AppLocalizations.of(context)!.currency,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.normal,
                       ),
@@ -247,7 +259,8 @@ class _CheckOutState extends State<CheckOut> {
         ),
         CustomButton(
           size: const Size(double.infinity, 50),
-          text: "PAY ${info.totalPrice?.toString() ?? '?'} " + AppLocalizations.of(context)!.currency,
+          text: "PAY ${info.totalPrice?.toString() ?? '?'} " +
+              AppLocalizations.of(context)!.currency,
           textFontSize: 14.sp,
           // circularSize: 20,
           onTap: () {
@@ -266,7 +279,8 @@ class _CheckOutState extends State<CheckOut> {
       children: [
         ...?item.size
             ?.map(
-              (e) => Padding(
+              (e) =>
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +294,7 @@ class _CheckOutState extends State<CheckOut> {
                           height: constraints.maxWidth * 0.2,
                           child: ClipRRect(
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0)),
+                            const BorderRadius.all(Radius.circular(10.0)),
                             child: SizedBox.expand(
                               child: Image.network(
                                 item.image!,
@@ -292,7 +306,8 @@ class _CheckOutState extends State<CheckOut> {
                         Column(
                           children: [
                             CustomText(
-                              text: item.totalAmount.toString()+" "+ AppLocalizations.of(context)!.currency,
+                              text: item.totalAmount.toString() + " " +
+                                  AppLocalizations.of(context)!.currency,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
                             ),
@@ -307,15 +322,19 @@ class _CheckOutState extends State<CheckOut> {
                                   Radius.circular(25.0),
                                 ),
                                 border: Border.all(
-                                    color: Theme.of(context).primaryColor),
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
                                     Icons.add,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor,
                                     size: 18.sp,
                                   ),
                                   CustomText(
@@ -327,7 +346,9 @@ class _CheckOutState extends State<CheckOut> {
                                   ),
                                   Icon(
                                     Icons.remove,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor,
                                     size: 18.sp,
                                   ),
                                 ],
@@ -345,13 +366,15 @@ class _CheckOutState extends State<CheckOut> {
                     ),
                     const SizedBox(height: 10),
                     Divider(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
                       thickness: 2,
                     ),
                   ],
                 ),
               ),
-            )
+        )
             .toList(),
       ],
     );

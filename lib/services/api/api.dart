@@ -74,7 +74,7 @@ abstract class API {
   Future<String> markNotificationAsRead(
       MarkReadNotificationModel notifications);
 
-  Future<bool> applyCoupon(ApplyCouponModel couponModel);
+  Future<String> applyCoupon(ApplyCouponModel couponModel);
 
   Future<String> submitInquiry(InquiryModel inquiry);
 

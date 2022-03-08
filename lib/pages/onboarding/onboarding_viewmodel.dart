@@ -8,9 +8,9 @@ import '../../services/navigator.dart';
 
 class OnboardingVM extends BaseViewModel {
   List<String> get images => [
-        'assets/images/onboarding/onboarding_1.jpg',
-        'assets/images/onboarding/onboarding_2.jpg',
-        'assets/images/onboarding/onboarding_3.jpg',
+        'assets/images/onboarding/onboarding_1.jpeg',
+        'assets/images/onboarding/onboarding_2.jpeg',
+        'assets/images/onboarding/onboarding_3.jpeg',
       ];
 
   final _navigationService = locator<NavigatorService>();

@@ -254,15 +254,12 @@ class LandingView extends StatelessWidget {
               height: 10,
             ),
             LayoutBuilder(builder: (context, constraints) {
-              return SizedBox(
-                width: constraints.maxWidth,
-                child: Row(
-                  children: [
-                    if (item.priceSmall != null) buildSizeCapsule(AppLocalizations.of(context)!.small),
-                    if (item.priceMedium != null) buildSizeCapsule(AppLocalizations.of(context)!.medium),
-                    if (item.priceLarge != null) buildSizeCapsule(AppLocalizations.of(context)!.large),
-                  ],
-                ),
+              return Wrap(
+                children: [
+                  if (item.priceSmall != null) buildSizeCapsule(AppLocalizations.of(context)!.small),
+                  if (item.priceMedium != null) buildSizeCapsule(AppLocalizations.of(context)!.medium),
+                  if (item.priceLarge != null) buildSizeCapsule(AppLocalizations.of(context)!.large),
+                ],
               );
             }),
             const SizedBox(
@@ -305,7 +302,7 @@ class LandingView extends StatelessWidget {
     return Builder(builder: (context) {
       return FittedBox(
         child: Container(
-          margin: const EdgeInsets.only(right: 10),
+          margin: const EdgeInsets.only(right: 10, top: 10),
           padding: const EdgeInsets.symmetric(horizontal: 15),
           height: 25,
           decoration: BoxDecoration(
