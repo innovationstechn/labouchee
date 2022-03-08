@@ -4,9 +4,9 @@ import 'package:labouchee/models/branch.dart';
 import 'package:labouchee/pages/branches/branches_viewmodel.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Branches extends StatelessWidget {
   const Branches({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class Branches extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(title: 'Branches'),
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.branches),
         body: ViewModelBuilder<BranchesVM>.reactive(
           viewModelBuilder: () => BranchesVM(),
           onModelReady: (model) => model.initialize(),

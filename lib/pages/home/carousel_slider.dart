@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CarouselSlider extends StatefulWidget {
 
   const CarouselSlider({Key? key}) : super(key: key);

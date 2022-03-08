@@ -4,7 +4,7 @@ import 'package:labouchee/pages/my_orders/my_orders_vm.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/my_order.dart';
 import '../../widgets/custom_text.dart';
 
@@ -19,7 +19,7 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "My Orders",),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.myOrders,),
       body: ViewModelBuilder<MyOrdersVM>.reactive(
           viewModelBuilder: () => MyOrdersVM(),
           onModelReady: (model)=> model.loadData(),
@@ -54,7 +54,7 @@ class _MyOrdersState extends State<MyOrders> {
                 Row(
                   children: [
                     CustomText(
-                      text: "Name: ",
+                      text: AppLocalizations.of(context)!.name,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,7 +81,7 @@ class _MyOrdersState extends State<MyOrders> {
                 Row(
                   children: [
                     CustomText(
-                      text: "OrderID: ",
+                      text: AppLocalizations.of(context)!.orderID,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -95,7 +95,7 @@ class _MyOrdersState extends State<MyOrders> {
                 Row(
                   children: [
                     CustomText(
-                      text: "Total amount:",
+                      text: AppLocalizations.of(context)!.totalAmount,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -121,13 +121,13 @@ class _MyOrdersState extends State<MyOrders> {
                   ),
                   onPressed: () =>myOrdersVM.navigateToOrderDetailPage(myOrderModel),
                   child: CustomText(
-                    text: "Details",
+                    text: AppLocalizations.of(context)!.details,
                     color: Colors.brown,
                     fontSize: 12.sp,
                   ),
                 ),
                 CustomText(
-                  text: "Status: "+myOrderModel.status!,
+                  text: AppLocalizations.of(context)!.status+" "+myOrderModel.status!,
                   fontSize: 12.sp,
                   color: Theme.of(context).primaryColor,
                 ),

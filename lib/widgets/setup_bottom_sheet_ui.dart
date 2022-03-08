@@ -2,6 +2,7 @@ import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/enums/bottomsheet_type.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void setupBottomSheetUi() {
   final bottomSheetService = locator<BottomSheetService>();

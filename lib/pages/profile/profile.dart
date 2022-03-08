@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
@@ -42,7 +42,7 @@ class _ProfileState extends State<Profile> {
     return SafeArea(
         child: Scaffold(
       appBar: CustomAppBar(
-        title: "Profile",
+        title: AppLocalizations.of(context)?.profile,
       ),
       body: SingleChildScrollView(
         child: ViewModelBuilder<ProfileStreamVM>.reactive(
@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                     context: context,
                     textEditingController: phoneNumber,
                     labelText: AppLocalizations.of(context)!.contactNo,
-                    bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                    bottomText: AppLocalizations.of(context)?.contactNumberLikeThat,
                     initialValue: "0966",
                     // errorText: registerValidationErrorModel.contactNo !=
                     //     null
@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                     padding: EdgeInsets.all(2.w),
                     buttonColor: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    text: "Save",
+                    text: AppLocalizations.of(context)?.save,
                     size: Size(80.w, 7.h),
                     textFontSize: 12.sp,
                     // TODO, add fields marked with '-'
@@ -211,7 +211,7 @@ class _ProfileState extends State<Profile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Select option'),
+            title: CustomText(text: AppLocalizations.of(context)?.selectOption,),
             content: Container(
               height: 150,
               width: 200,
@@ -219,7 +219,7 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.camera_alt_outlined),
-                    title: const Text("Camera"),
+                    title: CustomText(text:AppLocalizations.of(context)?.camera),
                     onTap: () async {
                       await _getFromCamera();
                       Navigator.pop(context);
@@ -228,7 +228,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.broken_image_outlined),
-                    title: const Text("Storage"),
+                    title: CustomText(text:AppLocalizations.of(context)?.storage),
                     onTap: () async {
                       await _getFromStorage();
                       Navigator.pop(context);

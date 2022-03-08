@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sizer/sizer.dart';
+
+import 'custom_text.dart';
 
 class ReviewUI extends StatelessWidget {
   final String? image, name, date, comment;
@@ -46,6 +50,7 @@ class ReviewUI extends StatelessWidget {
                       borderRadius: BorderRadius.circular(44.0),
                     ),
                   ),
+                  SizedBox(width: 5,),
                   Text(
                     name!,
                     style: TextStyle(
@@ -53,10 +58,6 @@ class ReviewUI extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // IconButton(
-                  //   onPressed: (){},
-                  //   icon: Icon(Icons.more_vert),
-                  // ),
                 ],
               ),
               SizedBox(height: 5.0),
@@ -72,9 +73,9 @@ class ReviewUI extends StatelessWidget {
                     unratedColor: Colors.grey[300],
                   ),
                   SizedBox(width: 16),
-                  Text(
-                    date!,
-                    style: TextStyle(fontSize: 18.0),
+                  CustomText(
+                    text:date!,
+                    fontSize:14.sp,
                   ),
                 ],
               ),

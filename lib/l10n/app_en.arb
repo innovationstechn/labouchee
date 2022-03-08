@@ -210,6 +210,447 @@
   "thankYouPlacingOrder": "Thank you for placing order with us, have a wonderful day.",
   "@thankYouPlacingOrder": {
     "description": "The current language"
+  },
+  "otpVerification": "OTP Verification.",
+  "@otpVerification": {
+    "description": "The current language"
+  },
+  "branches": "branches",
+  "@branches": {
+    "description": "The current language"
+  },
+  "cartIsEmpty": "cartIsEmpty",
+  "@cartIsEmpty": {
+    "description": "The current language"
+  },
+  "checkOUT": "checkOUT",
+  "@checkOUT": {
+    "description": "The current language"
+  },
+  "categories": "categories",
+  "@categories": {
+    "description": "The current language"
+  },
+  "haveCouponCode": "haveCouponCode?",
+  "@haveCouponCode?": {
+    "description": "The current language"
+  },
+  "applyCoupon": "applyCoupon",
+  "@applyCoupon": {
+    "description": "The current language"
+  },
+  "enterYourCouponCode": "enterYourCouponCode",
+  "@enterYourCouponCode": {
+    "description": "The current language"
+  },
+  "apply": "apply",
+  "@apply": {
+    "description": "The current language"
+  },
+  "couponOff": "couponOff",
+  "@couponOff": {
+    "description": "The current language"
+  },
+  "currency": "currency",
+  "@currency": {
+    "description": "The current language"
+  },
+  "shippingCost": "shippingCost",
+  "@shippingCost": {
+    "description": "The current language"
+  },
+  "totalCost": "totalCost",
+  "@totalCost": {
+    "description": "The current language"
+  },
+  "pay": "pay",
+  "@pay": {
+    "description": "The current language"
+  },
+  "coupons": "coupons",
+  "@coupons": {
+    "description": "The current language"
+  },
+  "off": "off",
+  "@off": {
+    "description": "The current language"
+  },
+  "available": "available",
+  "@available": {
+    "description": "The current language"
+  },
+  "notAvailable": "notAvailable",
+  "@notAvailable": {
+    "description": "The current language"
+  },
+  "status": "status",
+  "@status": {
+    "description": "The current language"
+  },
+  "couponCode": "couponCode",
+  "@couponCode": {
+    "description": "The current language"
+  },
+  "description": "description",
+  "@description": {
+    "description": "The current language"
+  },
+  "validTill": "validTill",
+  "@validTill": {
+    "description": "The current language"
+  },
+  "inquiryForm": "inquiryForm",
+  "@inquiryForm": {
+    "description": "The current language"
+  },
+  "title": "title",
+  "@title": {
+    "description": "The current language"
+  },
+  "note": "note",
+  "@note": {
+    "description": "The current language"
+  },
+  "submit": "submit",
+  "@submit": {
+    "description": "The current language"
+  },
+  "resetPassword": "resetPassword",
+  "@resetPassword": {
+    "description": "The current language"
+  },
+  "emailAddressBelowResetPassword": "emailAddressBelowResetPassword",
+  "@emailAddressBelowResetPassword": {
+    "description": "The current language"
+  },
+  "send": "send",
+  "@send": {
+    "description": "The current language"
+  },
+  "otpVerification": "otpVerification",
+  "@otpVerification": {
+    "description": "The current language"
+  },
+  "enterInformationBelowToResetPassword": "enterInformationBelowToResetPassword",
+  "@enterInformationBelowToResetPassword": {
+    "description": "The current language"
+  },
+  "otp": "otp",
+  "@otp": {
+    "description": "The current language"
+  },
+  "submit": "submit",
+  "@submit": {
+    "description": "The current language"
+  },
+  "category": "category",
+  "@category": {
+    "description": "The current language"
+  },
+  "viewAll": "viewAll",
+  "@viewAll": {
+    "description": "The current language"
+  },
+  "featured": "featured",
+  "@featured": {
+    "description": "The current language"
+  },
+  "hotSale": "hotSale",
+  "@hotSale": {
+    "description": "The current language"
+  },
+  "viewed": "viewed",
+  "@viewed": {
+    "description": "The current language"
+  },
+  "ourCatalog": "ourCatalog",
+  "@ourCatalog": {
+    "description": "The current language"
+  },
+  "small": "small",
+  "@small": {
+    "description": "The current language"
+  },
+  "medium": "medium",
+  "@medium": {
+    "description": "The current language"
+  },
+  "large": "large",
+  "@large": {
+    "description": "The current language"
+  },
+  "myOrder": "myOrder",
+  "@myOrder": {
+    "description": "The current language"
+  },
+  "deliveryCharges": "deliveryCharges",
+  "@deliveryCharges": {
+    "description": "The current language"
+  },
+  "discountAmount": "discountAmount",
+  "@discountAmount": {
+    "description": "The current language"
+  },
+  "grandTotal": "grandTotal",
+  "@grandTotal": {
+    "description": "The current language"
+  },
+  "myOrders": "myOrders",
+  "@myOrders": {
+    "description": "The current language"
+  },
+  "orderID": "orderID: ",
+  "@orderID": {
+    "description": "The current language"
+  },
+  "totalAmount": "totalAmount:",
+  "@totalAmount": {
+    "description": "The current language"
+  },
+  "details": "details",
+  "@details": {
+    "description": "The current language"
+  },
+  "status": "status",
+  "@status": {
+    "description": "The current language"
+  },
+  "createdAt": "createdAt ",
+  "@createdAt": {
+    "description": "The current language"
+  },
+  "otpVerification": "otpVerification",
+  "@otpVerification": {
+    "description": "The current language"
+  },
+  "emailAddressBelowToResetPassword": "emailAddressBelowToResetPassword",
+  "@emailAddressBelowToResetPassword": {
+    "description": "The current language"
+  },
+  "placeOrder": "placeOrder",
+  "@placeOrder": {
+    "description": "The current language"
+  },
+  "address": "address",
+  "@address": {
+    "description": "The current language"
+  },
+  "contactNumberLikeThat": "contactNumberLikeThat",
+  "@contactNumberLikeThat": {
+    "description": "The current language"
+  },
+  "paymentMethod": "paymentMethod",
+  "@paymentMethod": {
+    "description": "The current language"
+  },
+  "selectBranch": "selectBranch",
+  "@selectBranch": {
+    "description": "The current language"
+  },
+  "note": "note",
+  "@note": {
+    "description": "The current language"
+  },
+  "proceed": "proceed",
+  "@proceed": {
+    "description": "The current language"
+  },
+  "selectCity": "selectCity",
+  "@selectCity": {
+    "description": "The current language"
+  },
+  "confirm": "confirm",
+  "@confirm": {
+    "description": "The current language"
+  },
+  "notNow": "notNow",
+  "@notNow": {
+    "description": "The current language"
+  },
+  "bookingTime": "bookingTime",
+  "@bookingTime": {
+    "description": "The current language"
+  },
+  "creditOrDebitCard": "creditOrDebitCard",
+  "@creditOrDebitCard": {
+    "description": "The current language"
+  },
+  "cashOnDelivery": "cashOnDelivery",
+  "@cashOnDelivery": {
+    "description": "The current language"
+  },
+  "pickFromBranch": "pickFromBranch",
+  "@pickFromBranch": {
+    "description": "The current language"
+  },
+  "description": "description",
+  "@description": {
+    "description": "The current language"
+  },
+  "addToCart": "addToCart",
+  "@addToCart": {
+    "description": "The current language"
+  },
+  "standard": "standard",
+  "@standard": {
+    "description": "The current language"
+  },
+  "availableSize": "availableSize: ",
+  "@availableSize": {
+    "description": "The current language"
+  },
+  "availableSizes": "availableSizes",
+  "@availableSizes": {
+    "description": "The current language"
+  },
+  "reviews": "reviews",
+  "@reviews": {
+    "description": "The current language"
+  },
+  "viewAll": "viewAll",
+  "@viewAll": {
+    "description": "The current language"
+  },
+  "addREVIEW": "addREVIEW",
+  "@addREVIEW": {
+    "description": "The current language"
+  },
+  "tapAStar": "tapAStar",
+  "@tapAStar": {
+    "description": "The current language"
+  },
+  "comment": "comment",
+  "@comment": {
+    "description": "The current language"
+  },
+  "submit": "submit",
+  "@submit": {
+    "description": "The current language"
+  },
+  "similarProducts": "similarProducts",
+  "@similarProducts": {
+    "description": "The current language"
+  },
+  "profile": "profile",
+  "@profile": {
+    "description": "The current language"
+  },
+  "save": "save",
+  "@save": {
+    "description": "The current language"
+  },
+  "selectOption": "selectOption",
+  "@selectOption": {
+    "description": "The current language"
+  },
+  "camera": "camera",
+  "@camera": {
+    "description": "The current language"
+  },
+  "storage": "storage",
+  "@storage": {
+    "description": "The current language"
+  },
+  "searchYourFavouriteItem": "searchYourFavouriteItem",
+  "@searchYourFavouriteItem": {
+    "description": "The current language"
+  },
+  "home": "home",
+  "@home": {
+    "description": "The current language"
+  },
+  "search": "search",
+  "@search": {
+    "description": "The current language"
+  },
+  "cart": "cart",
+  "@cart": {
+    "description": "The current language"
+  },
+  "notifications": "notifications",
+  "@notifications": {
+    "description": "The current language"
+  },
+  "languages": "languages",
+  "@languages": {
+    "description": "The current language"
+  },
+  "logout": "logout",
+  "@logout": {
+    "description": "The current language"
+  },
+  "termsOfService": "termsOfService",
+  "@termsOfService": {
+    "description": "The current language"
+  },
+  "orderInfo": "orderInfo",
+  "@orderInfo": {
+    "description": "The current language"
+  },
+  "orderDate": "orderDate",
+  "@orderDate": {
+    "description": "The current language"
+  },
+  "paymentMethod": "paymentMethod",
+  "@paymentMethod": {
+    "description": "The current language"
+  },
+  "paymentStatus": "paymentStatus",
+  "@paymentStatus": {
+    "description": "The current language"
+  },
+  "note": "note",
+  "@note": {
+    "description": "The current language"
+  },
+  "orderDetails": "orderDetails",
+  "@orderDetails": {
+    "description": "The current language"
+  },
+  "product": "product",
+  "@product": {
+    "description": "The current language"
+  },
+  "unitPrice": "unitPrice",
+  "@unitPrice": {
+    "description": "The current language"
+  },
+  "size": "size",
+  "@size": {
+    "description": "The current language"
+  },
+  "quantity": "quantity",
+  "@quantity": {
+    "description": "The current language"
+  },
+  "total": "total",
+  "@total": {
+    "description": "The current language"
+  },
+  "arabic": "arabic",
+  "@arabic": {
+    "description": "The current language"
+  },
+  "english": "english",
+  "@english": {
+    "description": "The current language"
+  },
+  "login": "login",
+  "@login": {
+    "description": "The current language"
+  },
+  "cityNotSelected": "cityNotSelected",
+  "@cityNotSelected": {
+    "description": "The current language"
+  },
+  "change": "change",
+  "@change": {
+    "description": "The current language"
+  },
+  "createAccount": "createAccount",
+  "@createAccount": {
+    "description": "The current language"
   }
 }
+
 

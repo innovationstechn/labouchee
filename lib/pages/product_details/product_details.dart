@@ -15,6 +15,8 @@ import '../../models/product_review.dart';
 import '../../product_card.dart';
 import '../../services/navigator.dart';
 import '../../widgets/reviews_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ProductDetailPage extends StatefulWidget {
   final int selectedIndex;
@@ -133,7 +135,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             children: [
                               CustomText(
                                 fontWeight: FontWeight.bold,
-                                text: "Desription",
+                                text: AppLocalizations.of(context)?.description,
                                 fontSize: 13.sp,
                               ),
                               const SizedBox(
@@ -160,7 +162,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   quantitySelected,
                                   selectedSize,
                                 ),
-                                text: "ADD TO CART",
+                                text: AppLocalizations.of(context)?.addToCart,
                                 textColor: Colors.white,
                                 buttonColor: Theme.of(context).primaryColor,
                               ),
@@ -201,7 +203,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         child: Row(
           children: [
             CustomText(
-              text: "Available Size: ",
+              text: AppLocalizations.of(context)?.availableSize,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -219,7 +221,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: "Available Sizes",
+          text: AppLocalizations.of(context)?.availableSizes,
           fontSize: 12.sp,
           fontWeight: FontWeight.bold,
           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -337,7 +339,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     }
 
     return CustomText(
-      text: price.toString(),
+      text: price.toString()+" "+AppLocalizations.of(context)!.currency,
       fontSize: 14.sp,
       fontWeight: FontWeight.bold,
     );
@@ -379,14 +381,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-              text: "Reviews",
+              text: AppLocalizations.of(context)?.reviews,
               padding: EdgeInsets.all(10),
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
             ),
             if (reviews.length > 2)
               CustomText(
-                text: "View All",
+                text: AppLocalizations.of(context)?.viewAll,
                 color: Theme.of(context).primaryColor,
                 padding: EdgeInsets.all(10),
                 fontSize: 14.sp,
@@ -431,7 +433,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         Center(
           child: CustomButton(
-            text: "ADD REVIEW",
+            text: AppLocalizations.of(context)?.addREVIEW,
             onTap: () => _showRatingAppDialog(boxConstraints, productDetailsVM),
             buttonColor: Theme.of(context).primaryColor,
           ),
@@ -463,14 +465,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               CustomText(
-                text: "Title",
+                text: AppLocalizations.of(context)?.title,
                 fontSize: 14.sp,
                 padding: EdgeInsets.symmetric(vertical: 10),
                 fontWeight: FontWeight.bold,
               ),
               CustomText(
                 text:
-                    "Tap a star to set your rating. Add more description here if you want.",
+                AppLocalizations.of(context)?.tapAStar,
                 fontSize: 12.sp,
                 maxLines: 3,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -495,7 +497,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               TextFormField(
                   controller: comment,
                   decoration: InputDecoration(
-                    hintText: 'Comment',
+                    hintText: AppLocalizations.of(context)?.comment,
                     enabledBorder: UnderlineInputBorder(
                       borderSide:
                           BorderSide(color: Theme.of(context).primaryColor),
@@ -515,7 +517,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   }
                   Navigator.of(context).pop();
                 },
-                text: "Submit",
+                text: AppLocalizations.of(context)?.submit,
                 padding: const EdgeInsetsDirectional.only(top: 10),
               )
             ],
@@ -539,7 +541,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: "Similar Products",
+          text: AppLocalizations.of(context)?.similarProducts,
           fontSize: 15.sp,
           fontWeight: FontWeight.bold,
         ),

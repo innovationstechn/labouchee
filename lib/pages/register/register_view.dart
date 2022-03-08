@@ -65,7 +65,7 @@ class _RegisterViewState extends State<RegisterView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                          text: "Create Account",
+                          text: AppLocalizations.of(context)?.createAccount,
                           fontSize: 25.sp,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor,
@@ -112,7 +112,7 @@ class _RegisterViewState extends State<RegisterView> {
                         AddressFormWidget(
                           context: context,
                           textEditingController: address,
-                          labelText: "Address",
+                          labelText: AppLocalizations.of(context)?.address,
                           focusNode: FocusNode(),
                           errorText:
                               registerValidationErrorModel.address1 != null
@@ -137,7 +137,7 @@ class _RegisterViewState extends State<RegisterView> {
                           context: context,
                           textEditingController: phoneNumber,
                           labelText: AppLocalizations.of(context)!.contactNo,
-                          bottomText: "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                          bottomText: AppLocalizations.of(context)?.contactNumberLikeThat,
                           initialValue: "0966",
                           errorText: registerValidationErrorModel.contactNo !=
                                   null

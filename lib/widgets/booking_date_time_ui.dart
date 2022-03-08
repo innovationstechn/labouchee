@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/place_order_error.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'custom_text.dart';
 
 class BookingDateAndTime extends StatefulWidget {
@@ -75,8 +75,8 @@ class _BookingDateAndTimeState extends State<BookingDateAndTime> {
                           ),
                         ],
                       ),
-                      const CustomText(
-                          text: "  Change",
+                      CustomText(
+                          text: " "+AppLocalizations.of(context)!.change,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 12.0),

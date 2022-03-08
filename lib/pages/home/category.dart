@@ -8,7 +8,7 @@ import '../../app/routes.gr.dart';
 import '../../models/category.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Category extends StatefulWidget {
   final List<CategoryModel> categories;
 
@@ -31,12 +31,12 @@ class _CategoryState extends State<Category> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                text: "Category",
+                text: AppLocalizations.of(context)!.category,
                 fontWeight: FontWeight.bold,
                 fontSize: 14.sp,
               ),
               CustomText(
-                  text: "View All",
+                  text: AppLocalizations.of(context)!.viewAll,
                   color: Theme
                       .of(context)
                       .primaryColor,

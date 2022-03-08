@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomButton extends StatelessWidget {
   final double? textFontSize;
   final Color? textColor;

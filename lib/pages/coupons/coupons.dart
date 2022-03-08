@@ -6,7 +6,7 @@ import 'package:coupon_uikit/coupon_uikit.dart';
 import 'package:labouchee/pages/coupons/coupons_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/available_coupon.dart';
 import '../../widgets/custom_app_bar.dart';
 
@@ -21,7 +21,7 @@ class _CouponsState extends State<Coupons> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Coupons'),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.coupons),
       body: Padding(
         padding: const EdgeInsets.all(14),
         child: ViewModelBuilder<CouponVM>.reactive(

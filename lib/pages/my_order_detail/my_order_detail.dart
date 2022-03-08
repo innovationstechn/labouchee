@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/my_order_details_widgets/order_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyOrderDetailPage extends StatefulWidget {
   final MyOrderModel order;
@@ -25,7 +26,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Order Details",),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.orderDetails,),
       body: ViewModelBuilder<MyOrderDetailVM>.reactive(
         viewModelBuilder: () => MyOrderDetailVM(order: widget.order),
         onModelReady: (model) => model.loadData(),
@@ -42,7 +43,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
               child: Column(
                 children: [
                   CustomText(
-                    text: "My Order",
+                    text: AppLocalizations.of(context)!.myOrder,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -50,14 +51,14 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
                       detailModel: detailVM.detail!,),
                   OrderInfo(detailModel: detailVM.detail!,),
                   MyOrderProductDetails(detailModel: detailVM.detail!),
-                  customRow("Delivery Charges", detailVM.detail!.shippingAmount.toString()),
-                  customRow("Discount Amount", detailVM.detail!.discountAmount.toString()),
+                  customRow(AppLocalizations.of(context)!.deliveryCharges, detailVM.detail!.shippingAmount.toString()),
+                  customRow(AppLocalizations.of(context)!.discountAmount, detailVM.detail!.discountAmount.toString()),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: DottedBorder(
                       color: Colors.brown.shade400,
                       strokeWidth: 1,
-                      child: customRow("Grand Total", detailVM.detail!.orderTotalAmount.toString()),
+                      child: customRow(AppLocalizations.of(context)!.grandTotal, detailVM.detail!.orderTotalAmount.toString()),
                     ),
                   )
                 ],

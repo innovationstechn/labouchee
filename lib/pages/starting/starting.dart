@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:labouchee/orders_detail.dart';
 import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/my_orders/my_orders.dart';
@@ -18,6 +17,7 @@ import '../cart/cart.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import '../notifications/notifications.dart';
 import '../searchbar/searchbar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Starting extends StatefulWidget {
   const Starting({Key? key}) : super(key: key);
@@ -92,9 +92,13 @@ class _StartingState extends State<Starting> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
             ),
             Container(
-                child: Icon(
-                  Icons.shopping_cart,
+                child: IconButton(
+                  icon:Icon(Icons.shopping_cart),
                   color: primaryColor,
+                  onPressed: (){
+                    _pageController.jumpToPage(2);
+                    _advancedDrawerController.hideDrawer();
+                  },
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 10)),
           ],
@@ -126,22 +130,22 @@ class _StartingState extends State<Starting> {
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: const Text('Home'),
+                  title: CustomText(text:AppLocalizations.of(context)?.home,),
                   icon: const Icon(Icons.home)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: const Text('Search'),
+                  title: CustomText(text:AppLocalizations.of(context)?.search),
                   icon: const Icon(Icons.search)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: const Text('Cart'),
+                  title: CustomText(text:AppLocalizations.of(context)?.cart,),
                   icon: const Icon(Icons.shopping_cart)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: const Text('Notifications'),
+                  title: CustomText(text:AppLocalizations.of(context)?.notifications),
                   icon: const Icon(Icons.notifications)),
             ],
           ),
@@ -206,7 +210,7 @@ class _StartingState extends State<Starting> {
                 onTap: () => navigationService.router
                     .navigate(const ProfileScreenRoute()),
                 leading: const Icon(Icons.account_circle_rounded),
-                title: const Text('Profile'),
+                title: CustomText(text:AppLocalizations.of(context)?.profile,color: Colors.white,),
               ),
               ListTile(
                 onTap: () {
@@ -214,20 +218,20 @@ class _StartingState extends State<Starting> {
                   _advancedDrawerController.hideDrawer();
                 },
                 leading: const Icon(Icons.shopping_cart),
-                title: const Text('Cart'),
+                title: CustomText(text:AppLocalizations.of(context)?.cart,color: Colors.white,),
               ),
               ListTile(
                 onTap: () {
                   navigationService.router.navigateNamed('/my-orders');
                 },
                 leading: const Icon(Icons.receipt_long_outlined),
-                title: const Text('My Orders'),
+                title: CustomText(text:AppLocalizations.of(context)?.myOrders,color: Colors.white,),
               ),
               ListTile(
                 onTap: () =>
                     navigationService.router.navigate(BranchesScreenRoute()),
                 leading: const Icon(Icons.description),
-                title: const Text('Branches'),
+                title: CustomText(text:AppLocalizations.of(context)?.branches,color: Colors.white,),
               ),
               ListTile(
                 onTap: () {
@@ -235,7 +239,7 @@ class _StartingState extends State<Starting> {
                       .navigate(CustomerSupportScreenRoute());
                 },
                 leading: const Icon(Icons.message),
-                title: const Text('Inquiry Form'),
+                title: CustomText(text:AppLocalizations.of(context)?.inquiryForm,color: Colors.white,),
               ),
               ListTile(
                 onTap: () {
@@ -243,7 +247,7 @@ class _StartingState extends State<Starting> {
                       .navigate(CouponsSupportScreenRoute());
                 },
                 leading: const Icon(Icons.card_giftcard),
-                title: const Text('Coupons'),
+                title: CustomText(text:AppLocalizations.of(context)?.coupons,color: Colors.white,),
               ),
               ListTile(
                 onTap: () {
@@ -254,7 +258,7 @@ class _StartingState extends State<Starting> {
                   );
                 },
                 leading: const Icon(Icons.language),
-                title: const Text('Languages'),
+                title: CustomText(text:AppLocalizations.of(context)?.languages,color: Colors.white,),
               ),
               ViewModelBuilder<StartingStreamVM>.reactive(
                 viewModelBuilder: () => StartingStreamVM(),
@@ -265,7 +269,7 @@ class _StartingState extends State<Starting> {
                       startingVM.logout();
                     },
                     leading: const Icon(Icons.logout),
-                    title: const Text('Logout'),
+                    title: CustomText(text:AppLocalizations.of(context)?.logout,color: Colors.white,),
                   );
                 }
               ),
@@ -279,7 +283,7 @@ class _StartingState extends State<Starting> {
                   margin: const EdgeInsets.symmetric(
                     vertical: 16.0,
                   ),
-                  child: const Text('Terms of Service | Privacy Policy'),
+                  child: CustomText(text:AppLocalizations.of(context)?.termsOfService),
                 ),
               ),
             ],

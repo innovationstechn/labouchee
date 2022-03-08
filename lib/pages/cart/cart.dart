@@ -12,6 +12,7 @@ import '../../models/cart.dart';
 import '../../services/api/labouchee_api.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _CartState extends State<Cart> {
                     if (snapshot.data!.items!.isEmpty) {
                       return Center(
                         child: CustomText(
-                          text: "Cart is Empty",
+                          text: AppLocalizations.of(context)!.cartIsEmpty,
                           fontSize: 12.sp,
                         ),
                       );
@@ -84,7 +85,7 @@ class _CartState extends State<Cart> {
                         const SizedBox(height: 10),
                         CustomButton(
                           size: Size(constraints.maxWidth * 0.9, 40),
-                          text: "CHECK OUT",
+                          text: AppLocalizations.of(context)!.checkOUT,
                           textFontSize: 14.sp,
                           // circularSize: 20,
                           onTap: () {
@@ -157,10 +158,11 @@ class _CartState extends State<Cart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  text: "\$ ${e.price}",
+                                  text: "${e.price}" +" "+AppLocalizations.of(context)!.currency,
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 16.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
+                                  padding:EdgeInsetsDirectional.only(bottom: 5),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,

@@ -3,6 +3,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:labouchee/pages/onboarding/onboarding_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:onboarding/onboarding.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingView extends StatelessWidget {
   OnboardingView({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class OnboardingView extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               done: Text(
-                "LOGIN",
+                AppLocalizations.of(context)!.login,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Theme.of(context).primaryColor,
@@ -75,36 +76,6 @@ class OnboardingView extends StatelessWidget {
               ),
             );
 
-            // return Onboarding(
-            //   background: Colors.white,
-            //   isSkippable: false,
-            //   pages: onboardingVM.images
-            //       .map(
-            //         (e) => PageModel(
-            //           widget: Expanded(child: Image.asset(e)),
-            //         ),
-            //       )
-            //       .toList(),
-            //   proceedButtonStyle: ProceedButtonStyle(
-            //     proceedButtonColor: Theme.of(context).primaryColor,
-            //     proceedButtonBorderRadius: BorderRadius.zero,
-            //     proceedpButtonText: const Text(
-            //       'LOGIN',
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //     proceedButtonRoute: (_) => onboardingVM.onUserDone(),
-            //   ),
-            //   indicator: Indicator(
-            //     activeIndicator: ActiveIndicator(
-            //       color: Theme.of(context).primaryColor,
-            //     ),
-            //     indicatorDesign: IndicatorDesign.line(
-            //       lineDesign: LineDesign(
-            //         lineType: DesignType.line_uniform,
-            //       ),
-            //     ),
-            //   ),
-            // );
           },
         ),
       ),

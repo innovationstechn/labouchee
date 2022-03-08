@@ -14,6 +14,7 @@ import '../../app/routes.gr.dart';
 import '../../models/TelrPaymentModel.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckOut extends StatefulWidget {
   const CheckOut({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _CheckOutState extends State<CheckOut> {
             toolbarHeight: 50,
             leading: const BackButton(color: Colors.black),
             title: CustomText(
-              text: "Check Out",
+              text: AppLocalizations.of(context)!.checkOUT,
               fontWeight: FontWeight.bold,
               fontSize: 15.sp,
             ),
@@ -73,8 +74,8 @@ class _CheckOutState extends State<CheckOut> {
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(18.0),
                           topRight: Radius.circular(18.0)),
-                      maxHeight: 240,
-                      minHeight: 240,
+                      maxHeight: 220,
+                      minHeight: 220,
                       panelBuilder: (sc) =>
                           _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
                       onPanelSlide: (double pos) => setState(() {
@@ -95,7 +96,7 @@ class _CheckOutState extends State<CheckOut> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 190,
+          height: 170,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsetsDirectional.all(8.0),
@@ -123,12 +124,12 @@ class _CheckOutState extends State<CheckOut> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            text: "Have you a coupon code?",
+                            text: AppLocalizations.of(context)!.haveCouponCode,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.normal,
                           ),
                           CustomText(
-                            text: "APPLY COUPON",
+                            text: AppLocalizations.of(context)!.applyCoupon,
                             color: Theme.of(context).primaryColor,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.normal,
@@ -163,7 +164,7 @@ class _CheckOutState extends State<CheckOut> {
                                   height: 1.5),
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration.collapsed(
-                                hintText: "Enter your coupon code",
+                                hintText: AppLocalizations.of(context)!.haveCouponCode,
                                 hintStyle: TextStyle(
                                     // color: Theme.of(context).primaryColor,
                                     fontSize: 14.sp),
@@ -174,7 +175,7 @@ class _CheckOutState extends State<CheckOut> {
                         ),
                       ),
                       CustomButton(
-                        text: "APPLY",
+                        text: AppLocalizations.of(context)!.apply,
                         textColor: Colors.white,
                         buttonColor: Theme.of(context).primaryColor,
                         textFontSize: 10.sp,
@@ -192,12 +193,12 @@ class _CheckOutState extends State<CheckOut> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "Coupon Off:",
+                      text: AppLocalizations.of(context)!.couponOff,
                       fontSize: 12.sp,
                       // fontWeight:,
                     ),
                     CustomText(
-                      text: "SAR ${info.discountAmount?.toString() ?? 0}",
+                      text: " ${info.discountAmount?.toString() ?? 0}" + " "+AppLocalizations.of(context)!.currency,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.normal,
                     ),
@@ -206,20 +207,20 @@ class _CheckOutState extends State<CheckOut> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: "Shipping Cost:",
-                      fontSize: 12.sp,
-                    ),
-                    CustomText(
-                      text: "SAR ${info.shipping?.toString() ?? 0}",
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     CustomText(
+                //       text: "Shipping Cost:",
+                //       fontSize: 12.sp,
+                //     ),
+                //     CustomText(
+                //       text: "SAR ${info.shipping?.toString() ?? 0}",
+                //       fontSize: 13.sp,
+                //       fontWeight: FontWeight.normal,
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -228,12 +229,12 @@ class _CheckOutState extends State<CheckOut> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
-                        text: "Total Cost:",
+                        text: AppLocalizations.of(context)!.totalCost,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        text: "SAR ${info.totalPrice?.toString() ?? '?'}",
+                        text: " ${info.totalPrice?.toString() ?? '?'}" + " "+AppLocalizations.of(context)!.currency,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.normal,
                       ),
@@ -246,7 +247,7 @@ class _CheckOutState extends State<CheckOut> {
         ),
         CustomButton(
           size: const Size(double.infinity, 50),
-          text: "PAY SAR ${info.totalPrice?.toString() ?? '?'}",
+          text: "PAY ${info.totalPrice?.toString() ?? '?'} " + AppLocalizations.of(context)!.currency,
           textFontSize: 14.sp,
           // circularSize: 20,
           onTap: () {
@@ -291,7 +292,7 @@ class _CheckOutState extends State<CheckOut> {
                         Column(
                           children: [
                             CustomText(
-                              text: item.totalAmount.toString(),
+                              text: item.totalAmount.toString()+" "+ AppLocalizations.of(context)!.currency,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
                             ),
@@ -355,7 +356,4 @@ class _CheckOutState extends State<CheckOut> {
       ],
     );
   }
-
-
-
 }

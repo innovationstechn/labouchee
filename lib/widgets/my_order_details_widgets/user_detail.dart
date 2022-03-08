@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/my_order_detail.dart';
 import '../custom_text.dart';
 
@@ -31,10 +31,10 @@ class _UserDetailState extends State<UserDetail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              userInfoTile(Icons.account_circle_rounded, "Name", myOrderUserInputDetailModel.name!),
-              userInfoTile(Icons.phone, "Mobile No:", myOrderUserInputDetailModel.phone.toString()),
-              userInfoTile(Icons.message, "Email", myOrderUserInputDetailModel.email!),
-              userInfoTile(Icons.location_city, "Address:",
+              userInfoTile(Icons.account_circle_rounded, AppLocalizations.of(context)!.name, myOrderUserInputDetailModel.name!),
+              userInfoTile(Icons.phone, AppLocalizations.of(context)!.contactNo, myOrderUserInputDetailModel.phone.toString()),
+              userInfoTile(Icons.message, AppLocalizations.of(context)!.email, myOrderUserInputDetailModel.email!),
+              userInfoTile(Icons.location_city, AppLocalizations.of(context)!.address+ ":",
                   myOrderUserInputDetailModel.address!.first),
             ],
           ),

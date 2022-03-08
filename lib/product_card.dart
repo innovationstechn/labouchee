@@ -47,7 +47,7 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              flex: 3,
+              flex: 4,
               child: SizedBox.expand(
                 child: Image.network(
                   productModel.images!.elementAt(0),

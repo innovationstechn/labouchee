@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/models/my_order_detail.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../custom_text.dart';
 
 class MyOrderProductDetails extends StatefulWidget {
@@ -29,7 +29,7 @@ class _MyOrderProductDetailsState extends State<MyOrderProductDetails> {
           children: [
             Center(
               child: CustomText(
-                text: "Order Details",
+                text: AppLocalizations.of(context)!.orderDetails,
                 fontSize: 18.sp,
                 maxLines: 2,
                 fontWeight: FontWeight.w600,
@@ -71,14 +71,14 @@ class _MyOrderProductDetailsState extends State<MyOrderProductDetails> {
           ),
           Column(
             children: [
-              productInfoTile("Product", cartItemModel.title!),
+              productInfoTile(AppLocalizations.of(context)!.product, cartItemModel.title!),
               productInfoTile(
-                  "Unit Price", cartItemModel.size![0].price.toString()),
-              productInfoTile("Size", cartItemModel.size![0].type!),
+                  AppLocalizations.of(context)!.unitPrice, cartItemModel.size![0].price.toString()),
+              productInfoTile(AppLocalizations.of(context)!.size, cartItemModel.size![0].type!),
               productInfoTile(
-                  "Quantity", cartItemModel.totalQuantity.toString()),
+                  AppLocalizations.of(context)!.quantity, cartItemModel.totalQuantity.toString()),
               productInfoTile(
-                  "Total", cartItemModel.totalAmount.toString()+ " "+ "SAR"),
+                  AppLocalizations.of(context)!.totalAmount, cartItemModel.totalAmount.toString()+ " "+ AppLocalizations.of(context)!.currency),
             ],
           )
         ],

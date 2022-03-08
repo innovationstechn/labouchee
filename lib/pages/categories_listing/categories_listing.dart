@@ -9,7 +9,7 @@ import '../../app/routes.gr.dart';
 import '../../models/category.dart';
 import '../../services/navigator.dart';
 import '../categories_product_listing/categories_product_listing.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CategoriesListing extends StatefulWidget {
   final List<CategoryModel> categories;
 
@@ -27,7 +27,7 @@ class _CategoriesListingState extends State<CategoriesListing> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: "Categories"),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.categories),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(1.w),

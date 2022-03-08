@@ -8,7 +8,7 @@ import 'package:getwidget/components/carousel/gf_items_carousel.dart';
 import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
 import 'package:labouchee/services/navigator.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
@@ -91,13 +91,13 @@ class LandingView extends StatelessWidget {
                                   ),
                                   tabs: [
                                     Tab(
-                                      child: buildCategoryCapsule('FEATURED'),
+                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.featured),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule('HOT SALE'),
+                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.hotSale),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule('VIEWED'),
+                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.viewed),
                                     ),
                                   ],
                                 ),
@@ -120,7 +120,7 @@ class LandingView extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              buildCategoryCapsule('OUR CATALOG'),
+                              buildCategoryCapsule(AppLocalizations.of(context)!.ourCatalog),
                             ],
                           ),
                         ),
@@ -258,9 +258,9 @@ class LandingView extends StatelessWidget {
                 width: constraints.maxWidth,
                 child: Row(
                   children: [
-                    if (item.priceSmall != null) buildSizeCapsule('SMALL'),
-                    if (item.priceMedium != null) buildSizeCapsule('MEDIUM'),
-                    if (item.priceLarge != null) buildSizeCapsule('LARGE'),
+                    if (item.priceSmall != null) buildSizeCapsule(AppLocalizations.of(context)!.small),
+                    if (item.priceMedium != null) buildSizeCapsule(AppLocalizations.of(context)!.medium),
+                    if (item.priceLarge != null) buildSizeCapsule(AppLocalizations.of(context)!.large),
                   ],
                 ),
               );

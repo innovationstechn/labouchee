@@ -15,6 +15,7 @@ import 'package:group_radio_button/group_radio_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../models/place_order_error.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlaceOrder extends StatefulWidget with ValidatorMixin {
   const PlaceOrder({Key? key}) : super(key: key);
@@ -27,11 +28,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
   final _placeOrderFormKey = GlobalKey<FormState>();
 
   String _verticalGroupValue = "";
-  List<String> _status = [
-    "Credit or debit card/paypal",
-    "Cash on Delivery",
-    "Pick from Branch"
-  ];
+  late List<String> _status;
 
   String selectedDate = "";
   String selectedTime = "";
@@ -57,7 +54,19 @@ class _PlaceOrderState extends State<PlaceOrder> {
       bookingTime: null);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _status = [
+      AppLocalizations.of(context)!.creditOrDebitCard,
+      AppLocalizations.of(context)!.cashOnDelivery,
+      AppLocalizations.of(context)!.pickFromBranch,
+    ];
+
     return ViewModelBuilder<PlaceOrderVM>.reactive(
       onModelReady: (model) => model.initialize(),
       viewModelBuilder: () => PlaceOrderVM(),
@@ -78,7 +87,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         SliverAppBar(
                           leading: const BackButton(color: Colors.black),
                           title: CustomText(
-                            text: "Place Order",
+                            text: AppLocalizations.of(context)!.placeOrder,
                             fontWeight: FontWeight.bold,
                             fontSize: 15.sp,
                           ),
@@ -117,7 +126,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 AddressFormWidget(
                                   context: context,
                                   textEditingController: address,
-                                  labelText: "Address",
+                                  labelText:
+                                      AppLocalizations.of(context)!.address,
                                   errorText:
                                       placeOrderValidationErrorModel.address !=
                                               null
@@ -133,8 +143,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                   textEditingController: firstPhoneNumber,
                                   labelText:
                                       AppLocalizations.of(context)!.contactNo,
-                                  bottomText:
-                                      "CONTACT NUMBER SHOULD BE LIKE (0966)",
+                                  bottomText: AppLocalizations.of(context)!
+                                      .contactNumberLikeThat,
                                   initialValue: "0966",
                                   errorText:
                                       placeOrderValidationErrorModel.phone !=
@@ -160,7 +170,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 ),
                                 Center(
                                   child: CustomText(
-                                    text: "Payment Method",
+                                    text: AppLocalizations.of(context)!
+                                        .paymentMethod,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -187,7 +198,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                     child: Column(
                                       children: [
                                         CustomText(
-                                          text: "Select Branch",
+                                          text: AppLocalizations.of(context)!
+                                              .selectBranch,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -233,7 +245,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                           height: 1.5),
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration.collapsed(
-                                        hintText: "Note",
+                                        hintText:  AppLocalizations.of(context)!.note,
                                         hintStyle: TextStyle(
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -247,7 +259,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                   padding: EdgeInsets.all(2.w),
                                   buttonColor: Theme.of(context).primaryColor,
                                   textColor: Colors.white,
-                                  text: "Proceed",
+                                  text:AppLocalizations.of(context)!.proceed,
                                   size: const Size(double.infinity, 50),
                                   textFontSize: 12.sp,
                                   onTap: () =>
@@ -324,13 +336,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
           ),
           validator: (_) {
             if (selectedCity == null) {
-              return "City is not selected";
+              return AppLocalizations.of(context)!.cityNotSelected;
             }
           },
           isExpanded: true,
           elevation: 0,
           hint: CustomText(
-              text: "Select City",
+              text: AppLocalizations.of(context)!.selectCity,
               color: Theme.of(context).primaryColor,
               fontSize: 13.sp,
               fontWeight: FontWeight.w300),
@@ -373,9 +385,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
         context: context,
         initialTime: TimeOfDay.now(),
         initialEntryMode: TimePickerEntryMode.dial,
-        confirmText: "CONFIRM",
-        cancelText: "NOT NOW",
-        helpText: "BOOKING TIME");
+        confirmText: AppLocalizations.of(context)!.selectCity,
+        cancelText: AppLocalizations.of(context)!.notNow,
+        helpText: AppLocalizations.of(context)!.bookingTime);
     if (timeOfDay != null) {
       selectedTime = timeOfDay.format(context).toString();
       placeOrderVM.notifyListeners();
@@ -384,8 +396,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
 
   Future<void> onPlaceOrderPressed(PlaceOrderVM placeOrderVM) async {
     if (_placeOrderFormKey.currentState!.validate()) {
-      switch (_verticalGroupValue) {
-        case "Credit or debit card/paypal":
+      int selectedMethod = _status.indexOf(_verticalGroupValue);
+      switch (selectedMethod) {
+        case 0:
           await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
@@ -400,7 +413,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             "NO NOTES",
           );
           break;
-        case "Cash on Delivery":
+        case 1:
           await placeOrderVM.placeOrder(
             name.text,
             firstPhoneNumber.text,
@@ -415,7 +428,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             notes.text,
           );
           break;
-        case "Pick from Branch":
+        case 2:
           if (selectedBranch != 0) {
             await placeOrderVM.placeOrder(
               name.text,

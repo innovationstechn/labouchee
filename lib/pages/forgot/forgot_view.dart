@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'forgot_viewmodel.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotView extends StatelessWidget with ValidatorMixin {
   ForgotView({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
           ),
           const SizedBox(height: 10),
           CustomText(
-            text: "Reset Password",
+            text: AppLocalizations.of(context)!.resetPassword,
             fontSize: 15.sp,
             fontWeight: FontWeight.bold,
           ),
@@ -63,7 +64,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
             height: 10,
           ),
           CustomText(
-            text: "Enter your email address below to reset password",
+            text: AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
             fontSize: 12.sp,
             fontWeight: FontWeight.normal,
             color: Colors.grey,
@@ -80,7 +81,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
             padding: EdgeInsets.all(2.w),
             buttonColor: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            text: "SEND",
+            text: AppLocalizations.of(context)!.send,
             size: Size(80.w, 7.h),
             textFontSize: 12.sp,
             onTap: () => onEmailSubmitPressed(forgotVM),
@@ -106,7 +107,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
                 ),
                 const SizedBox(height: 10),
                 CustomText(
-                  text: "OTP VERIFICATION",
+                  text: AppLocalizations.of(context)!.otpVerification,
                   fontSize: 15.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -115,7 +116,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
                   height: 10,
                 ),
                 CustomText(
-                    text: "Enter information below to reset password",
+                    text: AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.normal,
                     color: Colors.grey,
@@ -127,7 +128,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
                       ? resetPasswordErrorModel.code!.first
                       : null,
                   textEditingController: otpController,
-                  labelText: "OTP",
+                  labelText: AppLocalizations.of(context)!.otp,
                   focusNode: FocusNode(),
                   validationMethod: (text) => passwordValidator(text),
                 ),
@@ -148,7 +149,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
                   padding: EdgeInsets.all(2.w),
                   buttonColor: Theme.of(context).primaryColor,
                   textColor: Colors.white,
-                  text: "SUBMIT",
+                  text: AppLocalizations.of(context)!.submit,
                   size: Size(80.w, 7.h),
                   textFontSize: 12.sp,
                   onTap: () => onOtpSubmitPressed(forgotVM),

@@ -6,6 +6,7 @@ import 'package:labouchee/widgets/custom_button.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OtpView extends StatelessWidget {
   OtpView({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class OtpView extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "OTP VERIFICATION",
+                  AppLocalizations.of(context)!.otpVerification,
                   style:
                   TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
@@ -54,7 +55,7 @@ class OtpView extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Enter your email address below to reset password",
+                  AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
                   style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
@@ -103,7 +104,7 @@ class OtpView extends StatelessWidget {
                   padding: EdgeInsets.all(2.w),
                   buttonColor: Theme.of(context).primaryColor,
                   textColor: Colors.white,
-                  text: "SUBMIT",
+                  text: AppLocalizations.of(context)!.submit,
                   size: Size(80.w, 7.h),
                   textFontSize: 12.sp,
                   onTap: () => onSubmitPressed(otpVM),

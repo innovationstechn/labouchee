@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_button.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomerSupport extends StatefulWidget {
   const CustomerSupport({Key? key}) : super(key: key);
 
@@ -22,7 +22,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(title: 'Inquiry Form'),
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.inquiryForm),
         body: LayoutBuilder(builder: (context, constraints) {
           return ViewModelBuilder<CustomerSupportVM>.reactive(
               viewModelBuilder: () => CustomerSupportVM(),
@@ -38,7 +38,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
                         controller: subject,
                         style: TextStyle(color: Colors.black, fontSize: 13.sp),
                         decoration: InputDecoration(
-                          hintText: "Title",
+                          hintText: AppLocalizations.of(context)!.title,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(
@@ -74,8 +74,8 @@ class _CustomerSupportState extends State<CustomerSupport> {
                                 letterSpacing: 1.0,
                                 height: 1.5),
                             keyboardType: TextInputType.multiline,
-                            decoration: const InputDecoration.collapsed(
-                              hintText: "Note",
+                            decoration: InputDecoration.collapsed(
+                              hintText: AppLocalizations.of(context)!.note,
                               border: InputBorder.none,
                             ),
                           ),
@@ -85,7 +85,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
                         height: 20,
                       ),
                       CustomButton(
-                        text: "Submit",
+                        text: AppLocalizations.of(context)!.submit,
                         size: Size(constraints.maxWidth - 50, 50),
                         onTap: () => customerSupportVM.submit(
                             subject.text, inquiry.text),

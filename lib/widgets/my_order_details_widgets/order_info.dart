@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/my_order_detail.dart';
 import '../custom_text.dart';
 
@@ -17,7 +17,7 @@ class OrderInfo extends StatelessWidget {
         children: [
           Center(
             child: CustomText(
-              text: "Order Info",
+              text: AppLocalizations.of(context)?.orderInfo,
               fontSize: 18.sp,
               maxLines: 2,
               fontWeight: FontWeight.bold,
@@ -27,12 +27,12 @@ class OrderInfo extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          orderInfoTile("Order Date", detailModel.createdAt??""),
-          orderInfoTile("Payment Method", detailModel.paymentMethod!),
-          orderInfoTile("Payment Status", detailModel.paymentStatus!),
+          orderInfoTile(AppLocalizations.of(context)!.orderDate, detailModel.createdAt??""),
+          orderInfoTile(AppLocalizations.of(context)!.paymentMethod, detailModel.paymentMethod!),
+          orderInfoTile(AppLocalizations.of(context)!.paymentStatus, detailModel.paymentStatus!),
           // orderInfoTile("Delivery Date", detailModel.),
           // orderInfoTile("Delivery Time", "asdasd"),
-          orderInfoTile("Note", detailModel.orderDetails!.orderNote??""),
+          orderInfoTile(AppLocalizations.of(context)!.note, detailModel.orderDetails!.orderNote??""),
           Container(
               margin: const EdgeInsets.symmetric(vertical:5,horizontal: 15),
               child: Divider(

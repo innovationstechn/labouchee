@@ -7,6 +7,7 @@ import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import '../../models/product.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class _SearchBarState extends State<SearchBar> {
         //   padding: EdgeInsets.symmetric(horizontal: 5.0),
         //   child: Icon(Icons.search),
         // ),
-        hintText: "Search your favourite item",
+        hintText: AppLocalizations.of(context)?.searchYourFavouriteItem,
         // labelText: "Search an item",
         // labelStyle: TextStyle(
         //     color: focusNode!.hasFocus

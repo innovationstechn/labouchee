@@ -26,7 +26,7 @@ class _LanguageViewState extends State<LanguageView> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(title:'Language'),
+        appBar: CustomAppBar(title:  AppLocalizations.of(context)!.languages ),
         body: ViewModelBuilder<LanguageVM>.reactive(
           viewModelBuilder: () => LanguageVM(),
           builder: (context, languageVM, _) {
@@ -47,7 +47,7 @@ class _LanguageViewState extends State<LanguageView> {
                       groupValue: radioButtonValue,
                       onChanged: (int) => update(languageVM, 'ar'),
                     ),
-                    title: const Text("Arabic"),
+                    title: Text(AppLocalizations.of(context)!.arabic),
                   ),
                   const SizedBox(height: 10),
                   ListTile(
@@ -62,7 +62,7 @@ class _LanguageViewState extends State<LanguageView> {
                       groupValue: radioButtonValue,
                       onChanged: (int) => update(languageVM, 'en'),
                     ),
-                    title: const Text("English"),
+                    title: Text(AppLocalizations.of(context)!.english),
                   ),
                   const SizedBox(
                     height: 50,
