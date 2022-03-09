@@ -44,13 +44,13 @@ class PlaceOrderVM extends BaseViewModel {
 
   CartDetailModel? _cart;
 
-  UserModel? _user;
+  UserModel? user;
   Locale? _locale;
 
   Future<void> initialize() async {
     Future<void> _initialize() async {
       try {
-        _user = await _api.getUser();
+        user = await _api.getUser();
         _branches = await _api.getBranches();
         _locations = await _api.getShippingLocations();
         _cart = await _api.getDetailedCart();
@@ -108,7 +108,6 @@ class PlaceOrderVM extends BaseViewModel {
       case PaymentMethod.pickup:
       case PaymentMethod.mada:
     }
-
   }
 
   void onPayment(PlaceOrderModel order) async {
@@ -127,7 +126,6 @@ class PlaceOrderVM extends BaseViewModel {
         _snackbarService.showSnackbar(message: e.toString());
       }
     }
-
   }
 
   Future<bool> payUsingDigital(PlaceOrderModel order) async {
@@ -144,12 +142,12 @@ class PlaceOrderVM extends BaseViewModel {
     telrPayment(
       TelrPaymentModel(
         storeId: '26550',
-        key: 'js7s^QsJD4#kCvQm',
+        key: '9F2sv-N8hFS@zKdS',
         deviceType: platform,
         deviceId: deviceId!,
         appName: 'Labouchee',
-        userId: _user!.id!.toString(),
-        description: 'Test',
+        userId: user!.id!.toString(),
+        description: _cart!.cart!.items.toString(),
         currency: 'SAR',
         amount: _cart!.cartInfo!.totalPrice!.toString(),
         language: locale!,
@@ -159,7 +157,7 @@ class PlaceOrderVM extends BaseViewModel {
         address: order.addr1!,
         city: order.city!.toString(),
         region: order.city!.toString(),
-        country: 'SA',
+        country: 'Saudia Arabia',
         userPhoneNumber: order.phone!,
         email: order.email!,
       ),
@@ -174,136 +172,22 @@ class PlaceOrderVM extends BaseViewModel {
   }
 
   void telrPayment(TelrPaymentModel telrPaymentModel, PlaceOrderModel order) {
-//     final builder = XmlBuilder();
-//     builder.processing('xml', 'version="1.0"');
-//     builder.element('mobile', nest: () {
-//       builder.element('store', nest: () {
-//         builder.text(telrPaymentModel.storeId);
-//       });
-//       builder.element('key', nest: () {
-//         builder.text(telrPaymentModel.key);
-//       });
-//
-//       builder.element('device', nest: () {
-//         builder.element('type', nest: () {
-//           builder.text(telrPaymentModel.deviceType);
-//         });
-//         builder.element('id', nest: () {
-//           builder.text(telrPaymentModel.deviceId);
-//         });
-//       });
-//
-// // app
-//       builder.element('app', nest: () {
-//         builder.element('name', nest: () {
-//           builder.text('Telr');
-//         });
-//         builder.element('version', nest: () {
-//           builder.text('1.1.6');
-//         });
-//         builder.element('user', nest: () {
-//           builder.text('2');
-//         });
-//         builder.element('id', nest: () {
-//           builder.text('123');
-//         });
-//       });
-//
-// //tran
-//       builder.element('tran', nest: () {
-//         builder.element('test', nest: () {
-//           builder.text('1');
-//         });
-//         builder.element('type', nest: () {
-//           builder.text('auth');
-//         });
-//         builder.element('class', nest: () {
-//           builder.text('paypage');
-//         });
-//         builder.element('cartid', nest: () {
-//           builder.text(100000000 + 1323);
-//         });
-//         builder.element('description', nest: () {
-//           builder.text(telrPaymentModel.description);
-//         });
-//         builder.element('currency', nest: () {
-//           builder.text(telrPaymentModel.currency);
-//         });
-//         builder.element('amount', nest: () {
-//           builder.text(telrPaymentModel.amount);
-//         });
-//         builder.element('language', nest: () {
-//           builder.text(telrPaymentModel.language);
-//         });
-//         builder.element('firstref', nest: () {
-//           builder.text('first');
-//         });
-//         builder.element('ref', nest: () {
-//           builder.text('null');
-//         });
-//       });
-//
-// //billing
-//       builder.element('billing', nest: () {
-// // name
-//         builder.element('name', nest: () {
-//           builder.element('title', nest: () {
-//             builder.text('');
-//           });
-//           builder.element('first', nest: () {
-//             builder.text(telrPaymentModel.userName);
-//           });
-//           builder.element('last', nest: () {
-//             builder.text('.');
-//           });
-//         });
-// //custref savedcard
-//         builder.element('custref', nest: () {
-//           builder.text('231');
-//         });
-//
-// // address
-//         builder.element('address', nest: () {
-//           builder.element('line1', nest: () {
-//             builder.text(telrPaymentModel.address);
-//           });
-//           builder.element('city', nest: () {
-//             builder.text(telrPaymentModel.city);
-//           });
-//           builder.element('region', nest: () {
-//             builder.text('ME');
-//           });
-//           builder.element('country', nest: () {
-//             builder.text(telrPaymentModel.country);
-//           });
-//         });
-//
-//         builder.element('phone', nest: () {
-//           builder.text(telrPaymentModel.userPhoneNumber);
-//         });
-//         builder.element('email', nest: () {
-//           builder.text(telrPaymentModel.email);
-//         });
-//       });
-//     });
-
     final builder = XmlBuilder();
-
     builder.processing('xml', 'version="1.0"');
     builder.element('mobile', nest: () {
       builder.element('store', nest: () {
-        builder.text('15996');
+        builder.text(telrPaymentModel.storeId);
       });
       builder.element('key', nest: () {
-        builder.text('pQ6nP-7rHt@5WRFv');
+        builder.text(telrPaymentModel.key);
       });
 
       builder.element('device', nest: () {
         builder.element('type', nest: () {
-          builder.text('iOS');
+          builder.text(telrPaymentModel.deviceType);
         });
         builder.element('id', nest: () {
-          builder.text('37fb44a2ec8202a3');
+          builder.text(telrPaymentModel.deviceId);
         });
       });
 
@@ -335,19 +219,19 @@ class PlaceOrderVM extends BaseViewModel {
           builder.text('paypage');
         });
         builder.element('cartid', nest: () {
-          builder.text(100000000 + Random(132924).nextInt(10000000));
+          builder.text(100000000 + 1323);
         });
         builder.element('description', nest: () {
-          builder.text('Test for Mobile API order');
+          builder.text(telrPaymentModel.description);
         });
         builder.element('currency', nest: () {
-          builder.text("AED");
+          builder.text(telrPaymentModel.currency);
         });
         builder.element('amount', nest: () {
-          builder.text("140");
+          builder.text(telrPaymentModel.amount);
         });
         builder.element('language', nest: () {
-          builder.text('en');
+          builder.text(telrPaymentModel.language);
         });
         builder.element('firstref', nest: () {
           builder.text('first');
@@ -365,10 +249,10 @@ class PlaceOrderVM extends BaseViewModel {
             builder.text('');
           });
           builder.element('first', nest: () {
-            builder.text('Div');
+            builder.text(telrPaymentModel.userName);
           });
           builder.element('last', nest: () {
-            builder.text('V');
+            builder.text('.');
           });
         });
 //custref savedcard
@@ -379,31 +263,30 @@ class PlaceOrderVM extends BaseViewModel {
 // address
         builder.element('address', nest: () {
           builder.element('line1', nest: () {
-            builder.text('Dubai');
+            builder.text(telrPaymentModel.address);
           });
           builder.element('city', nest: () {
-            builder.text('Dubai');
+            builder.text(telrPaymentModel.city);
           });
           builder.element('region', nest: () {
-            builder.text('');
+            builder.text('ME');
           });
           builder.element('country', nest: () {
-            builder.text('AE');
+            builder.text(telrPaymentModel.country);
           });
         });
 
         builder.element('phone', nest: () {
-          builder.text('551188269');
+          builder.text(telrPaymentModel.userPhoneNumber);
         });
         builder.element('email', nest: () {
-          builder.text('divya.thampi@telr.com');
+          builder.text(telrPaymentModel.email);
         });
       });
     });
 
-    final bookshelfXml = builder.buildDocument();
 
-// print(bookshelfXml);
+    final bookshelfXml = builder.buildDocument();
     pay(bookshelfXml, order);
   }
 
@@ -444,14 +327,13 @@ class PlaceOrderVM extends BaseViewModel {
   void _launchURL(String url, String code, PlaceOrderModel order) async {
     _navigationService.router.pushWidget(
       WebViewScreen(
-        url: url,
-        code: code,
-        onResponse: (bool success, String xml) {
-          if(success) {
-            onPayment(order..telr = xml);
-          }
-        }
-      ),
+          url: url,
+          code: code,
+          onResponse: (bool success, String xml) {
+            if (success) {
+              onPayment(order..telr = xml);
+            }
+          }),
     );
   }
 }

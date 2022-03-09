@@ -8,6 +8,7 @@ import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import 'forgot_viewmodel.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,7 +30,7 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
         builder: (context, forgotVM, _) {
           if (forgotVM.isBusy) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CustomCircularProgressIndicator(),
             );
           }
 

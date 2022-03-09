@@ -5,6 +5,7 @@ import 'package:labouchee/pages/branches/branches_viewmodel.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,7 +23,7 @@ class Branches extends StatelessWidget {
           builder: (context, branchesVM, _) {
             if (branchesVM.isBusy) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CustomCircularProgressIndicator(),
               );
             }
 

@@ -8,6 +8,8 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class LoginView extends StatefulWidget with ValidatorMixin {
   LoginView({Key? key}) : super(key: key);
 
@@ -88,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                               onTap:() => onForgotPassword(loginVM))),
                       SizedBox(height: 1.5.h),
                       if(loginVM.isBusy)
-                        CircularProgressIndicator(color: Theme.of(context).primaryColor,)
+                        CustomCircularProgressIndicator()
                       else
                       CustomButton(
                         // padding: EdgeInsets.symmetric(vertical: 5),

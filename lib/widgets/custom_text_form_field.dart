@@ -12,6 +12,7 @@ class TextFormWidget extends FormField<String> {
   final TextEditingController? textEditingController;
   final Function(String?) validationMethod;
   final String? errorText;
+  final bool isReadOnly;
 
   TextFormWidget(
       {Key? key,
@@ -23,6 +24,7 @@ class TextFormWidget extends FormField<String> {
       this.focusNode,
       this.errorText,
       bool? obscureText = false,
+      this.isReadOnly = false,
       required this.validationMethod,
       String initialValue = "",
       AutovalidateMode autoValidate = AutovalidateMode.disabled})
@@ -36,7 +38,7 @@ class TextFormWidget extends FormField<String> {
                 child: Column(
                   children: [
                     TextFormField(
-
+                      readOnly:isReadOnly,
                       enableSuggestions: true,
                       obscureText: obscureText!,
                       controller: textEditingController,

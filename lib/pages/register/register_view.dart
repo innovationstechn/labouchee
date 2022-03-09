@@ -11,6 +11,8 @@ import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class RegisterView extends StatefulWidget with ValidatorMixin {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -151,9 +153,7 @@ class _RegisterViewState extends State<RegisterView> {
                           height: 1.h,
                         ),
                         if (registerVM.isBusy)
-                          CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor,
-                          )
+                          CustomCircularProgressIndicator()
                         else
                           CustomButton(
                             padding: EdgeInsets.all(2.w),

@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:coupon_uikit/coupon_uikit.dart';
 import 'package:labouchee/pages/coupons/coupons_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../app/locator.dart';
 import '../../models/available_coupon.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 
 class Coupons extends StatefulWidget {
   const Coupons({Key? key}) : super(key: key);
@@ -18,6 +22,9 @@ class Coupons extends StatefulWidget {
 }
 
 class _CouponsState extends State<Coupons> {
+
+  final _snackbarService = locator<SnackbarService>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,7 @@ class _CouponsState extends State<Coupons> {
           builder: (context, couponsVM, _) {
             if (couponsVM.isBusy) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CustomCircularProgressIndicator(),
               );
             }
 
@@ -133,13 +140,19 @@ class _CouponsState extends State<Coupons> {
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              coupon.code ?? '-',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                color: secondaryColor,
-                fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: coupon.code));
+                _snackbarService.showSnackbar(message: "Coupon Copied");
+              },
+              child: Text(
+                coupon.code ?? '-',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                  color: secondaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const Spacer(),

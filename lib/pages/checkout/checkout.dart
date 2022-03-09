@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/checkout/checkout_viewmodel.dart';
-import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
-import '../../models/TelrPaymentModel.dart';
 import '../../services/navigator.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -53,7 +51,7 @@ class _CheckOutState extends State<CheckOut> {
               builder: (context, checkoutVM, _) {
                 if (checkoutVM.isBusy) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CustomCircularProgressIndicator(),
                   );
                 }
                 return Stack(
@@ -74,14 +72,13 @@ class _CheckOutState extends State<CheckOut> {
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(18.0),
                           topRight: Radius.circular(18.0)),
-                      maxHeight: 220,
-                      minHeight: 220,
+                      maxHeight: 190,
+                      minHeight: 190,
                       panelBuilder: (sc) =>
                           _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
-                      onPanelSlide: (double pos) =>
-                          setState(() {
-                            print("Position:" + pos.toString());
-                          }),
+                      onPanelSlide: (double pos) => setState(() {
+                        print("Position:" + pos.toString());
+                      }),
                     )
                   ],
                 );
@@ -97,7 +94,7 @@ class _CheckOutState extends State<CheckOut> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 170,
+          height: 140,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsetsDirectional.all(8.0),
@@ -113,15 +110,15 @@ class _CheckOutState extends State<CheckOut> {
                       decoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius:
-                          BorderRadius.all(Radius.circular(12.0))),
+                              BorderRadius.all(Radius.circular(12.0))),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                if(disableSlidingUI &&
-                    (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0 )
+                if (disableSlidingUI &&
+                    (checkoutVM.details?.cartInfo?.discountAmount ?? -1) <= 0)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -132,16 +129,13 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                       CustomText(
                           text: AppLocalizations.of(context)!.applyCoupon,
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 10.sp,
                           fontWeight: FontWeight.normal,
                           onTap: () {
                             disableSlidingUI = false;
                             checkoutVM.notifyListeners();
-                          }
-                      ),
+                          }),
                     ],
                   ),
                 if (!disableSlidingUI &&
@@ -149,19 +143,18 @@ class _CheckOutState extends State<CheckOut> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          side:
-                          BorderSide(color: Theme
-                              .of(context)
-                              .primaryColor),
-                        ),
-                        child: SizedBox(
-                          width: boxConstraints.maxWidth * 0.72,
-                          height: 40,
+                      Container(
+                        width: boxConstraints.maxWidth * 0.74 - 8,
+                        height: 40,
+                        decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor)),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5),
                             child: TextFormField(
                               controller: couponTextController,
                               maxLines: 1,
@@ -174,7 +167,7 @@ class _CheckOutState extends State<CheckOut> {
                                 hintText: AppLocalizations.of(context)!
                                     .haveCouponCode,
                                 hintStyle: TextStyle(
-                                  // color: Theme.of(context).primaryColor,
+                                    // color: Theme.of(context).primaryColor,
                                     fontSize: 14.sp),
                                 border: InputBorder.none,
                               ),
@@ -185,11 +178,9 @@ class _CheckOutState extends State<CheckOut> {
                       CustomButton(
                         text: AppLocalizations.of(context)!.apply,
                         textColor: Colors.white,
-                        buttonColor: Theme
-                            .of(context)
-                            .primaryColor,
+                        buttonColor: Theme.of(context).primaryColor,
                         textFontSize: 10.sp,
-                        size: Size(boxConstraints.maxWidth * 0.2, 35),
+                        size: Size(boxConstraints.maxWidth * 0.23, 40),
                         onTap: () {
                           checkoutVM.applyCoupon(couponTextController.text);
                         },
@@ -197,7 +188,7 @@ class _CheckOutState extends State<CheckOut> {
                     ],
                   ),
                 const SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,32 +199,17 @@ class _CheckOutState extends State<CheckOut> {
                       // fontWeight:,
                     ),
                     CustomText(
-                      text: " ${checkoutVM.details?.cart?.coupon?.toString() ??
-                          0}" " " + AppLocalizations.of(context)!.currency,
+                      text:
+                          " ${checkoutVM.details?.cart?.coupon?.toString() ?? 0}"
+                                  " " +
+                              AppLocalizations.of(context)!.currency,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.normal,
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     CustomText(
-                //       text: "Shipping Cost:",
-                //       fontSize: 12.sp,
-                //     ),
-                //     CustomText(
-                //       text: "SAR ${info.shipping?.toString() ?? 0}",
-                //       fontSize: 13.sp,
-                //       fontWeight: FontWeight.normal,
-                //     ),
-                //   ],
-                // ),
-                const SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 Expanded(
                   child: Row(
@@ -245,7 +221,8 @@ class _CheckOutState extends State<CheckOut> {
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        text: " ${info.totalPrice?.toString() ?? '?'}" + " " +
+                        text: " ${info.totalPrice?.toString() ?? '?'}" +
+                            " " +
                             AppLocalizations.of(context)!.currency,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.normal,
@@ -279,8 +256,7 @@ class _CheckOutState extends State<CheckOut> {
       children: [
         ...?item.size
             ?.map(
-              (e) =>
-              Padding(
+              (e) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,7 +270,7 @@ class _CheckOutState extends State<CheckOut> {
                           height: constraints.maxWidth * 0.2,
                           child: ClipRRect(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
+                                const BorderRadius.all(Radius.circular(10.0)),
                             child: SizedBox.expand(
                               child: Image.network(
                                 item.image!,
@@ -306,7 +282,8 @@ class _CheckOutState extends State<CheckOut> {
                         Column(
                           children: [
                             CustomText(
-                              text: item.totalAmount.toString() + " " +
+                              text: item.totalAmount.toString() +
+                                  " " +
                                   AppLocalizations.of(context)!.currency,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
@@ -322,19 +299,15 @@ class _CheckOutState extends State<CheckOut> {
                                   Radius.circular(25.0),
                                 ),
                                 border: Border.all(
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor),
+                                    color: Theme.of(context).primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
                                     Icons.add,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     size: 18.sp,
                                   ),
                                   CustomText(
@@ -346,9 +319,7 @@ class _CheckOutState extends State<CheckOut> {
                                   ),
                                   Icon(
                                     Icons.remove,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     size: 18.sp,
                                   ),
                                 ],
@@ -366,15 +337,13 @@ class _CheckOutState extends State<CheckOut> {
                     ),
                     const SizedBox(height: 10),
                     Divider(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Theme.of(context).primaryColor,
                       thickness: 2,
                     ),
                   ],
                 ),
               ),
-        )
+            )
             .toList(),
       ],
     );

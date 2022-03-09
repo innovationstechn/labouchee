@@ -7,6 +7,7 @@ import 'package:labouchee/widgets/my_order_details_widgets/user_detail.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dotted_border/dotted_border.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/my_order_details_widgets/order_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,7 +37,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
             boxConstraints = constraints;
 
             if(detailVM.isBusy) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: CustomCircularProgressIndicator());
             }
 
             return SingleChildScrollView(

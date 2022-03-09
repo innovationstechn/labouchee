@@ -8,6 +8,8 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class OtpView extends StatelessWidget {
   OtpView({Key? key}) : super(key: key);
   final TextEditingController otpController = TextEditingController();
@@ -21,7 +23,7 @@ class OtpView extends StatelessWidget {
         builder: (context, otpVM, _) {
           if (otpVM.isBusy) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CustomCircularProgressIndicator(),
             );
           }
 

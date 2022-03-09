@@ -14,6 +14,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../models/product_review.dart';
 import '../../product_card.dart';
 import '../../services/navigator.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/reviews_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -57,8 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           body: LayoutBuilder(builder: (context, constraints) {
             if (productDetailsVM.isBusy) {
               return Center(
-                child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor),
+                child: CustomCircularProgressIndicator(),
               );
             }
             return Stack(

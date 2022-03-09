@@ -17,6 +17,8 @@ import 'package:intl/intl.dart';
 import '../../models/place_order_error.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class PlaceOrder extends StatefulWidget with ValidatorMixin {
   const PlaceOrder({Key? key}) : super(key: key);
 
@@ -35,11 +37,12 @@ class _PlaceOrderState extends State<PlaceOrder> {
   int selectedBranch = 0;
   ShippingLocationModel? selectedCity;
 
-  final TextEditingController email = TextEditingController(),
-      name = TextEditingController(),
-      address = TextEditingController(),
-      firstPhoneNumber = TextEditingController(),
-      secondPhoneNumber = TextEditingController(),
+  bool dataIsInitialized = false;
+
+  late TextEditingController email,
+      name,
+      address,
+      firstPhoneNumber,
       notes = TextEditingController();
 
   PlaceOrderErrorModel placeOrderValidationErrorModel = PlaceOrderErrorModel(
@@ -76,13 +79,23 @@ class _PlaceOrderState extends State<PlaceOrder> {
               placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
         }
 
+        if (!dataIsInitialized && placeOrderVM.user!=null) {
+          email = TextEditingController(text: placeOrderVM.user?.email);
+          name = TextEditingController(text: placeOrderVM.user?.name);
+          address = TextEditingController(
+              text: placeOrderVM.user?.address?.elementAt(0));
+          firstPhoneNumber =
+              TextEditingController(text: placeOrderVM.user?.contactNo);
+          dataIsInitialized = true;
+        }
+
         return Form(
           key: _placeOrderFormKey,
           child: Scaffold(
             backgroundColor: Colors.white,
             body: Center(
                 child: placeOrderVM.isBusy
-                    ? const CircularProgressIndicator()
+                    ? const CustomCircularProgressIndicator()
                     : CustomScrollView(slivers: [
                         SliverAppBar(
                           leading: const BackButton(color: Colors.black),
@@ -245,7 +258,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                           height: 1.5),
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration.collapsed(
-                                        hintText:  AppLocalizations.of(context)!.note,
+                                        hintText:
+                                            AppLocalizations.of(context)!.note,
                                         hintStyle: TextStyle(
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -259,7 +273,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                   padding: EdgeInsets.all(2.w),
                                   buttonColor: Theme.of(context).primaryColor,
                                   textColor: Colors.white,
-                                  text:AppLocalizations.of(context)!.proceed,
+                                  text: AppLocalizations.of(context)!.proceed,
                                   size: const Size(double.infinity, 50),
                                   textFontSize: 12.sp,
                                   onTap: () =>
@@ -372,7 +386,31 @@ class _PlaceOrderState extends State<PlaceOrder> {
         initialDate: now,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime.now(),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+        builder: (BuildContext context, Widget ?child) {
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.grey,
+              splashColor: Colors.black,
+              textTheme: TextTheme(
+                subtitle1: TextStyle(color: Colors.white),
+                button: TextStyle(color: Colors.white),
+              ),
+              accentColor: Colors.black,
+              colorScheme: ColorScheme.light(
+                  primary: Theme.of(context).primaryColor,
+                  onSecondary: Colors.black,
+                  onPrimary: Colors.white,
+                  surface: Colors.black,
+                  onSurface: Colors.black,
+                  secondary: Colors.black),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child ??Text(""),
+          );
+        }
+
+    );
     if (picked != null) {
       selectedDate = DateFormat('yyyy-MM-dd').format(picked);
       placeOrderVM.notifyListeners();

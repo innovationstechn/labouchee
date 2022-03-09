@@ -31,7 +31,7 @@ mixin ValidatorMixin{
       return null;
     } else {
       if(contactNo.isEmpty){
-        return "CONTACT NUMBER SHOULD NOT BE EMPTY";
+        return "CONTACT NUMBER EMPTY";
       }
 
     }

@@ -5,6 +5,7 @@ import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
 import 'package:labouchee/pages/my_orders/my_orders.dart';
 import 'package:labouchee/pages/starting/starting_viewmodel.dart';
+import 'package:labouchee/widgets/custom_circular_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -155,8 +156,8 @@ class _StartingState extends State<Starting> {
         child: ListTileTheme(
           textColor: Colors.white,
           iconColor: Colors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
+          child: ListView(
+            // mainAxisSize: MainAxisSize.max,
             children: [
               ViewModelBuilder<StartingStreamVM>.reactive(
                 viewModelBuilder: () => StartingStreamVM(),
@@ -164,7 +165,7 @@ class _StartingState extends State<Starting> {
                 builder: (context, startingVM, _) {
                   if (startingVM.isBusy) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CustomCircularProgressIndicator(),
                     );
                   }
 
@@ -274,18 +275,6 @@ class _StartingState extends State<Starting> {
                 }
               ),
               const Spacer(),
-              DefaultTextStyle(
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white54,
-                ),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 16.0,
-                  ),
-                  child: CustomText(text:AppLocalizations.of(context)?.termsOfService),
-                ),
-              ),
             ],
           ),
         ),

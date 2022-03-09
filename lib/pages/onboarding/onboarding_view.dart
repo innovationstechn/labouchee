@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:labouchee/pages/onboarding/onboarding_viewmodel.dart';
+import 'package:labouchee/widgets/custom_circular_progress_indicator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,9 +19,7 @@ class OnboardingView extends StatelessWidget {
           builder: (context, onboardingVM, _) {
             if (onboardingVM.isBusy) {
               return Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
+                child: CustomCircularProgressIndicator(),
               );
             }
 

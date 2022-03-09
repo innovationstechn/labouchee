@@ -16,6 +16,8 @@ import '../../models/product.dart';
 import 'package:labouchee/pages/landing/landing_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class LandingView extends StatelessWidget {
   final NavigatorService _navigationService = locator();
 
@@ -32,8 +34,7 @@ class LandingView extends StatelessWidget {
           builder: (context, landingVM, _) {
             if (landingVM.isBusy) {
               return Center(
-                child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor),
+                child: CustomCircularProgressIndicator(),
               );
             } else if (landingVM.hasError) {
               return Center(

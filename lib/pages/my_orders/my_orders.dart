@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/my_order.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/custom_text.dart';
 
 class MyOrders extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MyOrdersState extends State<MyOrders> {
           builder: (context, ordersVM, _) {
 
             if(ordersVM.isBusy) {
-              return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
+              return Center(child: CustomCircularProgressIndicator(),);
             }
             return ListView.builder(
                 itemCount: ordersVM.orders.length,

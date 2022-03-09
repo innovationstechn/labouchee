@@ -9,6 +9,8 @@ import 'package:stacked/stacked.dart';
 import '../../models/product.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key}) : super(key: key);
 
@@ -43,9 +45,7 @@ class _SearchBarState extends State<SearchBar> {
               if (searchVM.isBusy)
                 SliverFillRemaining(
                   child: Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    child: CustomCircularProgressIndicator(),
                   ),
                 )
               else

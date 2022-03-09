@@ -8,6 +8,8 @@ import 'package:stacked/stacked.dart';
 import '../../landing_products_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class CategoryProductListing extends StatefulWidget {
   final CategoryModel category;
 
@@ -33,7 +35,7 @@ class _CategoryProductListingState extends State<CategoryProductListing> {
         builder: (context, categoryVM, _) {
           if (categoryVM.isBusy) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CustomCircularProgressIndicator(),
             );
           }
           return Padding(

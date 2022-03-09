@@ -18,6 +18,7 @@ import 'package:stacked/stacked.dart';
 import '../../widgets/address_field.dart';
 import '../../widgets/contact_number_field.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/custom_circular_progress_indicator.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -37,6 +38,13 @@ class _ProfileState extends State<Profile> {
       phoneNumber = TextEditingController(text: "Phone Number"),
       postalCode = TextEditingController(text: "Postal Code");
 
+  UpdateProfileErrorModel updateProfileErrorModel = UpdateProfileErrorModel(
+    name: null,
+    avatar: null,
+    contact: null,
+    address: null,
+  );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,42 +52,46 @@ class _ProfileState extends State<Profile> {
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)?.profile,
       ),
-      body: SingleChildScrollView(
-        child: ViewModelBuilder<ProfileStreamVM>.reactive(
-            viewModelBuilder: () => ProfileStreamVM(),
-            onModelReady: (model) async {
-              await model.refresh();
-            },
-            builder: (context, profileVM, _) {
-              if (profileVM.isBusy) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+      body: ViewModelBuilder<ProfileStreamVM>.reactive(
+          viewModelBuilder: () => ProfileStreamVM(),
+          onModelReady: (model) async {
+            await model.refresh();
+          },
+          builder: (context, profileVM, _) {
+            if (profileVM.isBusy) {
+              return Center(
+                child: CustomCircularProgressIndicator(),
+              );
+            }
+
+            if (profileVM.hasError) {
+              if (profileVM.error((profileVM))
+                  is ErrorModelException<UpdateProfileErrorModel>) {
+                // Set field errors error here.
+                updateProfileErrorModel =
+                    profileVM.error(profileVM) as UpdateProfileErrorModel;
+
+                // -- Placeholder --
+                return Center(
+                  child: Text(profileVM.error(profileVM).message),
+                );
+                // -- Placeholder --
+              } else {
+                return Center(
+                  child: Text(profileVM.error(profileVM).toString()),
                 );
               }
+            }
 
-              if(profileVM.hasError) {
-                if(profileVM.error((profileVM)) is ErrorModelException<UpdateProfileErrorModel>) {
-                  // Set field errors error here.
+            email.text = profileVM.data?.email ?? "";
+            name.text = profileVM.data?.name ?? "";
+            address.text = profileVM.data?.address?.first ?? "";
+            phoneNumber.text = profileVM.data?.contactNo ?? "";
+            postalCode.text = profileVM.data?.zipCode ?? "";
 
-                  // -- Placeholder --
-                  return Center(
-                    child: Text(profileVM.error(profileVM).message),
-                  );
-                  // -- Placeholder --
-                } else {
-                  return Center(
-                    child: Text(profileVM.error(profileVM).toString()),
-                  );
-                }
-              }
-
-              email.text = profileVM.data?.email ?? "";
-              name.text = profileVM.data?.name ?? "";
-              address.text = profileVM.data?.address?.first ?? "";
-              phoneNumber.text = profileVM.data?.contactNo ?? "";
-              postalCode.text = profileVM.data?.zipCode ?? "";
-
-              return Column(
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 10,
@@ -137,13 +149,14 @@ class _ProfileState extends State<Profile> {
                     textEditingController: name,
                     labelText: AppLocalizations.of(context)!.name,
                     focusNode: FocusNode(),
-                    // errorText: registerValidationErrorModel.name != null
-                    //     ? registerValidationErrorModel.name!.first
-                    //     : null,
+                    errorText: updateProfileErrorModel.name != null
+                        ? updateProfileErrorModel.name!.first
+                        : null,
                     validationMethod: (text) => widget.nameValidator(text),
                   ),
                   TextFormWidget(
                     context: context,
+                    isReadOnly: true,
                     textEditingController: email,
                     labelText: AppLocalizations.of(context)!.email,
                     focusNode: FocusNode(),
@@ -155,24 +168,23 @@ class _ProfileState extends State<Profile> {
                   AddressFormWidget(
                     context: context,
                     textEditingController: address,
-                    labelText: "Address",
+                    labelText: AppLocalizations.of(context)!.address,
                     focusNode: FocusNode(),
-                    // errorText:
-                    // registerValidationErrorModel.address1 != null
-                    //     ? registerValidationErrorModel.address1!.first
-                    //     : null,
+                    errorText: updateProfileErrorModel.address != null
+                        ? updateProfileErrorModel.address!.first
+                        : null,
                     validationMethod: (text) => widget.addressValidator(text),
                   ),
                   ContactFormWidget(
                     context: context,
                     textEditingController: phoneNumber,
                     labelText: AppLocalizations.of(context)!.contactNo,
-                    bottomText: AppLocalizations.of(context)?.contactNumberLikeThat,
+                    bottomText:
+                        AppLocalizations.of(context)?.contactNumberLikeThat,
                     initialValue: "0966",
-                    // errorText: registerValidationErrorModel.contactNo !=
-                    //     null
-                    //     ? registerValidationErrorModel.contactNo!.first
-                    //     : null,
+                    errorText: updateProfileErrorModel.contact != null
+                        ? updateProfileErrorModel.contact!.first
+                        : null,
                     focusNode: FocusNode(),
                     validationMethod: (text) => widget.contactNoValidator(text),
                   ),
@@ -200,9 +212,9 @@ class _ProfileState extends State<Profile> {
                     height: 1.5.h,
                   ),
                 ],
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     ));
   }
 
@@ -211,7 +223,9 @@ class _ProfileState extends State<Profile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: CustomText(text: AppLocalizations.of(context)?.selectOption,),
+            title: CustomText(
+              text: AppLocalizations.of(context)?.selectOption,
+            ),
             content: Container(
               height: 150,
               width: 200,
@@ -219,7 +233,8 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.camera_alt_outlined),
-                    title: CustomText(text:AppLocalizations.of(context)?.camera),
+                    title:
+                        CustomText(text: AppLocalizations.of(context)?.camera),
                     onTap: () async {
                       await _getFromCamera();
                       Navigator.pop(context);
@@ -228,7 +243,8 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.broken_image_outlined),
-                    title: CustomText(text:AppLocalizations.of(context)?.storage),
+                    title:
+                        CustomText(text: AppLocalizations.of(context)?.storage),
                     onTap: () async {
                       await _getFromStorage();
                       Navigator.pop(context);
