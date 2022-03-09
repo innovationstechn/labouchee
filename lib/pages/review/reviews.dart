@@ -51,7 +51,7 @@ class _ReviewsState extends State<Reviews> {
                           comment: widget.reviewsModel[index].review,
                           rating: 5,
                           onPressed: () => print("More Action $index"),
-                          onTap: () => setState(() {}),
+                          onTap: (){},
                           isLess: false,
                         ),
                         const Divider(

@@ -418,9 +418,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               comment: review.review!,
               rating: 4,
               onPressed: () => print("More Action $index"),
-              onTap: () => setState(() {
-                // isMore = !isMore;
-              }),
+              onTap: () {},
               isLess: false,
             );
           },

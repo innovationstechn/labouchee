@@ -76,9 +76,7 @@ class _CheckOutState extends State<CheckOut> {
                       minHeight: 190,
                       panelBuilder: (sc) =>
                           _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
-                      onPanelSlide: (double pos) => setState(() {
-                        print("Position:" + pos.toString());
-                      }),
+                      onPanelSlide: (double pos){},
                     )
                   ],
                 );
