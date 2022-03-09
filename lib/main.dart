@@ -41,11 +41,11 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final PageRouteInfo initialRoute;
   final NavigatorService _navigatorService = locator<NavigatorService>();
+
   MyApp({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Sizer(
       builder: (context, orientation, deviceType) {
         return ViewModelBuilder<LanguageVM>.reactive(
@@ -60,12 +60,16 @@ class MyApp extends StatelessWidget {
               ],
               locale: languageVM.locale,
               supportedLocales: L10n.all,
-              routerDelegate: _navigatorService.router.delegate(initialRoutes: [initialRoute]),
-
-              theme:
-                  ThemeData(primaryColor: const Color.fromRGBO(80, 32, 10, 1)),
+              routerDelegate: _navigatorService.router
+                  .delegate(initialRoutes: [initialRoute]),
+              theme: ThemeData(
+                  primaryColor: const Color.fromRGBO(80, 32, 10, 1),
+                  fontFamily: languageVM.locale.languageCode == "en"
+                      ? "ExoRegular"
+                      : 'DaxMedium'),
               title: 'Flutter Demo',
-              routeInformationParser: _navigatorService.router.defaultRouteParser(),
+              routeInformationParser:
+                  _navigatorService.router.defaultRouteParser(),
             );
           },
         );
