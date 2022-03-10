@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/local_storage/local_storage.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../app/routes.gr.dart';
 

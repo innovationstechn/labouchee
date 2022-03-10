@@ -41,6 +41,7 @@ import 'package:labouchee/services/language_service.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/local_storage/local_storage.dart';
 
+import '../../constants/strings.dart';
 import '../../models/reset_password_model.dart';
 
 class LaboucheeAPI implements API {
@@ -89,22 +90,21 @@ class LaboucheeAPI implements API {
         if (e.response!.statusCode == 401) {
           throw UnauthorisedException(
             e.response!.data['message'] ??
-                "There was a problem while logging in.",
+                Strings.cantLogin,
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -130,18 +130,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "Oops! We could not serve your request.",
+          Strings.cantServeRequest,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -164,18 +163,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "Oops! We could not serve your request.",
+          Strings.cantServeRequest,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -197,18 +195,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -227,18 +224,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -251,17 +247,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null && e.response!.statusCode != 200) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -274,17 +269,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -303,17 +297,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -332,17 +325,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -358,21 +350,21 @@ class LaboucheeAPI implements API {
       if (e.response != null) {
         if (e.response?.statusCode == 404) {
           throw RequestFailureException(
-              'Sorry, we could not get that product. Please contact administrator.');
+            Strings.cantGetProduct,
+          );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -390,17 +382,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -415,17 +406,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -440,17 +430,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -466,17 +455,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -494,17 +482,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -526,18 +513,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -555,17 +541,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -583,17 +568,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -611,17 +595,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -637,17 +620,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -667,17 +649,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -694,17 +675,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -720,17 +700,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -746,17 +725,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -774,17 +752,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -814,18 +791,17 @@ class LaboucheeAPI implements API {
           );
         } else {
           throw RequestFailureException(
-            e.response!.data['message'] ??
-                "Oops! We could not serve your request.",
+            e.response!.data['message'] ?? Strings.cantServeRequest,
           );
         }
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 
@@ -840,17 +816,16 @@ class LaboucheeAPI implements API {
     } on DioError catch (e) {
       if (e.response != null) {
         throw RequestFailureException(
-          e.response!.data['message'] ??
-              "Oops! We could not serve your request.",
+          e.response!.data['message'] ?? Strings.cantServeRequest,
         );
       } else {
         throw RequestFailureException(
-          "No internet detected. Please check your internet connection and try again.",
+          Strings.noInternet,
         );
       }
     } catch (e) {
       log(e.toString());
-      throw 'Sorry, we encountered an unknown error';
+      throw Strings.unknownError;
     }
   }
 }

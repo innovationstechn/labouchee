@@ -161,6 +161,12 @@
   "cityNotSelected": "cityNotSelected",
   "change": "change",
   "createAccount": "createAccount",
-  "selectTime": "Select Time"
+  "selectTime": "Select Time",
+  "unknownError": "unknownError",
+  "noInternet": "noInternet",
+  "cantServeRequest": "cantServeRequest",
+  "cantLogin": "cantLogin",
+  "cantGetProduct": "cantGetProduct",
+  "paymentProcessError": "paymentProcessError"
 }
 

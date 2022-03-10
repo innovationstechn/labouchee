@@ -6,6 +6,7 @@ import 'package:labouchee/services/api/labouchee_api.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../constants/strings.dart';
 import '../../services/local_storage/hive_local_storage.dart';
 import '../../services/navigator.dart';
 
@@ -24,7 +25,7 @@ class LoginVM extends BaseViewModel {
 
         await _localStorage.token(token: token);
 
-        _navigationService.router.navigate(StartingScreenRoute());
+        _navigationService.router.replaceAll([StartingScreenRoute()]);
       } on RequestFailureException catch (e) {
         _snackbarService.showSnackbar(
           message: e.toString(),
@@ -35,7 +36,7 @@ class LoginVM extends BaseViewModel {
         );
       } catch (e) {
         _snackbarService.showSnackbar(
-            message: 'Sorry, we encountered an unknown error');
+            message: Strings.unknownError);
       }
     }
 

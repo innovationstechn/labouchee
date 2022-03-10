@@ -654,7 +654,13 @@
   "selectTime": "Select Time",
   "@selectTime": {
     "description": "The current language"
-  }
+  },
+  "unknownError": "Sorry, we encountered an unknown error",
+  "noInternet": "No internet detected. Please check your internet connection and try again.",
+  "cantServeRequest": "Oops! We could not serve your request.",
+  "cantLogin": "There was a problem while logging in.",
+  "cantGetProduct": "Sorry, we could not get that product. Please contact the administrator.",
+  "paymentProcessError": "The payment process could not be completed."
 }
 
 

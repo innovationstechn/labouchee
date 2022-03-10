@@ -94,9 +94,9 @@ class _StartingState extends State<Starting> {
             ),
             Container(
                 child: IconButton(
-                  icon:Icon(Icons.shopping_cart),
+                  icon: Icon(Icons.shopping_cart),
                   color: primaryColor,
-                  onPressed: (){
+                  onPressed: () {
                     _pageController.jumpToPage(2);
                     _advancedDrawerController.hideDrawer();
                   },
@@ -131,22 +131,27 @@ class _StartingState extends State<Starting> {
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: CustomText(text:AppLocalizations.of(context)?.home,),
+                  title: CustomText(
+                    text: AppLocalizations.of(context)?.home,
+                  ),
                   icon: const Icon(Icons.home)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: CustomText(text:AppLocalizations.of(context)?.search),
+                  title: CustomText(text: AppLocalizations.of(context)?.search),
                   icon: const Icon(Icons.search)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: CustomText(text:AppLocalizations.of(context)?.cart,),
+                  title: CustomText(
+                    text: AppLocalizations.of(context)?.cart,
+                  ),
                   icon: const Icon(Icons.shopping_cart)),
               BottomNavyBarItem(
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey,
-                  title: CustomText(text:AppLocalizations.of(context)?.notifications),
+                  title: CustomText(
+                      text: AppLocalizations.of(context)?.notifications),
                   icon: const Icon(Icons.notifications)),
             ],
           ),
@@ -188,19 +193,22 @@ class _StartingState extends State<Starting> {
                           color: Colors.black26,
                           shape: BoxShape.circle,
                         ),
-                        child: Image.network(startingVM.data!.avatar!,fit: BoxFit.fill,),
+                        child: Image.network(
+                          startingVM.data!.avatar!,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       CustomText(
                         text: startingVM.data!.name,
-                        color:Colors.white,
-                        fontSize:12.sp,
-                        fontWeight:FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
                         padding: EdgeInsets.only(bottom: 10),
                       ),
                       CustomText(
                         text: startingVM.data!.email,
-                        color:Colors.white,
-                        fontSize:12.sp,
+                        color: Colors.white,
+                        fontSize: 12.sp,
                         padding: EdgeInsets.only(bottom: 10),
                       ),
                     ],
@@ -211,7 +219,10 @@ class _StartingState extends State<Starting> {
                 onTap: () => navigationService.router
                     .navigate(const ProfileScreenRoute()),
                 leading: const Icon(Icons.account_circle_rounded),
-                title: CustomText(text:AppLocalizations.of(context)?.profile,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.profile,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -219,20 +230,29 @@ class _StartingState extends State<Starting> {
                   _advancedDrawerController.hideDrawer();
                 },
                 leading: const Icon(Icons.shopping_cart),
-                title: CustomText(text:AppLocalizations.of(context)?.cart,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.cart,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
                   navigationService.router.navigateNamed('/my-orders');
                 },
                 leading: const Icon(Icons.receipt_long_outlined),
-                title: CustomText(text:AppLocalizations.of(context)?.myOrders,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.myOrders,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () =>
                     navigationService.router.navigate(BranchesScreenRoute()),
                 leading: const Icon(Icons.description),
-                title: CustomText(text:AppLocalizations.of(context)?.branches,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.branches,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -240,7 +260,10 @@ class _StartingState extends State<Starting> {
                       .navigate(CustomerSupportScreenRoute());
                 },
                 leading: const Icon(Icons.message),
-                title: CustomText(text:AppLocalizations.of(context)?.inquiryForm,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.inquiryForm,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -248,7 +271,10 @@ class _StartingState extends State<Starting> {
                       .navigate(CouponsSupportScreenRoute());
                 },
                 leading: const Icon(Icons.card_giftcard),
-                title: CustomText(text:AppLocalizations.of(context)?.coupons,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.coupons,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -259,22 +285,26 @@ class _StartingState extends State<Starting> {
                   );
                 },
                 leading: const Icon(Icons.language),
-                title: CustomText(text:AppLocalizations.of(context)?.languages,color: Colors.white,),
+                title: CustomText(
+                  text: AppLocalizations.of(context)?.languages,
+                  color: Colors.white,
+                ),
               ),
               ViewModelBuilder<StartingStreamVM>.reactive(
-                viewModelBuilder: () => StartingStreamVM(),
-                onModelReady: (model) => model.refresh(),
-                builder: (context, startingVM, _) {
-                  return               ListTile(
-                    onTap: () {
-                      startingVM.logout();
-                    },
-                    leading: const Icon(Icons.logout),
-                    title: CustomText(text:AppLocalizations.of(context)?.logout,color: Colors.white,),
-                  );
-                }
-              ),
-              const Spacer(),
+                  viewModelBuilder: () => StartingStreamVM(),
+                  onModelReady: (model) => model.refresh(),
+                  builder: (context, startingVM, _) {
+                    return ListTile(
+                      onTap: () {
+                        startingVM.logout();
+                      },
+                      leading: const Icon(Icons.logout),
+                      title: CustomText(
+                        text: AppLocalizations.of(context)?.logout,
+                        color: Colors.white,
+                      ),
+                    );
+                  }),
             ],
           ),
         ),

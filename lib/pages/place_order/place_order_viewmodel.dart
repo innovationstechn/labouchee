@@ -16,6 +16,7 @@ import 'package:sdk/components/network_helper.dart';
 import 'package:sdk/screens/webview_screen.dart';
 
 import '../../app/locator.dart';
+import '../../constants/strings.dart';
 import '../../models/TelrPaymentModel.dart';
 import '../../models/place_order.dart';
 import '../../models/place_order_error.dart';
@@ -92,21 +93,15 @@ class PlaceOrderVM extends BaseViewModel {
     switch (paymentMethod) {
       case PaymentMethod.digital:
         {
-          final paymentSuccessful = await payUsingDigital(order);
-
-          if (!paymentSuccessful) {
-            _snackbarService.showSnackbar(
-              message:
-                  'Could not place order. Please contact customer support.',
-            );
-            return;
-          }
-
-          break;
+          await payUsingDigital(order);
         }
+        break;
       case PaymentMethod.cashOnDelivery:
       case PaymentMethod.pickup:
       case PaymentMethod.mada:
+        {
+          onPayment(order);
+        }
     }
   }
 
@@ -128,7 +123,7 @@ class PlaceOrderVM extends BaseViewModel {
     }
   }
 
-  Future<bool> payUsingDigital(PlaceOrderModel order) async {
+  Future<void> payUsingDigital(PlaceOrderModel order) async {
     String platform = '';
     String? deviceId = await uniqueDeviceIdentifier();
     String? locale = await _localStorage.locale();
@@ -163,8 +158,6 @@ class PlaceOrderVM extends BaseViewModel {
       ),
       order,
     );
-
-    return await Future.delayed(Duration.zero, () => true);
   }
 
   void displayMessage(String message) {
@@ -191,7 +184,7 @@ class PlaceOrderVM extends BaseViewModel {
         });
       });
 
-// app
+      // app
       builder.element('app', nest: () {
         builder.element('name', nest: () {
           builder.text('Telr');
@@ -207,7 +200,7 @@ class PlaceOrderVM extends BaseViewModel {
         });
       });
 
-//tran
+      //tran
       builder.element('tran', nest: () {
         builder.element('test', nest: () {
           builder.text('1');
@@ -241,9 +234,9 @@ class PlaceOrderVM extends BaseViewModel {
         });
       });
 
-//billing
+      //billing
       builder.element('billing', nest: () {
-// name
+        // name
         builder.element('name', nest: () {
           builder.element('title', nest: () {
             builder.text('');
@@ -255,12 +248,12 @@ class PlaceOrderVM extends BaseViewModel {
             builder.text('.');
           });
         });
-//custref savedcard
+        //custref savedcard
         builder.element('custref', nest: () {
           builder.text('231');
         });
 
-// address
+        // address
         builder.element('address', nest: () {
           builder.element('line1', nest: () {
             builder.text(telrPaymentModel.address);
@@ -285,7 +278,6 @@ class PlaceOrderVM extends BaseViewModel {
       });
     });
 
-
     final bookshelfXml = builder.buildDocument();
     pay(bookshelfXml, order);
   }
@@ -295,8 +287,8 @@ class PlaceOrderVM extends BaseViewModel {
     var response = await _networkHelper.pay(xml);
     print(response);
     if (response == 'failed' || response == null) {
-// failed
-//       alertShow('Failed');
+    // failed
+    //       alertShow('Failed');
     } else {
       var _url;
       final doc = XmlDocument.parse(response);
@@ -327,13 +319,18 @@ class PlaceOrderVM extends BaseViewModel {
   void _launchURL(String url, String code, PlaceOrderModel order) async {
     _navigationService.router.pushWidget(
       WebViewScreen(
-          url: url,
-          code: code,
-          onResponse: (bool success, String xml) {
-            if (success) {
-              onPayment(order..telr = xml);
-            }
-          }),
+        url: url,
+        code: code,
+        onResponse: (bool success, String xml) {
+          if (success) {
+            onPayment(order..telr = xml);
+          } else {
+            _snackbarService.showSnackbar(
+              message: Strings.paymentProcessError,
+            );
+          }
+        },
+      ),
     );
   }
 }
