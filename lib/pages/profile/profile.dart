@@ -49,6 +49,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)?.profile,
       ),

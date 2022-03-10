@@ -656,11 +656,65 @@
     "description": "The current language"
   },
   "unknownError": "Sorry, we encountered an unknown error",
+  "@unknownError": {
+    "description": "The current language"
+  },
   "noInternet": "No internet detected. Please check your internet connection and try again.",
+  "@noInternet": {
+    "description": "The current language"
+  },
   "cantServeRequest": "Oops! We could not serve your request.",
+  "@cantServeRequest": {
+    "description": "The current language"
+  },
   "cantLogin": "There was a problem while logging in.",
+  "@cantLogin": {
+    "description": "The current language"
+  },
   "cantGetProduct": "Sorry, we could not get that product. Please contact the administrator.",
-  "paymentProcessError": "The payment process could not be completed."
+  "@cantGetProduct": {
+    "description": "The current language"
+  },
+  "paymentProcessError": "The payment process could not be completed.",
+  "@paymentProcessError": {
+    "description": "The current language"
+  },
+  "emailEmpty": "EMAIL SHOULD NOT BE EMPTY",
+  "@emailEmpty": {
+    "description": "The current language"
+  },
+  "invalidEmail": "INVALID EMAIL",
+  "@invalidEmail": {
+    "description": "The current language"
+  },
+  "passwordEmpty": "PASSWORD SHOULD NOT BE EMPTY",
+  "@passwordEmpty": {
+    "description": "The current language"
+  },
+  "invalidPassword": "INVALID PASSWORD",
+  "@invalidPassword": {
+    "description": "The current language"
+  },
+  "contactEmpty": "CONTACT NUMBER EMPTY",
+  "@contactEmpty": {
+    "description": "The current language"
+  },
+  "addressEmpty": "ADDRESS SHOULD NOT BE EMPTY",
+  "@addressEmpty": {
+    "description": "The current language"
+  },
+  "nameEmpty": "NAME SHOULD NOT BE EMPTY",
+  "@nameEmpty": {
+    "description": "The current language"
+  },
+  "bookingDate": "Booking Date",
+  "@bookingDate": {
+    "description": "The current language"
+  },
+  "bookingTime": "Booking Time",
+  "@bookingTime": {
+    "description": "The current language"
+  }
 }
 
 

@@ -1,14 +1,16 @@
 import 'package:email_validator/email_validator.dart';
 
+import '../constants/strings.dart';
+
 mixin ValidatorMixin{
   String? emailValidator(String? email){
     if(EmailValidator.validate(email!)) {
       return null;
     } else {
       if(email.isEmpty) {
-        return "EMAIL SHOULD NOT BE EMPTY";
+        return Strings.emailEmpty;
       }else{
-        return "INVALID EMAIL";
+        return Strings.invalidEmail;
       }
     }
   }
@@ -18,9 +20,9 @@ mixin ValidatorMixin{
       return null;
     } else {
       if(password.isEmpty){
-        return "PASSWORD SHOULD NOT BE EMPTY";
+        return Strings.passwordEmpty;
       }else{
-        return "INVALID PASSWORD";
+        return Strings.invalidPassword;
       }
 
     }
@@ -31,7 +33,7 @@ mixin ValidatorMixin{
       return null;
     } else {
       if(contactNo.isEmpty){
-        return "CONTACT NUMBER EMPTY";
+        return Strings.contactEmpty;
       }
 
     }
@@ -49,7 +51,7 @@ mixin ValidatorMixin{
     if(address!.isNotEmpty) {
       return null;
     } else {
-      return "ADDRESS SHOULD NOT BE EMPTY";
+      return Strings.addressEmpty;
     }
   }
 
@@ -57,7 +59,7 @@ mixin ValidatorMixin{
     if(name!.isNotEmpty) {
       return null;
     } else {
-      return "NAME SHOULD NOT BE EMPTY";
+      return Strings.nameEmpty;
     }
 
   }

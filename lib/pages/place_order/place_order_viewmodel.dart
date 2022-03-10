@@ -212,7 +212,7 @@ class PlaceOrderVM extends BaseViewModel {
           builder.text('paypage');
         });
         builder.element('cartid', nest: () {
-          builder.text(100000000 + 1323);
+          builder.text(Random().nextInt(100000));
         });
         builder.element('description', nest: () {
           builder.text(telrPaymentModel.description);
@@ -242,10 +242,10 @@ class PlaceOrderVM extends BaseViewModel {
             builder.text('');
           });
           builder.element('first', nest: () {
-            builder.text(telrPaymentModel.userName);
+            builder.text('');
           });
           builder.element('last', nest: () {
-            builder.text('.');
+            builder.text(telrPaymentModel.userName);
           });
         });
         //custref savedcard

@@ -18,6 +18,7 @@ import '../cart/cart.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import '../notifications/notifications.dart';
 import '../searchbar/searchbar.dart';
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Starting extends StatefulWidget {
@@ -48,6 +49,7 @@ class _StartingState extends State<Starting> {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final navigationService = locator<NavigatorService>();
+    final snackBarService = locator<SnackbarService>();
 
     return AdvancedDrawer(
       backdropColor: Colors.blueGrey,
@@ -107,19 +109,23 @@ class _StartingState extends State<Starting> {
           backgroundColor: Colors.white,
         ),
         body: Scaffold(
-          body: SizedBox.expand(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() => _currentIndex = index);
-              },
-              children: <Widget>[
-                LandingView(),
-                SearchBar(),
-                Cart(),
-                Notifications()
-              ],
-            ),
+          backgroundColor: Colors.white,
+          body: DoubleBack(
+              message:"Press back again to close",
+              child: SizedBox.expand(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() => _currentIndex = index);
+                  },
+                  children: <Widget>[
+                    LandingView(),
+                    SearchBar(),
+                    Cart(),
+                    Notifications()
+                  ],
+                ),
+              ),
           ),
           bottomNavigationBar: BottomNavyBar(
             selectedIndex: _currentIndex,
@@ -157,6 +163,7 @@ class _StartingState extends State<Starting> {
           ),
         ),
       ),
+
       drawer: SafeArea(
         child: ListTileTheme(
           textColor: Colors.white,

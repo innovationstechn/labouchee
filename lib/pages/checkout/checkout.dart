@@ -57,7 +57,7 @@ class _CheckOutState extends State<CheckOut> {
                 return Stack(
                   children: [
                     SizedBox(
-                      height: constraints.maxHeight - 320,
+                      height: constraints.maxHeight - 230,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
@@ -72,8 +72,8 @@ class _CheckOutState extends State<CheckOut> {
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(18.0),
                           topRight: Radius.circular(18.0)),
-                      maxHeight: 190,
-                      minHeight: 190,
+                      maxHeight: 200,
+                      minHeight: 200,
                       panelBuilder: (sc) =>
                           _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
                       onPanelSlide: (double pos){},
@@ -92,7 +92,7 @@ class _CheckOutState extends State<CheckOut> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 140,
+          height: 150,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsetsDirectional.all(8.0),
@@ -280,7 +280,7 @@ class _CheckOutState extends State<CheckOut> {
                         Column(
                           children: [
                             CustomText(
-                              text: item.totalAmount.toString() +
+                              text: e.price.toString() +
                                   " " +
                                   AppLocalizations.of(context)!.currency,
                               fontSize: 14.sp,

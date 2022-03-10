@@ -26,6 +26,7 @@ class _LanguageViewState extends State<LanguageView> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: CustomAppBar(title:  AppLocalizations.of(context)!.languages ),
         body: ViewModelBuilder<LanguageVM>.reactive(
           viewModelBuilder: () => LanguageVM(),

@@ -20,6 +20,7 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.myOrders,),
       body: ViewModelBuilder<MyOrdersVM>.reactive(
           viewModelBuilder: () => MyOrdersVM(),

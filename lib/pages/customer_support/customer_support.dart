@@ -22,6 +22,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: CustomAppBar(title: AppLocalizations.of(context)!.inquiryForm),
         body: LayoutBuilder(builder: (context, constraints) {
           return ViewModelBuilder<CustomerSupportVM>.reactive(

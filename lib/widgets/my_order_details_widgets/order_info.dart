@@ -27,7 +27,8 @@ class OrderInfo extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          orderInfoTile(AppLocalizations.of(context)!.orderDate, detailModel.createdAt??""),
+          orderInfoTile(AppLocalizations.of(context)!.bookingDate, detailModel.orderDetails?.bookingDate??""),
+          orderInfoTile(AppLocalizations.of(context)!.bookingTime, detailModel.createdTime??""),
           orderInfoTile(AppLocalizations.of(context)!.paymentMethod, detailModel.paymentMethod!),
           orderInfoTile(AppLocalizations.of(context)!.paymentStatus, detailModel.paymentStatus!),
           // orderInfoTile("Delivery Date", detailModel.),

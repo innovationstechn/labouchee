@@ -140,9 +140,9 @@ class _BookingDateAndTimeState extends State<BookingDateAndTime> {
                           )
                         ],
                       ),
-                      const Text(
-                        "  Change",
-                        style: TextStyle(
+                      Text(
+                        " " + AppLocalizations.of(context)!.change,
+                        style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.0),

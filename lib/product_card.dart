@@ -4,7 +4,7 @@ import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'app/locator.dart';
 import 'app/routes.gr.dart';
 import 'models/product.dart';
@@ -56,7 +56,7 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
+              flex: 2,
               child: FittedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,11 +72,10 @@ class ProductCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 5),
                     ),
                     CustomText(
-                        text: productModel.price.toString(),
+                        text: productModel.price.toString() + " " + AppLocalizations.of(context)!.currency,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
-                        padding: EdgeInsets.symmetric(horizontal: 5)),
-                    // SizedBox(height: 10,),
+                        padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5)),
                   ],
                 ),
               ),
@@ -105,7 +104,6 @@ class ProductCard extends StatelessWidget {
                         ),
                         Icon(
                           Icons.shopping_cart,
-                          size: constraints.maxWidth * 0.15,
                         ),
                       ],
                     );

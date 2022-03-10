@@ -38,7 +38,7 @@ class MyOrderDetailModel {
       cancelledBy,
       cancellationReason,
       deletedAt,
-      createdAt;
+      createdTime;
 
   MyOrderDetailModel({
     this.id,
@@ -64,7 +64,7 @@ class MyOrderDetailModel {
     this.cancelledBy,
     this.cancellationReason,
     this.deletedAt,
-    this.createdAt,
+    this.createdTime,
   });
 
   factory MyOrderDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -75,14 +75,14 @@ class MyOrderDetailModel {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class MyOrderUserInputDetailModel {
-  final String? name, email, orderNote, bookingTime;
+  final String? name, email, orderNote, bookingDate;
   final List<String>? address, phone;
 
   MyOrderUserInputDetailModel({
     this.name,
     this.email,
     this.orderNote,
-    this.bookingTime,
+    this.bookingDate,
     this.address,
     this.phone,
   });

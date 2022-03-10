@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/cart/cart_viewmodel.dart';
+import 'package:labouchee/widgets/custom_circular_progress_indicator.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
@@ -31,7 +32,7 @@ class _CartState extends State<Cart> {
       viewModelBuilder: () => CartVM(),
       onModelReady: (model) => model.sync(),
       builder: (context, cartVM, _) {
-        if (cartVM.isBusy) return Center(child: CircularProgressIndicator());
+        if (cartVM.isBusy) return Center(child: CustomCircularProgressIndicator());
 
         return LayoutBuilder(
           builder: (context, constraints) {
@@ -42,7 +43,7 @@ class _CartState extends State<Cart> {
                   stream: cartVM.cart,
                   builder: (BuildContext context,
                       AsyncSnapshot<CartModel> snapshot) {
-                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    if (!snapshot.hasData) return CustomCircularProgressIndicator();
 
                     if (snapshot.data!.items!.isEmpty) {
                       return Center(

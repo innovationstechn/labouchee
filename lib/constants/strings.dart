@@ -16,4 +16,19 @@ class Strings {
   static String get cantGetProduct => _localizations.cantGetProduct;
 
   static String get paymentProcessError => _localizations.paymentProcessError;
+
+  static String get invalidEmail  => _localizations.invalidEmail;
+
+  static String get passwordEmpty => _localizations.passwordEmpty;
+
+  static String get invalidPassword  => _localizations.invalidPassword;
+
+  static String get contactEmpty => _localizations.contactEmpty;
+
+  static String get addressEmpty  => _localizations.addressEmpty;
+
+  static String get nameEmpty => _localizations.nameEmpty;
+
+  static String get emailEmpty => _localizations.emailEmpty;
+
 }

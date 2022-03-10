@@ -27,6 +27,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.orderDetails,),
       body: ViewModelBuilder<MyOrderDetailVM>.reactive(
         viewModelBuilder: () => MyOrderDetailVM(order: widget.order),
