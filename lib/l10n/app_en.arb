@@ -650,6 +650,10 @@
   "createAccount": "createAccount",
   "@createAccount": {
     "description": "The current language"
+  },
+  "selectTime": "Select Time",
+  "@selectTime": {
+    "description": "The current language"
   }
 }
 

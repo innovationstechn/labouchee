@@ -79,7 +79,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
               placeOrderVM.error(placeOrderVM) as PlaceOrderErrorModel;
         }
 
-        if (!dataIsInitialized && placeOrderVM.user!=null) {
+        if (!dataIsInitialized && placeOrderVM.user != null) {
           email = TextEditingController(text: placeOrderVM.user?.email);
           name = TextEditingController(text: placeOrderVM.user?.name);
           address = TextEditingController(
@@ -94,199 +94,197 @@ class _PlaceOrderState extends State<PlaceOrder> {
           child: Scaffold(
             backgroundColor: Colors.white,
             body: Center(
-                child: placeOrderVM.isBusy
-                    ? const CustomCircularProgressIndicator()
-                    : CustomScrollView(slivers: [
-                        SliverAppBar(
-                          leading: const BackButton(color: Colors.black),
-                          title: CustomText(
-                            text: AppLocalizations.of(context)!.placeOrder,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp,
-                          ),
-                          titleTextStyle: const TextStyle(color: Colors.black),
-                          backgroundColor: Colors.white,
+              child: placeOrderVM.isBusy
+                  ? const CustomCircularProgressIndicator()
+                  : CustomScrollView(slivers: [
+                      SliverAppBar(
+                        leading: const BackButton(color: Colors.black),
+                        title: CustomText(
+                          text: AppLocalizations.of(context)!.placeOrder,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp,
                         ),
-                        SliverList(
-                          delegate: SliverChildListDelegate([
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextFormWidget(
-                                  context: context,
-                                  textEditingController: name,
-                                  labelText: AppLocalizations.of(context)!.name,
-                                  focusNode: FocusNode(),
-                                  validationMethod: (text) =>
-                                      widget.nameValidator(text),
+                        titleTextStyle: const TextStyle(color: Colors.black),
+                        backgroundColor: Colors.white,
+                      ),
+                      SliverList(
+                        delegate: SliverChildListDelegate([
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextFormWidget(
+                                context: context,
+                                textEditingController: name,
+                                labelText: AppLocalizations.of(context)!.name,
+                                focusNode: FocusNode(),
+                                autofocus: false,
+                                validationMethod: (text) =>
+                                    widget.nameValidator(text),
+                              ),
+                              TextFormWidget(
+                                context: context,
+                                textEditingController: email,
+                                labelText: AppLocalizations.of(context)!.email,
+                                autofocus: false,
+                                focusNode: FocusNode(),
+                                errorText:
+                                    placeOrderValidationErrorModel.email != null
+                                        ? placeOrderValidationErrorModel
+                                            .email!.first
+                                        : null,
+                                validationMethod: (text) =>
+                                    widget.emailValidator(text),
+                              ),
+                              cityWidget(placeOrderVM),
+                              AddressFormWidget(
+                                context: context,
+                                textEditingController: address,
+                                labelText:
+                                    AppLocalizations.of(context)!.address,
+                                autofocus: false,
+                                errorText:
+                                    placeOrderValidationErrorModel.address !=
+                                            null
+                                        ? placeOrderValidationErrorModel
+                                            .address!.first
+                                        : null,
+                                focusNode: FocusNode(),
+                                validationMethod: (text) =>
+                                    widget.addressValidator(text),
+                              ),
+                              ContactFormWidget(
+                                context: context,
+                                textEditingController: firstPhoneNumber,
+                                labelText:
+                                    AppLocalizations.of(context)!.contactNo,
+                                bottomText: AppLocalizations.of(context)!
+                                    .contactNumberLikeThat,
+                                initialValue: "0966",
+                                errorText:
+                                    placeOrderValidationErrorModel.phone != null
+                                        ? placeOrderValidationErrorModel
+                                            .phone!.first
+                                        : null,
+                                focusNode: FocusNode(),
+                                autofocus: false,
+                                validationMethod: (text) =>
+                                    widget.contactNoValidator(text),
+                              ),
+                              BookingDateAndTime(
+                                  selectDate: () =>
+                                      _selectDate(context, placeOrderVM),
+                                  selectTime: (time) =>
+                                      _selectBookingTime(time),
+                                  selectedDate: selectedDate,
+                                  selectedTime: selectedTime,
+                                  placeOrderValidationErrorModel:
+                                      placeOrderValidationErrorModel),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Center(
+                                child: CustomText(
+                                  text: AppLocalizations.of(context)!
+                                      .paymentMethod,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                TextFormWidget(
-                                  context: context,
-                                  textEditingController: email,
-                                  labelText:
-                                      AppLocalizations.of(context)!.email,
-                                  focusNode: FocusNode(),
-                                  errorText:
-                                      placeOrderValidationErrorModel.email !=
-                                              null
-                                          ? placeOrderValidationErrorModel
-                                              .email!.first
-                                          : null,
-                                  validationMethod: (text) =>
-                                      widget.emailValidator(text),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 20, top: 20, bottom: 20),
+                                child: RadioGroup<String>.builder(
+                                  groupValue: _verticalGroupValue,
+                                  onChanged: (value) {
+                                    _verticalGroupValue = value!;
+                                    placeOrderVM.notifyListeners();
+                                  },
+                                  items: _status,
+                                  itemBuilder: (item) => RadioButtonBuilder(
+                                    item,
+                                  ),
+                                  activeColor: Theme.of(context).primaryColor,
                                 ),
-                                cityWidget(placeOrderVM),
-                                AddressFormWidget(
-                                  context: context,
-                                  textEditingController: address,
-                                  labelText:
-                                      AppLocalizations.of(context)!.address,
-                                  errorText:
-                                      placeOrderValidationErrorModel.address !=
-                                              null
-                                          ? placeOrderValidationErrorModel
-                                              .address!.first
-                                          : null,
-                                  focusNode: FocusNode(),
-                                  validationMethod: (text) =>
-                                      widget.addressValidator(text),
-                                ),
-                                ContactFormWidget(
-                                  context: context,
-                                  textEditingController: firstPhoneNumber,
-                                  labelText:
-                                      AppLocalizations.of(context)!.contactNo,
-                                  bottomText: AppLocalizations.of(context)!
-                                      .contactNumberLikeThat,
-                                  initialValue: "0966",
-                                  errorText:
-                                      placeOrderValidationErrorModel.phone !=
-                                              null
-                                          ? placeOrderValidationErrorModel
-                                              .phone!.first
-                                          : null,
-                                  focusNode: FocusNode(),
-                                  validationMethod: (text) =>
-                                      widget.contactNoValidator(text),
-                                ),
-                                BookingDateAndTime(
-                                    selectDate: () =>
-                                        _selectDate(context, placeOrderVM),
-                                    selectTime: () => _selectBookingTime(
-                                        context, placeOrderVM),
-                                    selectedDate: selectedDate,
-                                    selectedTime: selectedTime,
-                                    placeOrderValidationErrorModel:
-                                        placeOrderValidationErrorModel),
+                              ),
+                              if (_verticalGroupValue == _status[2])
                                 SizedBox(
-                                  height: 1.h,
-                                ),
-                                Center(
-                                  child: CustomText(
-                                    text: AppLocalizations.of(context)!
-                                        .paymentMethod,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 20, top: 20, bottom: 20),
-                                  child: RadioGroup<String>.builder(
-                                    groupValue: _verticalGroupValue,
-                                    onChanged: (value) {
-                                      _verticalGroupValue = value!;
-                                      placeOrderVM.notifyListeners();
-                                    },
-                                    items: _status,
-                                    itemBuilder: (item) => RadioButtonBuilder(
-                                      item,
-                                    ),
-                                    activeColor: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                if (_verticalGroupValue == _status[2])
-                                  SizedBox(
-                                    height: 100,
-                                    child: Column(
-                                      children: [
-                                        CustomText(
-                                          text: AppLocalizations.of(context)!
-                                              .selectBranch,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          margin:
-                                              const EdgeInsetsDirectional.all(
-                                                  10),
-                                          child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount:
-                                                placeOrderVM.branches.length,
-                                            itemBuilder: (context, index) {
-                                              return branchCard(
-                                                placeOrderVM
-                                                    .branches[index].name!,
-                                                placeOrderVM.branches[index].id,
-                                              );
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                  height: 150,
-                                  width: 90.w,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: TextFormField(
-                                      controller: notes,
-                                      maxLines: 7,
-                                      style: TextStyle(
-                                          fontSize: 14.sp,
-                                          letterSpacing: 1.0,
-                                          height: 1.5),
-                                      keyboardType: TextInputType.multiline,
-                                      decoration: InputDecoration.collapsed(
-                                        hintText:
-                                            AppLocalizations.of(context)!.note,
-                                        hintStyle: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 14.sp),
-                                        border: InputBorder.none,
+                                  height: 100,
+                                  child: Column(
+                                    children: [
+                                      CustomText(
+                                        text: AppLocalizations.of(context)!
+                                            .selectBranch,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
                                       ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        margin:
+                                            const EdgeInsetsDirectional.all(10),
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount:
+                                              placeOrderVM.branches.length,
+                                          itemBuilder: (context, index) {
+                                            return branchCard(
+                                              placeOrderVM
+                                                  .branches[index].name!,
+                                              placeOrderVM.branches[index].id,
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme.of(context).primaryColor)),
+                                height: 150,
+                                width: 90.w,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: TextFormField(
+                                    controller: notes,
+                                    maxLines: 7,
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        letterSpacing: 1.0,
+                                        height: 1.5),
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: InputDecoration.collapsed(
+                                      hintText:
+                                          AppLocalizations.of(context)!.note,
+                                      hintStyle: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 14.sp),
+                                      border: InputBorder.none,
                                     ),
                                   ),
                                 ),
-                                CustomButton(
-                                  padding: EdgeInsets.all(2.w),
-                                  buttonColor: Theme.of(context).primaryColor,
-                                  textColor: Colors.white,
-                                  text: AppLocalizations.of(context)!.proceed,
-                                  size: const Size(double.infinity, 50),
-                                  textFontSize: 12.sp,
-                                  onTap: () =>
-                                      onPlaceOrderPressed(placeOrderVM),
-                                ),
-                                SizedBox(
-                                  height: 1.5.h,
-                                ),
-                              ],
-                            )
-                          ]),
-                        )
-                      ])),
+                              ),
+                              CustomButton(
+                                padding: EdgeInsets.all(2.w),
+                                buttonColor: Theme.of(context).primaryColor,
+                                textColor: Colors.white,
+                                text: AppLocalizations.of(context)!.proceed,
+                                size: const Size(double.infinity, 50),
+                                textFontSize: 12.sp,
+                                onTap: () => onPlaceOrderPressed(placeOrderVM),
+                              ),
+                              SizedBox(
+                                height: 1.5.h,
+                              ),
+                            ],
+                          )
+                        ]),
+                      ),
+                    ]),
+            ),
           ),
         );
       },
@@ -387,7 +385,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime.now(),
         lastDate: DateTime(2101),
-        builder: (BuildContext context, Widget ?child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData(
               primarySwatch: Colors.grey,
@@ -406,30 +404,18 @@ class _PlaceOrderState extends State<PlaceOrder> {
                   secondary: Colors.black),
               dialogBackgroundColor: Colors.white,
             ),
-            child: child ??Text(""),
+            child: child ?? Text(""),
           );
-        }
-
-    );
+        });
     if (picked != null) {
       selectedDate = DateFormat('yyyy-MM-dd').format(picked);
       placeOrderVM.notifyListeners();
     }
   }
 
-  Future _selectBookingTime(
-      BuildContext context, PlaceOrderVM placeOrderVM) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.dial,
-        confirmText: AppLocalizations.of(context)!.selectCity,
-        cancelText: AppLocalizations.of(context)!.notNow,
-        helpText: AppLocalizations.of(context)!.bookingTime);
-    if (timeOfDay != null) {
-      selectedTime = timeOfDay.format(context).toString();
-      placeOrderVM.notifyListeners();
-    }
+  Future _selectBookingTime(String? time) async {
+    selectedTime = time!;
+    setState(() {});
   }
 
   Future<void> onPlaceOrderPressed(PlaceOrderVM placeOrderVM) async {

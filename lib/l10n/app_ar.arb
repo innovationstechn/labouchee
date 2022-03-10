@@ -160,6 +160,7 @@
   "login": "login",
   "cityNotSelected": "cityNotSelected",
   "change": "change",
-  "createAccount": "createAccount"
+  "createAccount": "createAccount",
+  "selectTime": "Select Time"
 }
 

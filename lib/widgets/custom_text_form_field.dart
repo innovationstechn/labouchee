@@ -13,6 +13,7 @@ class TextFormWidget extends FormField<String> {
   final Function(String?) validationMethod;
   final String? errorText;
   final bool isReadOnly;
+  final bool autofocus;
 
   TextFormWidget(
       {Key? key,
@@ -23,6 +24,7 @@ class TextFormWidget extends FormField<String> {
       this.suffixIcon,
       this.focusNode,
       this.errorText,
+      this.autofocus=true,
       bool? obscureText = false,
       this.isReadOnly = false,
       required this.validationMethod,
@@ -51,7 +53,7 @@ class TextFormWidget extends FormField<String> {
                           return isValidationFailed;
                         }
                       },
-                      autofocus: true,
+                      autofocus: autofocus,
                       style: TextStyle(color: Colors.black,fontSize: 13.sp),
                       decoration: InputDecoration(
                         errorText:errorText,

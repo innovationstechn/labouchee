@@ -14,12 +14,14 @@ class AddressFormWidget extends FormField<String> {
   final TextEditingController? textEditingController;
   final Function(String?) validationMethod;
   final String? errorText;
+  final bool autofocus;
   AddressFormWidget({Key? key,
     this.context,
     this.textEditingController,
     this.labelText,
     this.focusNode,
     this.errorText,
+    this.autofocus= true,
     required this.validationMethod,
     String initialValue = "",
     bool isButtonTapped = false,
@@ -44,7 +46,7 @@ class AddressFormWidget extends FormField<String> {
                     return isValidationFailed;
                   }
                 },
-                autofocus: true,
+                autofocus: autofocus,
                 style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   errorText: errorText,

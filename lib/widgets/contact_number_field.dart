@@ -10,6 +10,7 @@ class ContactFormWidget extends FormField<String> {
   final TextEditingController? textEditingController;
   final Function(String?) validationMethod;
   final String? errorText;
+  final bool autofocus;
 
   ContactFormWidget(
       {Key? key,
@@ -19,6 +20,7 @@ class ContactFormWidget extends FormField<String> {
       this.focusNode,
       this.bottomText = "",
       this.errorText,
+      this.autofocus = true,
       required this.validationMethod,
       String initialValue = "",
       AutovalidateMode autoValidate = AutovalidateMode.disabled})
@@ -49,7 +51,7 @@ class ContactFormWidget extends FormField<String> {
                               return isValidationFailed;
                             }
                           },
-                          autoFocus: true,
+                          autoFocus: autofocus,
                           textStyle:
                               TextStyle(color: Colors.black, fontSize: 13.sp),
                           inputDecoration: InputDecoration(
