@@ -9,7 +9,9 @@ class ShippingInfoModel {
     toJson: _intToJson,
   )
   final String? city;
-  final String? shippingCost, isEnabled, cityName;
+  final String? shippingCost, isEnabled;
+  @JsonKey(name: 'cityName')
+  final String? cityName;
 
   ShippingInfoModel({
     this.city,

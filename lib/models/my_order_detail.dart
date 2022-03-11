@@ -75,7 +75,7 @@ class MyOrderDetailModel {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class MyOrderUserInputDetailModel {
-  final String? name, email, orderNote, bookingDate;
+  final String? name, email, orderNote, bookingDate, bookingTime;
   final List<String>? address, phone;
 
   MyOrderUserInputDetailModel({
@@ -85,6 +85,7 @@ class MyOrderUserInputDetailModel {
     this.bookingDate,
     this.address,
     this.phone,
+    this.bookingTime,
   });
 
   factory MyOrderUserInputDetailModel.fromJson(Map<String, dynamic> json) =>
