@@ -36,6 +36,9 @@ class _UserDetailState extends State<UserDetail> {
               userInfoTile(Icons.message, AppLocalizations.of(context)!.email, myOrderUserInputDetailModel.email!),
               userInfoTile(Icons.location_city, AppLocalizations.of(context)!.address+ ":",
                   myOrderUserInputDetailModel.address!.first),
+              userInfoTile(Icons.location_city, AppLocalizations.of(context)!.city+ ":",
+                  widget.detailModel.shipping?.cityName??""),
+
             ],
           ),
         );

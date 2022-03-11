@@ -714,7 +714,8 @@
   "bookingTime": "Booking Time",
   "@bookingTime": {
     "description": "The current language"
-  }
+  },
+  "city": "City"
 }
 
 

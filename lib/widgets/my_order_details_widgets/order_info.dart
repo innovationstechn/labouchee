@@ -27,12 +27,11 @@ class OrderInfo extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
+          orderInfoTile(AppLocalizations.of(context)!.orderDate, detailModel.createdTime??""),
           orderInfoTile(AppLocalizations.of(context)!.bookingDate, detailModel.orderDetails?.bookingDate??""),
-          orderInfoTile(AppLocalizations.of(context)!.bookingTime, detailModel.createdTime??""),
+          orderInfoTile(AppLocalizations.of(context)!.bookingTime, detailModel.orderDetails?.bookingTime??""),
           orderInfoTile(AppLocalizations.of(context)!.paymentMethod, detailModel.paymentMethod!),
           orderInfoTile(AppLocalizations.of(context)!.paymentStatus, detailModel.paymentStatus!),
-          // orderInfoTile("Delivery Date", detailModel.),
-          // orderInfoTile("Delivery Time", "asdasd"),
           orderInfoTile(AppLocalizations.of(context)!.note, detailModel.orderDetails!.orderNote??""),
           Container(
               margin: const EdgeInsets.symmetric(vertical:5,horizontal: 15),

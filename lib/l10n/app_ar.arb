@@ -176,6 +176,7 @@
   "addressEmpty": "ADDRESS SHOULD NOT BE EMPTY",
   "nameEmpty": "NAME SHOULD NOT BE EMPTY",
   "bookingDate": "Booking Date",
-  "bookingTime": "Booking Time"
+  "bookingTime": "Booking Time",
+  "city": "city"
 }
 
