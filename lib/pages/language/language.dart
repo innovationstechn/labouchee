@@ -59,6 +59,7 @@ class _LanguageViewState extends State<LanguageView> {
                       ),
                     ),
                     trailing: Radio(
+                      activeColor: Theme.of(context).primaryColor,
                       value: 1,
                       groupValue: radioButtonValue,
                       onChanged: (int) => update(languageVM, 'en'),
