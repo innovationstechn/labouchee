@@ -46,6 +46,7 @@ class _LanguageViewState extends State<LanguageView> {
                     trailing: Radio(
                       value: 0,
                       groupValue: radioButtonValue,
+                      activeColor: Theme.of(context).primaryColor,
                       onChanged: (int) => update(languageVM, 'ar'),
                     ),
                     title: Text(AppLocalizations.of(context)!.arabic),
