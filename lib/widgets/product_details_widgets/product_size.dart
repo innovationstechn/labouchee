@@ -38,9 +38,27 @@ class _ProductSizeState extends State<ProductSize> {
       ProductDetailsVM productDetailsVM) {
     if (productDetailsVM.details.price != null) {
       String? size = "STANDARD";
-      if (productDetailsVM.details.priceSmall != null) size = 'SMALL';
-      if (productDetailsVM.details.priceMedium != null) size = 'MEDIUM';
-      if (productDetailsVM.details.priceLarge != null) size = 'LARGE';
+      String? sizeTranslation = AppLocalizations
+          .of(context)
+          ?.standard;
+      if (productDetailsVM.details.priceSmall != null){
+        size = 'SMALL';
+        sizeTranslation = AppLocalizations
+            .of(context)
+            ?.small;
+      }
+      if (productDetailsVM.details.priceMedium != null) {
+        size = 'MEDIUM';
+        sizeTranslation = AppLocalizations
+            .of(context)
+            ?.medium;
+      }
+      if (productDetailsVM.details.priceLarge != null) {
+        size = 'LARGE';
+        sizeTranslation = AppLocalizations
+            .of(context)
+            ?.large;
+      }
 
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -54,7 +72,7 @@ class _ProductSizeState extends State<ProductSize> {
               fontWeight: FontWeight.bold,
             ),
             CustomText(
-              text: size,
+              text: sizeTranslation,
               fontSize: 12.sp,
               fontWeight: FontWeight.normal,
             ),
@@ -94,6 +112,27 @@ class _ProductSizeState extends State<ProductSize> {
 
   Widget productSize(BoxConstraints constraints,
       String? text,) {
+
+    String? helpTranslation;
+
+    switch (text){
+      case "SMALL":
+        helpTranslation = AppLocalizations
+            .of(context)
+            ?.small;
+        break;
+      case "MEDIUM":
+        helpTranslation = AppLocalizations
+            .of(context)
+            ?.medium;
+        break;
+      case "LARGE":
+        helpTranslation = AppLocalizations
+            .of(context)
+            ?.large;
+        break;
+    }
+
     bool isSelected = text == widget.selectedSize;
     return GestureDetector(
       onTap: () => widget.onSizeChanged(text),
@@ -112,7 +151,7 @@ class _ProductSizeState extends State<ProductSize> {
         height: constraints.maxWidth * 0.08,
         child: Center(
           child: CustomText(
-            text: text,
+            text: helpTranslation??"",
             fontSize: 12.sp,
             color: Colors.black,
           ),

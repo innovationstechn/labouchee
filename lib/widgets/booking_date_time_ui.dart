@@ -36,7 +36,7 @@ class _BookingDateAndTimeState extends State<BookingDateAndTime> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               CustomText(
-                text: "Booking Date",
+                text: AppLocalizations.of(context)!.bookingDate,
                 color: Theme
                     .of(context)
                     .primaryColor,
@@ -98,7 +98,7 @@ class _BookingDateAndTimeState extends State<BookingDateAndTime> {
                 height: 20.0,
               ),
               CustomText(
-                text: "Booking Time",
+                text: AppLocalizations.of(context)!.bookingTime,
                 color: Theme
                     .of(context)
                     .primaryColor,

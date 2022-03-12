@@ -126,7 +126,7 @@ class _RegisterViewState extends State<RegisterView> {
                         TextFormWidget(
                           context: context,
                           textEditingController: postalCode,
-                          labelText: "Postal Code",
+                          labelText: AppLocalizations.of(context)?.zipCode,
                           errorText:
                               registerValidationErrorModel.zipCode != null
                                   ? registerValidationErrorModel.zipCode!.first

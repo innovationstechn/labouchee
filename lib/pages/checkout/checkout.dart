@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:labouchee/models/cart_detail.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/checkout/checkout_viewmodel.dart';
+import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -33,17 +34,8 @@ class _CheckOutState extends State<CheckOut> {
     return LayoutBuilder(builder: (context, constraints) {
       boxConstraints = constraints;
       return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 50,
-          leading: const BackButton(color: Colors.black),
-          title: CustomText(
-            text: AppLocalizations.of(context)!.checkOUT,
-            fontWeight: FontWeight.bold,
-            fontSize: 15.sp,
-          ),
-          titleTextStyle: const TextStyle(color: Colors.black),
-          backgroundColor: Colors.white,
-        ),
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.checkOUT,),
         body: ViewModelBuilder<CheckoutVM>.reactive(
             viewModelBuilder: () => CheckoutVM(),
             onModelReady: (model) => model.initialize(),
@@ -232,7 +224,7 @@ class _CheckOutState extends State<CheckOut> {
         ),
         CustomButton(
           size: const Size(double.infinity, 50),
-          text: "PAY ${info.totalPrice?.toString() ?? '?'} " +
+          text: AppLocalizations.of(context)!.pay+ " ${info.totalPrice?.toString() ?? '?'} " +
               AppLocalizations.of(context)!.currency,
           textFontSize: 14.sp,
           // circularSize: 20,

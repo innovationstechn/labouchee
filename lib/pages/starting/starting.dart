@@ -61,6 +61,7 @@ class _StartingState extends State<Starting> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          elevation: 1,
           title: Image.asset("assets/images/flags/logo.png"),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
@@ -108,21 +109,28 @@ class _StartingState extends State<Starting> {
         body: Scaffold(
           backgroundColor: Colors.white,
           body: DoubleBack(
-              message:"Press back again to close",
-              child: SizedBox.expand(
-                child: PageView(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() => _currentIndex = index);
-                  },
-                  children: <Widget>[
-                    LandingView(),
-                    SearchBar(),
-                    Cart(),
-                    Notifications()
-                  ],
-                ),
+            onFirstBackPress: (context) {
+              if(_currentIndex!=0){
+                setState(() => _currentIndex = 0);
+                _pageController.jumpToPage(0);
+              }else{
+                snackBarService.showSnackbar(message: 'Press back again to exit');
+              }
+            },
+            child: SizedBox.expand(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() => _currentIndex = index);
+                },
+                children: <Widget>[
+                  LandingView(),
+                  SearchBar(),
+                  Cart(),
+                  Notifications()
+                ],
               ),
+            ),
           ),
           bottomNavigationBar: BottomNavyBar(
             selectedIndex: _currentIndex,
@@ -160,7 +168,6 @@ class _StartingState extends State<Starting> {
           ),
         ),
       ),
-
       drawer: SafeArea(
         child: ListTileTheme(
           textColor: Colors.white,

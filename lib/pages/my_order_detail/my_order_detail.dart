@@ -28,16 +28,17 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.orderDetails,),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.orderDetails,
+      ),
       body: ViewModelBuilder<MyOrderDetailVM>.reactive(
         viewModelBuilder: () => MyOrderDetailVM(order: widget.order),
         onModelReady: (model) => model.loadData(),
         builder: (context, detailVM, _) {
-          return LayoutBuilder(
-              builder: (context, BoxConstraints constraints) {
+          return LayoutBuilder(builder: (context, BoxConstraints constraints) {
             boxConstraints = constraints;
 
-            if(detailVM.isBusy) {
+            if (detailVM.isBusy) {
               return Center(child: CustomCircularProgressIndicator());
             }
 
@@ -50,17 +51,26 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
                     fontWeight: FontWeight.bold,
                   ),
                   UserDetail(
-                      detailModel: detailVM.detail!,),
-                  OrderInfo(detailModel: detailVM.detail!,),
+                    detailModel: detailVM.detail!,
+                  ),
+                  OrderInfo(
+                    detailModel: detailVM.detail!,
+                  ),
                   MyOrderProductDetails(detailModel: detailVM.detail!),
-                  customRow(AppLocalizations.of(context)!.deliveryCharges, detailVM.detail!.shippingAmount.toString()),
-                  customRow(AppLocalizations.of(context)!.discountAmount, detailVM.detail!.discountAmount.toString()),
+                  customRow(AppLocalizations.of(context)!.deliveryCharges,
+                      detailVM.detail!.shippingAmount.toString()),
+                  customRow(AppLocalizations.of(context)!.discountAmount,
+                      detailVM.detail!.discountAmount.toString()),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: DottedBorder(
                       color: Colors.brown.shade400,
                       strokeWidth: 1,
-                      child: customRow(AppLocalizations.of(context)!.grandTotal, detailVM.detail!.orderTotalAmount.toString()),
+                      child: customRow(
+                          AppLocalizations.of(context)!.grandTotal,
+                          detailVM.detail!.orderTotalAmount.toString() +  " " +
+                              AppLocalizations.of(context)!.currency,
+                      ),
                     ),
                   )
                 ],
@@ -72,14 +82,19 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
     );
   }
 
-  Widget customRow(String title,String value){
+  Widget customRow(String title, String value) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(start: 10,end:20,top: 10,bottom: 10),
+      padding: const EdgeInsetsDirectional.only(
+          start: 10, end: 20, top: 10, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomText(text: title,fontSize: 15.sp,fontWeight: FontWeight.bold,),
-          CustomText(text: value,fontSize: 13.sp),
+          CustomText(
+            text: title,
+            fontSize: 15.sp,
+            fontWeight: FontWeight.bold,
+          ),
+          CustomText(text: value, fontSize: 13.sp),
         ],
       ),
     );
