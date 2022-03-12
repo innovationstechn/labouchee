@@ -139,7 +139,8 @@ class _RegisterViewState extends State<RegisterView> {
                           context: context,
                           textEditingController: phoneNumber,
                           labelText: AppLocalizations.of(context)!.contactNo,
-                          bottomText: AppLocalizations.of(context)?.contactNumberLikeThat,
+                          bottomText: AppLocalizations.of(context)
+                              ?.contactNumberLikeThat,
                           initialValue: "0966",
                           errorText: registerValidationErrorModel.contactNo !=
                                   null
@@ -194,7 +195,7 @@ class _RegisterViewState extends State<RegisterView> {
         registerValidationErrorModel =
             registerVM.error(registerVM) as RegisterValidationErrorModel;
         registerVM.setState();
-      }else{
+      } else {
         registerVM.navigateToOTPVerification();
       }
     }

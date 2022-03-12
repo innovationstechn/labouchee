@@ -12,7 +12,6 @@ class NotificationFilterModel {
     this.type,
   });
 
-
   factory NotificationFilterModel.fromJson(Map<String, dynamic> json) =>
       _$NotificationFilterModelFromJson(json);
 

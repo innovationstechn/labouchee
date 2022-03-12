@@ -29,7 +29,6 @@ class _LoginViewState extends State<LoginView> {
       viewModelBuilder: () => LoginVM(),
       onModelReady: (model) {},
       builder: (context, loginVM, _) {
-
         return Scaffold(
             body: Form(
           key: _formKey,
@@ -44,11 +43,11 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomText(
-                          text: AppLocalizations.of(context)!.welComeBack,
-                          fontSize: 25.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                          ),
+                        text: AppLocalizations.of(context)!.welComeBack,
+                        fontSize: 25.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
                       SizedBox(
                         height: 1.h,
                       ),
@@ -83,28 +82,28 @@ class _LoginViewState extends State<LoginView> {
                           child: CustomText(
                               text:
                                   AppLocalizations.of(context)!.forgotPassword,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 5.w,vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5.w, vertical: 5),
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w300,
-                              onTap:() => onForgotPassword(loginVM))),
+                              onTap: () => onForgotPassword(loginVM))),
                       SizedBox(height: 1.5.h),
-                      if(loginVM.isBusy)
+                      if (loginVM.isBusy)
                         CustomCircularProgressIndicator()
                       else
-                      CustomButton(
-                        // padding: EdgeInsets.symmetric(vertical: 5),
-                        buttonColor: Theme.of(context).primaryColor,
-                        textColor: Colors.white,
-                        text: AppLocalizations.of(context)!.signIn,
-                        size: Size(80.w, 7.h),
-                        textFontSize: 12.sp,
-                        onTap: () => onLoginPressed(loginVM),
-                      ),
+                        CustomButton(
+                          // padding: EdgeInsets.symmetric(vertical: 5),
+                          buttonColor: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          text: AppLocalizations.of(context)!.signIn,
+                          size: Size(80.w, 7.h),
+                          textFontSize: 12.sp,
+                          onTap: () => onLoginPressed(loginVM),
+                        ),
                       SizedBox(
                         height: 1.5.h,
                       ),
-                      createAccount(context,loginVM),
+                      createAccount(context, loginVM),
                     ],
                   )
                 ]),
@@ -122,18 +121,18 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  void onForgotPassword(LoginVM loginVm){
+  void onForgotPassword(LoginVM loginVm) {
     loginVm.navigateToForgotPassword();
   }
 
-  Widget createAccount(BuildContext context,LoginVM loginVM) {
+  Widget createAccount(BuildContext context, LoginVM loginVM) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:2.w),
+      margin: EdgeInsets.symmetric(horizontal: 2.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomText(
-              text: AppLocalizations.of(context)!.dontHaveAccount+" ",
+              text: AppLocalizations.of(context)!.dontHaveAccount + " ",
               fontSize: 14.sp,
               color: Colors.black,
               fontWeight: FontWeight.w400),
@@ -142,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
               fontSize: 14.sp,
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w400,
-              onTap:()=>loginVM.navigateToSignUp())
+              onTap: () => loginVM.navigateToSignUp())
         ],
       ),
     );

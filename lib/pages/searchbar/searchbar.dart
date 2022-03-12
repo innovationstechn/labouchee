@@ -27,7 +27,6 @@ class _SearchBarState extends State<SearchBar> {
       onModelReady: (model) => model.loadDefault(),
       viewModelBuilder: () => SearchVM(),
       builder: (context, searchVM, __) {
-
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: CustomScrollView(
@@ -41,7 +40,6 @@ class _SearchBarState extends State<SearchBar> {
                   ],
                 ),
               ),
-
               if (searchVM.isBusy)
                 SliverFillRemaining(
                   child: Center(
@@ -49,7 +47,7 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                 )
               else
-              LandingProductList(items: searchVM.searched),
+                LandingProductList(items: searchVM.searched),
             ],
           ),
         );

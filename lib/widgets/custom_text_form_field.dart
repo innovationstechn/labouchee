@@ -24,7 +24,7 @@ class TextFormWidget extends FormField<String> {
       this.suffixIcon,
       this.focusNode,
       this.errorText,
-      this.autofocus=true,
+      this.autofocus = true,
       bool? obscureText = false,
       this.isReadOnly = false,
       required this.validationMethod,
@@ -36,11 +36,11 @@ class TextFormWidget extends FormField<String> {
             autovalidateMode: autoValidate,
             builder: (FormFieldState<String> state) {
               return Container(
-                margin: EdgeInsets.symmetric(horizontal:4.w,vertical: 2.w),
+                margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.w),
                 child: Column(
                   children: [
                     TextFormField(
-                      readOnly:isReadOnly,
+                      readOnly: isReadOnly,
                       enableSuggestions: true,
                       obscureText: obscureText!,
                       controller: textEditingController,
@@ -54,9 +54,9 @@ class TextFormWidget extends FormField<String> {
                         }
                       },
                       autofocus: autofocus,
-                      style: TextStyle(color: Colors.black,fontSize: 13.sp),
+                      style: TextStyle(color: Colors.black, fontSize: 13.sp),
                       decoration: InputDecoration(
-                        errorText:errorText,
+                        errorText: errorText,
                         // hintText: hintText,
                         labelText: labelText,
                         labelStyle: TextStyle(

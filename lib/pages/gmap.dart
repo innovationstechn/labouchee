@@ -4,8 +4,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 
 class GMAP extends StatefulWidget {
-  final double? latitude,longitude;
-  const GMAP({Key? key, required this.latitude, required this.longitude}) : super(key: key);
+  final double? latitude, longitude;
+  const GMAP({Key? key, required this.latitude, required this.longitude})
+      : super(key: key);
 
   @override
   _GMAPState createState() => _GMAPState();
@@ -18,19 +19,20 @@ class _GMAPState extends State<GMAP> {
   void initState() {
     // TODO: implement initState
     super.initState();
-      _center = LatLng(widget.latitude!,widget.longitude!);
-      _lastMapPosition = _center;
-      _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
-        markerId: MarkerId(_lastMapPosition.toString()),
-        position: _lastMapPosition,
-        infoWindow: const InfoWindow(
-          title: 'Really cool place',
-          snippet: '5 Star Rating',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
+    _center = LatLng(widget.latitude!, widget.longitude!);
+    _lastMapPosition = _center;
+    _markers.add(Marker(
+      // This marker id can be anything that uniquely identifies each marker.
+      markerId: MarkerId(_lastMapPosition.toString()),
+      position: _lastMapPosition,
+      infoWindow: const InfoWindow(
+        title: 'Really cool place',
+        snippet: '5 Star Rating',
+      ),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
   }
+
   late LatLng _center;
 
   final Set<Marker> _markers = {};
@@ -67,16 +69,16 @@ class _GMAPState extends State<GMAP> {
     _controller.complete(controller);
   }
 
-  void _closeMap(){
-    Navigator.of(context).pop( [_lastMapPosition.latitude , _lastMapPosition.longitude]);
+  void _closeMap() {
+    Navigator.of(context)
+        .pop([_lastMapPosition.latitude, _lastMapPosition.longitude]);
   }
 
   @override
   Widget build(BuildContext context) {
-
-  return MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        appBar: CustomAppBar(title:'Select Location'),
+        appBar: CustomAppBar(title: 'Select Location'),
         body: Stack(
           children: <Widget>[
             GoogleMap(
@@ -88,7 +90,7 @@ class _GMAPState extends State<GMAP> {
               ),
               mapType: _currentMapType,
               markers: _markers,
-              onTap:(result){
+              onTap: (result) {
                 _onAddMarkerButtonPressed(result);
               },
             ),
@@ -97,7 +99,7 @@ class _GMAPState extends State<GMAP> {
               child: Align(
                 alignment: Alignment.topRight,
                 child: Column(
-                  children: <Widget> [
+                  children: <Widget>[
                     FloatingActionButton(
                       onPressed: _onMapTypeButtonPressed,
                       materialTapTargetSize: MaterialTapTargetSize.padded,

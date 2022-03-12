@@ -67,9 +67,10 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
                       color: Colors.brown.shade400,
                       strokeWidth: 1,
                       child: customRow(
-                          AppLocalizations.of(context)!.grandTotal,
-                          detailVM.detail!.orderTotalAmount.toString() +  " " +
-                              AppLocalizations.of(context)!.currency,
+                        AppLocalizations.of(context)!.grandTotal,
+                        detailVM.detail!.orderTotalAmount.toString() +
+                            " " +
+                            AppLocalizations.of(context)!.currency,
                       ),
                     ),
                   )

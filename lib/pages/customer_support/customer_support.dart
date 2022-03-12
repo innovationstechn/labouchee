@@ -7,6 +7,7 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CustomerSupport extends StatefulWidget {
   const CustomerSupport({Key? key}) : super(key: key);
 

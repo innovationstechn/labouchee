@@ -10,6 +10,7 @@ import '../../models/category.dart';
 import '../../services/navigator.dart';
 import '../categories_product_listing/categories_product_listing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CategoriesListing extends StatefulWidget {
   final List<CategoryModel> categories;
 

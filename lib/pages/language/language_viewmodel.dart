@@ -8,15 +8,17 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../services/navigator.dart';
 
-class LanguageVM extends BaseViewModel{
+class LanguageVM extends BaseViewModel {
   final _navigationService = locator<NavigatorService>();
   final _languageService = locator<LanguageService>();
 
-  Future<void> languageSelection(String language, PageRouteInfo nextPage) async {
+  Future<void> languageSelection(
+      String language, PageRouteInfo nextPage) async {
     await _languageService.changeLanguage(Locale(language));
     _navigationService.router.replace(nextPage);
   }
-  void update(){
+
+  void update() {
     notifyListeners();
   }
 }

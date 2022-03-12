@@ -17,7 +17,6 @@ class ProfileVM extends BaseViewModel {
 
   UserModel? data;
 
-
   Future<void> loadData() async {
     Future<void> _loadData() async {
       try {
@@ -49,11 +48,10 @@ class ProfileVM extends BaseViewModel {
 
         _snackbarService.showSnackbar(message: message);
       } catch (e) {
-        if(e is ErrorModelException) {
+        if (e is ErrorModelException) {
           _snackbarService.showSnackbar(message: e.message);
           setError(e.error);
-        }
-         else {
+        } else {
           _snackbarService.showSnackbar(message: e.toString());
         }
       }

@@ -92,13 +92,18 @@ class LandingView extends StatelessWidget {
                                   ),
                                   tabs: [
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.featured),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!
+                                              .featured),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.hotSale),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!
+                                              .hotSale),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.viewed),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!.viewed),
                                     ),
                                   ],
                                 ),
@@ -121,7 +126,8 @@ class LandingView extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              buildCategoryCapsule(AppLocalizations.of(context)!.ourCatalog),
+                              buildCategoryCapsule(
+                                  AppLocalizations.of(context)!.ourCatalog),
                             ],
                           ),
                         ),
@@ -225,7 +231,6 @@ class LandingView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Spacer(),
                 Text(
                   similarProduct[selectedIndex]
                           .productRating
@@ -260,9 +265,12 @@ class LandingView extends StatelessWidget {
             LayoutBuilder(builder: (context, constraints) {
               return Wrap(
                 children: [
-                  if (item.priceSmall != null) buildSizeCapsule(AppLocalizations.of(context)!.small),
-                  if (item.priceMedium != null) buildSizeCapsule(AppLocalizations.of(context)!.medium),
-                  if (item.priceLarge != null) buildSizeCapsule(AppLocalizations.of(context)!.large),
+                  if (item.priceSmall != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.small),
+                  if (item.priceMedium != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.medium),
+                  if (item.priceLarge != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.large),
                 ],
               );
             }),

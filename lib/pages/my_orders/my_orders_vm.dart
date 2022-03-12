@@ -27,9 +27,8 @@ class MyOrdersVM extends BaseViewModel {
     await runBusyFuture(_loadData());
   }
 
-  void navigateToOrderDetailPage(MyOrderModel myOrderModel){
-    _navigationService.router.navigate(
-      MyOrdersDetailScreenRoute(order: myOrderModel)
-    );
+  void navigateToOrderDetailPage(MyOrderModel myOrderModel) {
+    _navigationService.router
+        .navigate(MyOrdersDetailScreenRoute(order: myOrderModel));
   }
 }

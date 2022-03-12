@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CustomButton extends StatelessWidget {
   final double? textFontSize;
   final Color? textColor;
@@ -28,13 +29,13 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding??EdgeInsets.zero,
+      padding: padding ?? EdgeInsets.zero,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(circularSize??0.0),
+              borderRadius: new BorderRadius.circular(circularSize ?? 0.0),
             ),
-            primary: buttonColor??Theme.of(context).primaryColor,
+            primary: buttonColor ?? Theme.of(context).primaryColor,
             minimumSize: size,
             maximumSize: size,
           ),

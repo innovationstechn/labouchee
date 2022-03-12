@@ -27,8 +27,8 @@ class HiveLocalStorage implements LocalStorage {
     }
 
     return Future.delayed(
-    Duration.zero,
-    () => _prefsBox!.get('locale'),
+      Duration.zero,
+      () => _prefsBox!.get('locale'),
     );
   }
 
@@ -39,8 +39,8 @@ class HiveLocalStorage implements LocalStorage {
     }
 
     return Future.delayed(
-    Duration.zero,
-    () => _prefsBox!.get('token'),
+      Duration.zero,
+      () => _prefsBox!.get('token'),
     );
   }
 
@@ -52,7 +52,7 @@ class HiveLocalStorage implements LocalStorage {
 
     return Future.delayed(
       Duration.zero,
-          () => _prefsBox!.get('otp_verified') ?? false,
+      () => _prefsBox!.get('otp_verified') ?? false,
     );
   }
 

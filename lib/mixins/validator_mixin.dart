@@ -2,65 +2,62 @@ import 'package:email_validator/email_validator.dart';
 
 import '../constants/strings.dart';
 
-mixin ValidatorMixin{
-  String? emailValidator(String? email){
-    if(EmailValidator.validate(email!)) {
+mixin ValidatorMixin {
+  String? emailValidator(String? email) {
+    if (EmailValidator.validate(email!)) {
       return null;
     } else {
-      if(email.isEmpty) {
+      if (email.isEmpty) {
         return Strings.emailEmpty;
-      }else{
+      } else {
         return Strings.invalidEmail;
       }
     }
   }
 
-  String? passwordValidator(String? password){
-    if(password!.isNotEmpty) {
+  String? passwordValidator(String? password) {
+    if (password!.isNotEmpty) {
       return null;
     } else {
-      if(password.isEmpty){
+      if (password.isEmpty) {
         return Strings.passwordEmpty;
-      }else{
+      } else {
         return Strings.invalidPassword;
       }
-
     }
   }
 
-  String? contactNoValidator(String? contactNo){
-    if(contactNo!.isNotEmpty) {
+  String? contactNoValidator(String? contactNo) {
+    if (contactNo!.isNotEmpty) {
       return null;
     } else {
-      if(contactNo.isEmpty){
+      if (contactNo.isEmpty) {
         return Strings.contactEmpty;
       }
-
     }
   }
 
-  String? postalCodeValidator(String? postalCode){
-    if(postalCode!.isNotEmpty) {
+  String? postalCodeValidator(String? postalCode) {
+    if (postalCode!.isNotEmpty) {
       return null;
     } else {
       return "POSTAL CODE SHOULD NOT BE EMPTY";
     }
   }
 
-  String? addressValidator(String? address){
-    if(address!.isNotEmpty) {
+  String? addressValidator(String? address) {
+    if (address!.isNotEmpty) {
       return null;
     } else {
       return Strings.addressEmpty;
     }
   }
 
-  String? nameValidator(String? name){
-    if(name!.isNotEmpty) {
+  String? nameValidator(String? name) {
+    if (name!.isNotEmpty) {
       return null;
     } else {
       return Strings.nameEmpty;
     }
-
   }
 }

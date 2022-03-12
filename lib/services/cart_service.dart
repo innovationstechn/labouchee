@@ -42,7 +42,8 @@ class CartService {
     return message;
   }
 
-  Future<String> addItem(int product, int quantity, {ProductSize? sizeInEnum, String? sizeInText}) async {
+  Future<String> addItem(int product, int quantity,
+      {ProductSize? sizeInEnum, String? sizeInText}) async {
     final message = await _api.updateCart(
       CartUpdateModel(
         product: product,
@@ -57,7 +58,8 @@ class CartService {
     return message;
   }
 
-  Future<String> decreaseItem(int product, int quantity, {ProductSize? sizeInEnum, String? sizeInText}) async {
+  Future<String> decreaseItem(int product, int quantity,
+      {ProductSize? sizeInEnum, String? sizeInText}) async {
     final message = await _api.updateCart(
       CartUpdateModel(
         product: product,

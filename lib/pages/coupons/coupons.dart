@@ -22,7 +22,6 @@ class Coupons extends StatefulWidget {
 }
 
 class _CouponsState extends State<Coupons> {
-
   final _snackbarService = locator<SnackbarService>();
 
   @override
@@ -157,7 +156,7 @@ class _CouponsState extends State<Coupons> {
             ),
             const Spacer(),
             CustomText(
-              text: coupon.description??"",
+              text: coupon.description ?? "",
             ),
             const Spacer(),
             Text(

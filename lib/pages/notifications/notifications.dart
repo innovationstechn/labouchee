@@ -6,6 +6,7 @@ import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Notifications extends StatelessWidget {
   Notifications({Key? key}) : super(key: key);
 
@@ -33,7 +34,8 @@ class Notifications extends StatelessWidget {
     );
   }
 
-  Widget notificationCard(NotificationModel notification,BuildContext context, void Function(List<int>) onTap) {
+  Widget notificationCard(NotificationModel notification, BuildContext context,
+      void Function(List<int>) onTap) {
     return GestureDetector(
       onTap: () => onTap([notification.id!]),
       child: Column(
@@ -54,7 +56,8 @@ class Notifications extends StatelessWidget {
                   height: 10,
                 ),
                 CustomText(
-                  text: AppLocalizations.of(context)!.createdAt+ notification.createdDate!,
+                  text: AppLocalizations.of(context)!.createdAt +
+                      notification.createdDate!,
                   fontSize: 10.sp,
                   color: Colors.black,
                   fontWeight: FontWeight.normal,

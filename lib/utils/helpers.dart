@@ -17,9 +17,9 @@ Future<PageRouteInfo> generateInitRoute() async {
   final isLoggedIn = await localStorage.token() != null;
   // final isOtpVerified = await localStorage.isOtpVerified();
 
-  if(!isOnboardingDone) {
+  if (!isOnboardingDone) {
     return OnboardingScreenRoute();
-  } else if(!isLoggedIn) {
+  } else if (!isLoggedIn) {
     return LoginScreenRoute();
   }
   // else if(!isOtpVerified) {
@@ -33,7 +33,7 @@ Future<PageRouteInfo> generateInitRoute() async {
 Future<String?> uniqueDeviceIdentifier() async {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-  if(Platform.isAndroid) {
+  if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
     return androidInfo.androidId;
@@ -41,13 +41,15 @@ Future<String?> uniqueDeviceIdentifier() async {
     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
     return iosInfo.identifierForVendor;
-  } else if(kIsWeb) {
+  } else if (kIsWeb) {
     WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
 
-    if(webBrowserInfo.vendor == null) return null;
-    if(webBrowserInfo.userAgent == null) return null;
+    if (webBrowserInfo.vendor == null) return null;
+    if (webBrowserInfo.userAgent == null) return null;
 
-    return webBrowserInfo.vendor! + webBrowserInfo.userAgent! + webBrowserInfo.hardwareConcurrency.toString();
+    return webBrowserInfo.vendor! +
+        webBrowserInfo.userAgent! +
+        webBrowserInfo.hardwareConcurrency.toString();
   } else {
     throw 'Platform not supported';
   }

@@ -32,7 +32,8 @@ class _CartState extends State<Cart> {
       viewModelBuilder: () => CartVM(),
       onModelReady: (model) => model.sync(),
       builder: (context, cartVM, _) {
-        if (cartVM.isBusy) return Center(child: CustomCircularProgressIndicator());
+        if (cartVM.isBusy)
+          return Center(child: CustomCircularProgressIndicator());
 
         return LayoutBuilder(
           builder: (context, constraints) {
@@ -43,7 +44,8 @@ class _CartState extends State<Cart> {
                   stream: cartVM.cart,
                   builder: (BuildContext context,
                       AsyncSnapshot<CartModel> snapshot) {
-                    if (!snapshot.hasData) return CustomCircularProgressIndicator();
+                    if (!snapshot.hasData)
+                      return CustomCircularProgressIndicator();
 
                     if (snapshot.data!.items!.isEmpty) {
                       return Center(
@@ -90,7 +92,8 @@ class _CartState extends State<Cart> {
                           textFontSize: 14.sp,
                           // circularSize: 20,
                           onTap: () {
-                            _navigationService.router.navigate(CheckoutScreenRoute());
+                            _navigationService.router
+                                .navigate(CheckoutScreenRoute());
                           },
                         )
                       ],
@@ -159,11 +162,14 @@ class _CartState extends State<Cart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  text: "${e.price}" +" "+AppLocalizations.of(context)!.currency,
+                                  text: "${e.price}" +
+                                      " " +
+                                      AppLocalizations.of(context)!.currency,
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
-                                  padding:EdgeInsetsDirectional.only(bottom: 5),
+                                  padding:
+                                      EdgeInsetsDirectional.only(bottom: 5),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -189,7 +195,7 @@ class _CartState extends State<Cart> {
                                             onTap: () => vm.increase(
                                               item.id!,
                                               1,
-                                              convertText(e.type!)??"",
+                                              convertText(e.type!) ?? "",
                                             ),
                                             child: Icon(
                                               Icons.add,
@@ -245,8 +251,8 @@ class _CartState extends State<Cart> {
     );
   }
 
-  String? convertText(String text){
-    switch(text){
+  String? convertText(String text) {
+    switch (text) {
       case 'sm':
         return AppLocalizations.of(context)!.small;
       case 'md':

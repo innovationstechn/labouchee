@@ -11,7 +11,6 @@ class ProductFilterModel {
   @JsonKey(fromJson: _boolFromInt, toJson: _boolToInt)
   final bool? mostViewed, featured, hotSale;
 
-
   ProductFilterModel({
     this.page,
     this.min,
@@ -24,11 +23,14 @@ class ProductFilterModel {
     this.categoryId,
   });
 
-
   factory ProductFilterModel.fromJson(Map<String, dynamic> json) =>
       _$ProductFilterModelFromJson(json);
 
-  static int? _boolToInt(bool? b) => b == null ? null : b ? 1 : 0;
+  static int? _boolToInt(bool? b) => b == null
+      ? null
+      : b
+          ? 1
+          : 0;
   static bool? _boolFromInt(int? b) => b == null ? null : b == 1;
 
   Map<String, dynamic> toJson() => _$ProductFilterModelToJson(this);

@@ -35,7 +35,9 @@ class _CheckOutState extends State<CheckOut> {
       boxConstraints = constraints;
       return Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppBar(title: AppLocalizations.of(context)!.checkOUT,),
+        appBar: CustomAppBar(
+          title: AppLocalizations.of(context)!.checkOUT,
+        ),
         body: ViewModelBuilder<CheckoutVM>.reactive(
             viewModelBuilder: () => CheckoutVM(),
             onModelReady: (model) => model.initialize(),
@@ -67,7 +69,7 @@ class _CheckOutState extends State<CheckOut> {
                     minHeight: 200,
                     panelBuilder: (sc) =>
                         _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
-                    onPanelSlide: (double pos){},
+                    onPanelSlide: (double pos) {},
                   )
                 ],
               );
@@ -135,14 +137,13 @@ class _CheckOutState extends State<CheckOut> {
                         width: boxConstraints.maxWidth * 0.74 - 8,
                         height: 40,
                         decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                                 color: Theme.of(context).primaryColor)),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: TextFormField(
                               controller: couponTextController,
                               maxLines: 1,
@@ -224,7 +225,8 @@ class _CheckOutState extends State<CheckOut> {
         ),
         CustomButton(
           size: const Size(double.infinity, 50),
-          text: AppLocalizations.of(context)!.pay+ " ${info.totalPrice?.toString() ?? '?'} " +
+          text: AppLocalizations.of(context)!.pay +
+              " ${info.totalPrice?.toString() ?? '?'} " +
               AppLocalizations.of(context)!.currency,
           textFontSize: 14.sp,
           // circularSize: 20,
