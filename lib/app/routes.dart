@@ -92,7 +92,8 @@ import 'auth_guard.dart';
     MaterialRoute(
       page: CategoriesListing,
       name: 'categoriesListingScreenRoute',
-    ),MaterialRoute(
+    ),
+    MaterialRoute(
       page: CategoryProductListing,
       name: 'categoryProductListingScreenRoute',
     ),
@@ -104,7 +105,6 @@ import 'auth_guard.dart';
       page: MyOrderDetailPage,
       name: 'myOrdersDetailScreenRoute',
     ),
-
   ],
   transitionsBuilder: TransitionsBuilders.zoomIn,
   durationInMilliseconds: 400,

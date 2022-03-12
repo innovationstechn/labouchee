@@ -4,8 +4,7 @@ part 'inquiry.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class InquiryModel {
-  final String? subject,
-      feedback;
+  final String? subject, feedback;
 
   InquiryModel({
     this.subject,

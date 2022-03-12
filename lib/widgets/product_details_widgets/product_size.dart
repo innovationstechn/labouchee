@@ -11,10 +11,11 @@ class ProductSize extends StatefulWidget {
   final String selectedSize;
   final ProductDetailsVM productDetailsVM;
 
-  const ProductSize({Key? key,
-    required this.onSizeChanged,
-    required this.selectedSize,
-    required this.productDetailsVM})
+  const ProductSize(
+      {Key? key,
+      required this.onSizeChanged,
+      required this.selectedSize,
+      required this.productDetailsVM})
       : super(key: key);
 
   @override
@@ -34,30 +35,22 @@ class _ProductSizeState extends State<ProductSize> {
     );
   }
 
-  Widget productSizeWidget(BoxConstraints constraints,
-      ProductDetailsVM productDetailsVM) {
+  Widget productSizeWidget(
+      BoxConstraints constraints, ProductDetailsVM productDetailsVM) {
     if (productDetailsVM.details.price != null) {
       String? size = "STANDARD";
-      String? sizeTranslation = AppLocalizations
-          .of(context)
-          ?.standard;
-      if (productDetailsVM.details.priceSmall != null){
+      String? sizeTranslation = AppLocalizations.of(context)?.standard;
+      if (productDetailsVM.details.priceSmall != null) {
         size = 'SMALL';
-        sizeTranslation = AppLocalizations
-            .of(context)
-            ?.small;
+        sizeTranslation = AppLocalizations.of(context)?.small;
       }
       if (productDetailsVM.details.priceMedium != null) {
         size = 'MEDIUM';
-        sizeTranslation = AppLocalizations
-            .of(context)
-            ?.medium;
+        sizeTranslation = AppLocalizations.of(context)?.medium;
       }
       if (productDetailsVM.details.priceLarge != null) {
         size = 'LARGE';
-        sizeTranslation = AppLocalizations
-            .of(context)
-            ?.large;
+        sizeTranslation = AppLocalizations.of(context)?.large;
       }
 
       return Container(
@@ -65,9 +58,7 @@ class _ProductSizeState extends State<ProductSize> {
         child: Row(
           children: [
             CustomText(
-              text: AppLocalizations
-                  .of(context)
-                  ?.availableSize,
+              text: AppLocalizations.of(context)?.availableSize,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -85,9 +76,7 @@ class _ProductSizeState extends State<ProductSize> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: AppLocalizations
-              .of(context)
-              ?.availableSizes,
+          text: AppLocalizations.of(context)?.availableSizes,
           fontSize: 12.sp,
           fontWeight: FontWeight.bold,
           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -110,26 +99,21 @@ class _ProductSizeState extends State<ProductSize> {
     );
   }
 
-  Widget productSize(BoxConstraints constraints,
-      String? text,) {
-
+  Widget productSize(
+    BoxConstraints constraints,
+    String? text,
+  ) {
     String? helpTranslation;
 
-    switch (text){
+    switch (text) {
       case "SMALL":
-        helpTranslation = AppLocalizations
-            .of(context)
-            ?.small;
+        helpTranslation = AppLocalizations.of(context)?.small;
         break;
       case "MEDIUM":
-        helpTranslation = AppLocalizations
-            .of(context)
-            ?.medium;
+        helpTranslation = AppLocalizations.of(context)?.medium;
         break;
       case "LARGE":
-        helpTranslation = AppLocalizations
-            .of(context)
-            ?.large;
+        helpTranslation = AppLocalizations.of(context)?.large;
         break;
     }
 
@@ -141,9 +125,7 @@ class _ProductSizeState extends State<ProductSize> {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           border: Border.all(
             width: 1,
-            color: isSelected ? Theme
-                .of(context)
-                .primaryColor : Colors.black12,
+            color: isSelected ? Theme.of(context).primaryColor : Colors.black12,
           ),
         ),
         margin: const EdgeInsetsDirectional.only(start: 10),
@@ -151,7 +133,7 @@ class _ProductSizeState extends State<ProductSize> {
         height: constraints.maxWidth * 0.08,
         child: Center(
           child: CustomText(
-            text: helpTranslation??"",
+            text: helpTranslation ?? "",
             fontSize: 12.sp,
             color: Colors.black,
           ),

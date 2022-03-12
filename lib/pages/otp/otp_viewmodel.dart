@@ -40,7 +40,7 @@ class OtpVM extends BaseViewModel {
 
   Future<void> match(String userOtpCode) async {
     Future<void> _match() async {
-      if(userOtpCode == _otpCode) {
+      if (userOtpCode == _otpCode) {
         await _api.verifyUser();
         await _localStorage.isOtpVerified(isVerified: true);
 
@@ -48,7 +48,6 @@ class OtpVM extends BaseViewModel {
       } else {
         _snackbarService.showSnackbar(message: 'Sorry, that OTP didn\'t match');
       }
-
     }
 
     await runBusyFuture(_match());

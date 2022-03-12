@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cart_update.g.dart';
-  
+
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CartUpdateModel {
   final int? product, quantity;

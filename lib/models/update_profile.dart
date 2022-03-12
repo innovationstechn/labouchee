@@ -27,7 +27,7 @@ class UpdateProfileModel {
   Map<String, dynamic> toJson() {
     final map = _$UpdateProfileModelToJson(this);
 
-    if(address2 != null) {
+    if (address2 != null) {
       map['address[]'] = [address1, address2];
     } else {
       map['address[]'] = [address1];

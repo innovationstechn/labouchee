@@ -287,8 +287,8 @@ class PlaceOrderVM extends BaseViewModel {
     var response = await _networkHelper.pay(xml);
     print(response);
     if (response == 'failed' || response == null) {
-    // failed
-    //       alertShow('Failed');
+      // failed
+      //       alertShow('Failed');
     } else {
       var _url;
       final doc = XmlDocument.parse(response);

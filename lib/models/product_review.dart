@@ -8,7 +8,6 @@ class ProductReviewModel {
   final String? name, review, avatar, userId;
   final DateTime? createdAt;
 
-
   ProductReviewModel({
     this.id,
     this.name,

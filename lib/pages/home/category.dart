@@ -10,6 +10,7 @@ import '../../services/navigator.dart';
 import '../../widgets/custom_cached_image.dart';
 import '../../widgets/custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Category extends StatefulWidget {
   final List<CategoryModel> categories;
 
@@ -38,9 +39,7 @@ class _CategoryState extends State<Category> {
               ),
               CustomText(
                   text: AppLocalizations.of(context)!.viewAll,
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
+                  color: Theme.of(context).primaryColor,
                   onTap: () {
                     _navigationService.router.navigate(
                       CategoriesListingScreenRoute(
@@ -72,11 +71,9 @@ class _CategoryState extends State<Category> {
 
   Widget categoryCard(CategoryModel categoryModel) {
     return GestureDetector(
-      onTap: () =>
-          _navigationService.router.navigate(
-           CategoryProductListingScreenRoute(
-                category: categoryModel),
-          ),
+      onTap: () => _navigationService.router.navigate(
+        CategoryProductListingScreenRoute(category: categoryModel),
+      ),
       child: Column(
         children: [
           Container(

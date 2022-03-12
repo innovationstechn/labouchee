@@ -42,4 +42,3 @@ class CartDetailInfoModel {
 
   Map<String, dynamic> toJson() => _$CartDetailInfoModelToJson(this);
 }
-

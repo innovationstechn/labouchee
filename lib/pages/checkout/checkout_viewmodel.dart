@@ -46,5 +46,4 @@ class CheckoutVM extends BaseViewModel {
 
     await runBusyFuture(_applyCoupon());
   }
-
 }

@@ -89,8 +89,7 @@ class LaboucheeAPI implements API {
       if (e.response != null) {
         if (e.response!.statusCode == 401) {
           throw UnauthorisedException(
-            e.response!.data['message'] ??
-                Strings.cantLogin,
+            e.response!.data['message'] ?? Strings.cantLogin,
           );
         } else {
           throw RequestFailureException(

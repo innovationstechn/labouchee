@@ -44,7 +44,8 @@ class OnboardingView extends StatelessWidget {
                         width: double.infinity,
                         child: GestureDetector(
                           onTap: () {
-                            if(e == onboardingVM.images.last) onboardingVM.onUserDone();
+                            if (e == onboardingVM.images.last)
+                              onboardingVM.onUserDone();
                           },
                           child: Image.asset(
                             e,

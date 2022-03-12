@@ -4,8 +4,7 @@ part 'apply_coupon.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ApplyCouponModel {
-  final String? mobileId,
-      coupon;
+  final String? mobileId, coupon;
 
   ApplyCouponModel({
     this.mobileId,

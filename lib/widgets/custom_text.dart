@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CustomText extends StatelessWidget {
   final String? text;
   final Color? color;
@@ -32,7 +33,7 @@ class CustomText extends StatelessWidget {
               text!,
               maxLines: maxLines,
               style: TextStyle(
-                  decoration: underline?TextDecoration.underline:null,
+                  decoration: underline ? TextDecoration.underline : null,
                   fontSize: fontSize,
                   fontWeight: fontWeight,
                   color: color,
@@ -48,7 +49,7 @@ class CustomText extends StatelessWidget {
                 text!,
                 maxLines: maxLines,
                 style: TextStyle(
-                    decoration: underline?TextDecoration.underline:null,
+                    decoration: underline ? TextDecoration.underline : null,
                     fontSize: fontSize,
                     fontWeight: fontWeight,
                     color: color,

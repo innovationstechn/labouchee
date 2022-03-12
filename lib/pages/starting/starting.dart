@@ -110,11 +110,12 @@ class _StartingState extends State<Starting> {
           backgroundColor: Colors.white,
           body: DoubleBack(
             onFirstBackPress: (context) {
-              if(_currentIndex!=0){
+              if (_currentIndex != 0) {
                 setState(() => _currentIndex = 0);
                 _pageController.jumpToPage(0);
-              }else{
-                snackBarService.showSnackbar(message: 'Press back again to exit');
+              } else {
+                snackBarService.showSnackbar(
+                    message: 'Press back again to exit');
               }
             },
             child: SizedBox.expand(

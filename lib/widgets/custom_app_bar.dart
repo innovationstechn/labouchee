@@ -15,16 +15,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
         toolbarHeight: 50,
         elevation: 0,
-        leading: const BackButton(
-            color: Colors.black
-        ),
+        leading: const BackButton(color: Colors.black),
         title: CustomText(
-          text: title, fontWeight: FontWeight.bold, fontSize: 15.sp,),
+          text: title,
+          fontWeight: FontWeight.bold,
+          fontSize: 15.sp,
+        ),
         titleTextStyle: const TextStyle(color: Colors.black),
         backgroundColor: Colors.white);
   }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
 }

@@ -19,6 +19,5 @@ class NotificationContentModel {
   factory NotificationContentModel.fromJson(Map<String, dynamic> json) =>
       _$NotificationContentModelFromJson(json);
 
-
   Map<String, dynamic> toJson() => _$NotificationContentModelToJson(this);
 }

@@ -15,31 +15,32 @@ class PriceTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomText(
-      text: priceSelection().toString() + " " + AppLocalizations.of(context)!.currency,
+      text: priceSelection().toString() +
+          " " +
+          AppLocalizations.of(context)!.currency,
       fontSize: 14.sp,
       fontWeight: FontWeight.bold,
     );
   }
 
-  double? priceSelection(){
-     double? price;
+  double? priceSelection() {
+    double? price;
 
-     if (productDetailsVM.details.price != null) {
-       price = productDetailsVM.details.price!;
-     } else {
-       switch (selectedSize) {
-         case 'SMALL':
-           price = productDetailsVM.details.priceSmall!;
-           break;
-         case 'MEDIUM':
-           price = productDetailsVM.details.priceMedium!;
-           break;
-         case 'LARGE':
-           price = productDetailsVM.details.priceLarge!;
-           break;
-       }
-     }
-     return price??0;
+    if (productDetailsVM.details.price != null) {
+      price = productDetailsVM.details.price!;
+    } else {
+      switch (selectedSize) {
+        case 'SMALL':
+          price = productDetailsVM.details.priceSmall!;
+          break;
+        case 'MEDIUM':
+          price = productDetailsVM.details.priceMedium!;
+          break;
+        case 'LARGE':
+          price = productDetailsVM.details.priceLarge!;
+          break;
+      }
+    }
+    return price ?? 0;
   }
-
 }

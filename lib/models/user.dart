@@ -42,7 +42,11 @@ class UserModel {
     this.signupCouponUsed,
   });
 
-  static String? _boolToString(bool? b) => b == null ? null : b ? '1' : '0';
+  static String? _boolToString(bool? b) => b == null
+      ? null
+      : b
+          ? '1'
+          : '0';
   static bool? _boolFromString(String? s) => s == null ? null : s == '1';
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

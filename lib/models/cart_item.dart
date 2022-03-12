@@ -49,18 +49,18 @@ class CartItemSizeModel {
   });
 
   factory CartItemSizeModel.fromJson(Map<String, dynamic> json) =>
-     _$CartItemSizeModelFromJson(json);
+      _$CartItemSizeModelFromJson(json);
 
   static double? _doubleFromUnknown(Object? o) {
-    if(o == null) return null;
-    if(o is double) return o;
+    if (o == null) return null;
+    if (o is double) return o;
 
     return double.tryParse(o.toString());
   }
 
   static int? _intFromUnknown(Object? o) {
-    if(o == null) return null;
-    if(o is int) return o;
+    if (o == null) return null;
+    if (o is int) return o;
 
     return int.tryParse(o.toString());
   }

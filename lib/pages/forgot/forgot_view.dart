@@ -65,7 +65,8 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
             height: 10,
           ),
           CustomText(
-            text: AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
+            text: AppLocalizations.of(context)!
+                .enterInformationBelowToResetPassword,
             fontSize: 12.sp,
             fontWeight: FontWeight.normal,
             color: Colors.grey,
@@ -117,7 +118,8 @@ class ForgotView extends StatelessWidget with ValidatorMixin {
                   height: 10,
                 ),
                 CustomText(
-                    text: AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
+                    text: AppLocalizations.of(context)!
+                        .enterInformationBelowToResetPassword,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.normal,
                     color: Colors.grey,

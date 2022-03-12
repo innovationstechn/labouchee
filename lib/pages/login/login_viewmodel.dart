@@ -35,19 +35,18 @@ class LoginVM extends BaseViewModel {
           message: e.toString(),
         );
       } catch (e) {
-        _snackbarService.showSnackbar(
-            message: Strings.unknownError);
+        _snackbarService.showSnackbar(message: Strings.unknownError);
       }
     }
 
     await runBusyFuture(_login());
   }
 
-  void navigateToForgotPassword(){
+  void navigateToForgotPassword() {
     _navigationService.router.navigate(ForgotScreenRoute());
   }
 
-  void navigateToSignUp(){
+  void navigateToSignUp() {
     _navigationService.router.navigate(RegisterScreenRoute());
   }
 }

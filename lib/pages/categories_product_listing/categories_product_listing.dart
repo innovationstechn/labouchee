@@ -27,7 +27,9 @@ class _CategoryProductListingState extends State<CategoryProductListing> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: widget.category.name,),
+      appBar: CustomAppBar(
+        title: widget.category.name,
+      ),
       body: ViewModelBuilder<CategoryProductListingVM>.reactive(
         viewModelBuilder: () =>
             CategoryProductListingVM(categoryModel: widget.category),

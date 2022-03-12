@@ -10,7 +10,6 @@ class BannerFilterModel {
     this.type,
   });
 
-
   factory BannerFilterModel.fromJson(Map<String, dynamic> json) =>
       _$BannerFilterModelFromJson(json);
 

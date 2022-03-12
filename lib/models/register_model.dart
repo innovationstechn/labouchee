@@ -23,7 +23,7 @@ class RegisterModel {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = _$RegisterModelToJson(this);
 
-    if(address2 != null) {
+    if (address2 != null) {
       map['address[]'] = [address1, address2];
     } else {
       map['address[]'] = [address1];

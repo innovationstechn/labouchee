@@ -21,25 +21,28 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.myOrders,),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.myOrders,
+      ),
       body: ViewModelBuilder<MyOrdersVM>.reactive(
           viewModelBuilder: () => MyOrdersVM(),
-          onModelReady: (model)=> model.loadData(),
+          onModelReady: (model) => model.loadData(),
           builder: (context, ordersVM, _) {
-
-            if(ordersVM.isBusy) {
-              return Center(child: CustomCircularProgressIndicator(),);
+            if (ordersVM.isBusy) {
+              return Center(
+                child: CustomCircularProgressIndicator(),
+              );
             }
             return ListView.builder(
                 itemCount: ordersVM.orders.length,
                 itemBuilder: (context, index) {
-                  return orderCard(ordersVM.orders[index],ordersVM);
+                  return orderCard(ordersVM.orders[index], ordersVM);
                 });
           }),
     );
   }
 
-  Widget orderCard(MyOrderModel myOrderModel,MyOrdersVM myOrdersVM) {
+  Widget orderCard(MyOrderModel myOrderModel, MyOrdersVM myOrdersVM) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -121,7 +124,8 @@ class _MyOrdersState extends State<MyOrders> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0))),
                   ),
-                  onPressed: () =>myOrdersVM.navigateToOrderDetailPage(myOrderModel),
+                  onPressed: () =>
+                      myOrdersVM.navigateToOrderDetailPage(myOrderModel),
                   child: CustomText(
                     text: AppLocalizations.of(context)!.details,
                     color: Colors.brown,
@@ -129,7 +133,9 @@ class _MyOrdersState extends State<MyOrders> {
                   ),
                 ),
                 CustomText(
-                  text: AppLocalizations.of(context)!.status+" "+myOrderModel.status!,
+                  text: AppLocalizations.of(context)!.status +
+                      " " +
+                      myOrderModel.status!,
                   fontSize: 12.sp,
                   color: Theme.of(context).primaryColor,
                 ),

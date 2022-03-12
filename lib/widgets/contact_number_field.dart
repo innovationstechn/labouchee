@@ -35,13 +35,14 @@ class ContactFormWidget extends FormField<String> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          border:Border.all(color: Theme.of(context!).primaryColor)
-                      ),
+                          border: Border.all(
+                              color: Theme.of(context!).primaryColor)),
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0,left:8 ,right: 8),
+                        padding: const EdgeInsets.only(
+                            bottom: 8.0, left: 8, right: 8),
                         child: InternationalPhoneNumberInput(
-                          selectorConfig:const SelectorConfig(
-                            selectorType:  PhoneInputSelectorType.DROPDOWN,
+                          selectorConfig: const SelectorConfig(
+                            selectorType: PhoneInputSelectorType.DROPDOWN,
                             showFlags: true,
                           ),
                           countries: ["SA"],
@@ -58,7 +59,8 @@ class ContactFormWidget extends FormField<String> {
                             errorText: errorText,
                             hintText: labelText,
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor),
                             ),
                             hintStyle: TextStyle(
                                 color: focusNode!.hasFocus
@@ -77,7 +79,8 @@ class ContactFormWidget extends FormField<String> {
                           onInputChanged: (PhoneNumber value) {
                             state.didChange(textEditingController!.text);
                           },
-                          keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                          keyboardType: TextInputType.numberWithOptions(
+                              signed: true, decimal: true),
                         ),
                       ),
                     ),

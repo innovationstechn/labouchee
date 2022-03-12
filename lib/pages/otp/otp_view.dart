@@ -27,13 +27,13 @@ class OtpView extends StatelessWidget {
             );
           }
 
-          return otpField(otpVM,context);
+          return otpField(otpVM, context);
         },
       ),
     );
   }
 
-  Widget otpField(OtpVM otpVM,BuildContext context) {
+  Widget otpField(OtpVM otpVM, BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -51,13 +51,14 @@ class OtpView extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.otpVerification,
                   style:
-                  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.enterInformationBelowToResetPassword,
+                  AppLocalizations.of(context)!
+                      .enterInformationBelowToResetPassword,
                   style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,

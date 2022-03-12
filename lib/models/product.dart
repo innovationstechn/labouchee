@@ -9,8 +9,7 @@ class ProductModel {
   final List<String>? images;
 
   @JsonKey(fromJson: doubleFromString, toJson: doubleToString)
-  final double? discount, price,
-      productRating;
+  final double? discount, price, productRating;
 
   @JsonKey(name: 'price_sm', fromJson: doubleFromString, toJson: doubleToString)
   final double? priceSmall;

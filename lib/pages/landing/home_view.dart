@@ -221,15 +221,16 @@ class LandingView extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  item.name!,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis,
+                Expanded(
+                  child: Text(
+                    item.name!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-                const Spacer(),
                 Text(
                   similarProduct[selectedIndex]
                           .productRating

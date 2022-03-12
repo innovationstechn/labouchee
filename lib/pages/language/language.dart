@@ -27,7 +27,7 @@ class _LanguageViewState extends State<LanguageView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppBar(title:  AppLocalizations.of(context)!.languages ),
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.languages),
         body: ViewModelBuilder<LanguageVM>.reactive(
           viewModelBuilder: () => LanguageVM(),
           builder: (context, languageVM, _) {
@@ -77,7 +77,8 @@ class _LanguageViewState extends State<LanguageView> {
                     text: AppLocalizations.of(context)!.submit,
                     size: Size(80.w, 7.h),
                     textFontSize: 12.sp,
-                    onTap: () => languageVM.languageSelection(language!, widget.nextPage),
+                    onTap: () => languageVM.languageSelection(
+                        language!, widget.nextPage),
                   ),
                 ],
               ),

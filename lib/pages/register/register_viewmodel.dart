@@ -61,12 +61,11 @@ class RegisterVM extends BaseViewModel {
     await runBusyFuture(_register());
   }
 
-
-  void navigateToOTPVerification(){
+  void navigateToOTPVerification() {
     _navigationService.router.navigate(OtpScreenRoute());
   }
 
-  void setState(){
+  void setState() {
     clearErrors();
     notifyListeners();
   }

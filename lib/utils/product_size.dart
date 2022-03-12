@@ -1,10 +1,8 @@
-enum ProductSize {
-  small, medium, large, unknown
-}
+enum ProductSize { small, medium, large, unknown }
 
 extension Stringify on ProductSize {
   String toJson() {
-    switch(this) {
+    switch (this) {
       case ProductSize.small:
         return 'sm';
       case ProductSize.medium:
@@ -17,15 +15,15 @@ extension Stringify on ProductSize {
   }
 
   ProductSize fromJson() {
-   return ProductSize.unknown;
+    return ProductSize.unknown;
   }
 
   ProductSize fromString(String size) {
-    if(size.toLowerCase() == 'large') {
+    if (size.toLowerCase() == 'large') {
       return ProductSize.large;
-    } else if(size.toLowerCase() == 'medium') {
+    } else if (size.toLowerCase() == 'medium') {
       return ProductSize.medium;
-    } else if(size.toLowerCase() == 'small') {
+    } else if (size.toLowerCase() == 'small') {
       return ProductSize.small;
     } else {
       return ProductSize.unknown;
@@ -34,7 +32,7 @@ extension Stringify on ProductSize {
 }
 
 String productSizeToString(ProductSize size) {
-  switch(size) {
+  switch (size) {
     case ProductSize.small:
       return 'sm';
     case ProductSize.medium:
@@ -47,11 +45,11 @@ String productSizeToString(ProductSize size) {
 }
 
 ProductSize productFromString(String size) {
-  if(size.toLowerCase() == 'large') {
+  if (size.toLowerCase() == 'large') {
     return ProductSize.large;
-  } else if(size.toLowerCase() == 'medium') {
+  } else if (size.toLowerCase() == 'medium') {
     return ProductSize.medium;
-  } else if(size.toLowerCase() == 'small') {
+  } else if (size.toLowerCase() == 'small') {
     return ProductSize.small;
   } else {
     return ProductSize.unknown;
