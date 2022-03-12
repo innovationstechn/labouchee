@@ -4,20 +4,16 @@ import 'package:flutter/rendering.dart';
 import 'package:labouchee/pages/product_details/product_details_viewmodel.dart';
 import 'package:labouchee/widgets/custom_button.dart';
 import 'package:labouchee/widgets/custom_text.dart';
+import 'package:labouchee/widgets/product_details_widgets/price_tag.dart';
+import 'package:labouchee/widgets/product_details_widgets/product_size.dart';
+import 'package:labouchee/widgets/product_details_widgets/review_widget.dart';
+import 'package:labouchee/widgets/product_details_widgets/similar_products.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
-import '../../app/locator.dart';
-import '../../app/routes.gr.dart';
 import '../../models/product.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../models/product_review.dart';
-import '../../product_card.dart';
-import '../../services/navigator.dart';
 import '../../widgets/custom_circular_progress_indicator.dart';
-import '../../widgets/reviews_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class ProductDetailPage extends StatefulWidget {
   final int selectedIndex;
@@ -32,7 +28,6 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  final _navigationService = locator<NavigatorService>();
   ProductModel? selectedItem;
   String? selectedSize = "SMALL";
   int quantitySelected = 1;
@@ -106,11 +101,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
                               ),
-                              // Icon(
-                              //   Icons.favorite,
-                              //   size: 15.sp,
-                              //   color: Colors.redAccent,
-                              // ),
                             ],
                           ),
                           const SizedBox(
@@ -124,7 +114,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.normal,
                               ),
-                              priceTag(productDetailsVM)
+                              PriceTag(
+                                  productDetailsVM: productDetailsVM,
+                                  selectedSize: selectedSize ?? "")
                             ],
                           ),
                           const SizedBox(
@@ -147,11 +139,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   text: productDetailsVM.details.description),
                             ],
                           ),
-                          Container(
-                              margin: const EdgeInsetsDirectional.only(
-                                  bottom: 20, top: 10),
-                              child: productSizeWidget(
-                                  constraints, productDetailsVM)),
+                          ProductSize(
+                            selectedSize: selectedSize ?? "",
+                            productDetailsVM: productDetailsVM,
+                            onSizeChanged: (size) {
+                              selectedSize = size;
+                              productDetailsVM.notifyListeners();
+                            },
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -172,11 +167,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          buildReviewCard(
-                              constraints,
-                              productDetailsVM.productReviews,
-                              productDetailsVM),
-                          buildSimilarProudcts(constraints)
+                          ProductDetailsReviewCard(
+                              productDetailsVM: productDetailsVM,
+                              similarProducts: widget.similarProducts,
+                              selectedIndex: widget.selectedIndex),
+                          SimilarProducts(
+                            similarProducts: widget.similarProducts,
+                            selectedIndex: widget.selectedIndex,
+                          ),
                         ],
                       ),
                     ),
@@ -187,87 +185,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           }),
         );
       },
-    );
-  }
-
-  Widget productSizeWidget(
-      BoxConstraints constraints, ProductDetailsVM productDetailsVM) {
-    if (productDetailsVM.details.price != null) {
-      String? size = "STANDARD";
-      if (productDetailsVM.details.priceSmall != null) size = 'SMALL';
-      if (productDetailsVM.details.priceMedium != null) size = 'MEDIUM';
-      if (productDetailsVM.details.priceLarge != null) size = 'LARGE';
-
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            CustomText(
-              text: AppLocalizations.of(context)?.availableSize,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.bold,
-            ),
-            CustomText(
-              text: size,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.normal,
-            ),
-          ],
-        ),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          text: AppLocalizations.of(context)?.availableSizes,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (productDetailsVM.details.priceSmall != null)
-              productSize(constraints, "SMALL", productDetailsVM),
-            if (productDetailsVM.details.priceMedium != null)
-              productSize(constraints, "MEDIUM", productDetailsVM),
-            if (productDetailsVM.details.priceLarge != null)
-              productSize(constraints, "LARGE", productDetailsVM),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget productSize(BoxConstraints constraints, String? text,
-      ProductDetailsVM productDetailsVM) {
-    bool isSelected = text == selectedSize;
-    return GestureDetector(
-      onTap: () {
-        selectedSize = text;
-        productDetailsVM.notifyListeners();
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: Border.all(
-            width: 1,
-            color: isSelected ? Theme.of(context).primaryColor : Colors.black12,
-          ),
-        ),
-        margin: const EdgeInsetsDirectional.only(start: 10),
-        width: constraints.maxWidth * 0.25,
-        height: constraints.maxWidth * 0.08,
-        child: Center(
-          child: CustomText(
-            text: text,
-            fontSize: 12.sp,
-            color: Colors.black,
-          ),
-        ),
-      ),
     );
   }
 
@@ -319,32 +236,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Widget priceTag(ProductDetailsVM productDetailsVM) {
-    double? price;
-
-    if (productDetailsVM.details.price != null) {
-      price = productDetailsVM.details.price!;
-    } else {
-      switch (selectedSize) {
-        case 'SMALL':
-          price = productDetailsVM.details.priceSmall!;
-          break;
-        case 'MEDIUM':
-          price = productDetailsVM.details.priceMedium!;
-          break;
-        case 'LARGE':
-          price = productDetailsVM.details.priceLarge!;
-          break;
-      }
-    }
-
-    return CustomText(
-      text: price.toString()+" "+AppLocalizations.of(context)!.currency,
-      fontSize: 14.sp,
-      fontWeight: FontWeight.bold,
-    );
-  }
-
   Widget imageCards(BoxConstraints constraints, int index,
       ProductDetailsVM productDetailsVM) {
     return GestureDetector(
@@ -353,231 +244,24 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         productDetailsVM.notifyListeners();
       },
       child: Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxWidth * 0.2,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              border: Border.all(
-                  color: selectedImageIndex == index
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey)),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            child: SizedBox.expand(
-              child: Image.network(
-                productDetailsVM.details.images![index],
-                fit: BoxFit.fill,
-              ),
+        width: constraints.maxWidth * 0.25,
+        height: constraints.maxWidth * 0.2,
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(
+                color: selectedImageIndex == index
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey)),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          child: SizedBox.expand(
+            child: Image.network(
+              productDetailsVM.details.images![index],
+              fit: BoxFit.fill,
             ),
-          )),
-    );
-  }
-
-  Widget buildReviewCard(BoxConstraints boxConstraints,
-      List<ProductReviewModel> reviews, ProductDetailsVM productDetailsVM) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomText(
-              text: AppLocalizations.of(context)?.reviews,
-              padding: EdgeInsets.all(10),
-              fontSize: 14.sp,
-              fontWeight: FontWeight.bold,
-            ),
-            if (reviews.length > 2)
-              CustomText(
-                text: AppLocalizations.of(context)?.viewAll,
-                color: Theme.of(context).primaryColor,
-                padding: EdgeInsets.all(10),
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                onTap: () {
-                  _navigationService.router.navigate(
-                    ReviewsScreenRoute(
-                      reviewsModel: reviews,
-                    ),
-                  );
-                },
-              ),
-          ],
-        ),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
-          itemCount: reviews.length > 2 ? 2 : reviews.length,
-          itemBuilder: (context, index) {
-            final review = reviews.elementAt(index);
-
-            return ReviewUI(
-              image: review.avatar!,
-              name: review.name!,
-              date: review.createdAt!.toString(),
-              comment: review.review!,
-              rating: 4,
-              onPressed: () => print("More Action $index"),
-              onTap: () {},
-              isLess: false,
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const Divider(
-              thickness: 1.0,
-              color: Colors.black12,
-            );
-          },
-        ),
-        Center(
-          child: CustomButton(
-            text: AppLocalizations.of(context)?.addREVIEW,
-            onTap: () => _showRatingAppDialog(boxConstraints, productDetailsVM),
-            buttonColor: Theme.of(context).primaryColor,
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _showRatingAppDialog(
-      BoxConstraints boxConstraints, ProductDetailsVM productDetailsVM) {
-    final TextEditingController comment = TextEditingController();
-    double? rating = 3;
-
-    final _dialog = AlertDialog(
-      content: SingleChildScrollView(
-        child: Container(
-          height: boxConstraints.maxHeight * 0.53,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: boxConstraints.maxHeight * 0.2,
-                child: SizedBox.expand(
-                  child: Image.network(
-                    widget.similarProducts[widget.selectedIndex].images!
-                        .elementAt(0),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              CustomText(
-                text: AppLocalizations.of(context)?.title,
-                fontSize: 14.sp,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                fontWeight: FontWeight.bold,
-              ),
-              CustomText(
-                text:
-                AppLocalizations.of(context)?.tapAStar,
-                fontSize: 12.sp,
-                maxLines: 3,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                fontWeight: FontWeight.normal,
-              ),
-              RatingBar.builder(
-                initialRating: 3,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Color(0xffDE970B),
-                ),
-                itemSize: 0.08 * boxConstraints.maxWidth,
-                onRatingUpdate: (rate) {
-                  rating = rate;
-                },
-              ),
-              TextFormField(
-                  controller: comment,
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)?.comment,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                    ),
-                  )),
-              CustomButton(
-                onTap: () async {
-                  if (comment.text.isEmpty) {
-                    productDetailsVM.postProductReview("N/A", rating!.toInt());
-                  } else {
-                    productDetailsVM.postProductReview(
-                        comment.text, rating!.toInt());
-                  }
-                  Navigator.of(context).pop();
-                },
-                text: AppLocalizations.of(context)?.submit,
-                padding: const EdgeInsetsDirectional.only(top: 10),
-              )
-            ],
           ),
         ),
       ),
-    );
-    showDialog(
-      context: context,
-      barrierDismissible: true, // set to false if you want to force a rating
-      builder: (context) => _dialog,
-    );
-  }
-
-  Widget buildSimilarProudcts(BoxConstraints boxConstraints) {
-    double boxHeight =
-        boxConstraints.maxHeight * 0.65 > boxConstraints.maxWidth * 0.4
-            ? boxConstraints.maxWidth * 0.5
-            : boxConstraints.maxHeight * 0.65;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          text: AppLocalizations.of(context)?.similarProducts,
-          fontSize: 15.sp,
-          fontWeight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: boxHeight,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: widget.similarProducts.length,
-            itemBuilder: (context, index) {
-              return index == widget.selectedIndex
-                  ? Container()
-                  : Container(
-                      width: boxConstraints.maxWidth * 0.4,
-                      padding: const EdgeInsetsDirectional.only(end: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          _navigationService.router.popAndPush(
-                            ProductScreenRoute(
-                                selectedIndex: index,
-                                similarProducts: widget.similarProducts),
-                          );
-                        },
-                        child: ProductCard(
-                          disableOnTap: true,
-                          isSmall: false,
-                          selectedItemIndex: index,
-                          similarModel: widget.similarProducts,
-                        ),
-                      ),
-                    );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

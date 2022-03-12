@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:labouchee/pages/categories_listing/categories_listing.dart';
 import 'package:labouchee/pages/landing/home_view.dart';
-import 'package:labouchee/pages/my_orders/my_orders.dart';
 import 'package:labouchee/pages/starting/starting_viewmodel.dart';
 import 'package:labouchee/widgets/custom_circular_progress_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../services/navigator.dart';

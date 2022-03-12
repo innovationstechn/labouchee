@@ -49,105 +49,54 @@ class Branches extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.home,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.name!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.home, branch.name ?? ""),
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.phone,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.contactNo!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.phone, branch.contactNo ?? ""),
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.phone,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.whatsapp!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.phone, branch.whatsapp ?? ""),
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.watch_later_outlined,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.timing!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.watch_later_outlined, branch.timing ?? ""),
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.email,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.email!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.email, branch.email ?? ""),
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.pin_drop,
-                  size: 17.sp,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomText(text: branch.address!, fontSize: 12.sp),
-              ],
-            ),
+            customRow(Icons.pin_drop, branch.address ?? ""),
             const SizedBox(
               height: 5,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget customRow(IconData icon, String title) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          size: 17.sp,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Flexible(
+            child: CustomText(
+          text: title,
+          fontSize: 12.sp,
+          maxLines: 2,
+        )),
+      ],
     );
   }
 }
