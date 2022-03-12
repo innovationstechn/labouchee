@@ -220,15 +220,12 @@ class LandingView extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: Text(
-                    item.name!,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                Text(
+                  item.name!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Text(
