@@ -58,9 +58,9 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
                   ),
                   MyOrderProductDetails(detailModel: detailVM.detail!),
                   customRow(AppLocalizations.of(context)!.deliveryCharges,
-                      detailVM.detail!.shippingAmount.toString()),
+                      detailVM.detail!.shippingAmount.toString(),11.sp),
                   customRow(AppLocalizations.of(context)!.discountAmount,
-                      detailVM.detail!.discountAmount.toString()),
+                      detailVM.detail!.discountAmount.toString(),11.sp),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: DottedBorder(
@@ -70,6 +70,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
                           AppLocalizations.of(context)!.grandTotal,
                           detailVM.detail!.orderTotalAmount.toString() +  " " +
                               AppLocalizations.of(context)!.currency,
+                        13.sp
                       ),
                     ),
                   )
@@ -82,7 +83,7 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
     );
   }
 
-  Widget customRow(String title, String value) {
+  Widget customRow(String title, String value,double fontSize) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(
           start: 10, end: 20, top: 10, bottom: 10),
@@ -91,10 +92,10 @@ class _MyOrderDetailPageState extends State<MyOrderDetailPage> {
         children: [
           CustomText(
             text: title,
-            fontSize: 15.sp,
+            fontSize: fontSize,
             fontWeight: FontWeight.bold,
           ),
-          CustomText(text: value, fontSize: 13.sp),
+          CustomText(text: value, fontSize: fontSize),
         ],
       ),
     );

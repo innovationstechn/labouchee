@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
 import '../../models/product.dart';
+import '../../widgets/custom_cached_image.dart';
 import '../../widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -60,11 +61,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               children: <Widget>[
                 SizedBox(
                   height: constraints.maxHeight * 0.35,
-                  child: SizedBox.expand(
-                    child: Image.network(
-                      productDetailsVM.details.images![selectedImageIndex!],
-                      fit: BoxFit.fill,
-                    ),
+                  child: CustomCachedImage(
+                    image: productDetailsVM.details.images![selectedImageIndex!],
                   ),
                 ),
                 SlidingUpPanel(
@@ -257,12 +255,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     : Colors.grey)),
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          child: SizedBox.expand(
-            child: Image.network(
-              productDetailsVM.details.images![index],
-              fit: BoxFit.fill,
-            ),
-          ),
+          child:CustomCachedImage(
+            image: productDetailsVM.details.images![index],
+          )
         ),
       ),
     );

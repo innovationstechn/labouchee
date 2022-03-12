@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/cart/cart_viewmodel.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:labouchee/widgets/custom_circular_progress_indicator.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
@@ -124,11 +125,8 @@ class _CartState extends State<Cart> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10.0)),
-                        child: SizedBox.expand(
-                          child: Image.network(
-                            item.image!,
-                            fit: BoxFit.fill,
-                          ),
+                        child: CustomCachedImage(
+                          image:item.image!
                         ),
                       ),
                     ),

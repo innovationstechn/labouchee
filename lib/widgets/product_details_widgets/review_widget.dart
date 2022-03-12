@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:labouchee/models/product.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -122,11 +123,8 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
           AspectRatio(
             aspectRatio: 16/9,
             child: SizedBox.expand(
-              child: Image.network(
-                widget.similarProducts[widget.selectedIndex].images!
-                    .elementAt(0),
-                fit: BoxFit.fill,
-              ),
+              child: CustomCachedImage(image: widget.similarProducts[widget.selectedIndex].images!
+                  .elementAt(0),)
             ),
           ),
           CustomText(

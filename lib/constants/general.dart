@@ -6,3 +6,4 @@ const API_KEY = '1234';
 
 const DEFAULT_LOCALE = Locale('en');
 final NAVIGATOR_KEY = GlobalKey<NavigatorState>();
+

@@ -9,6 +9,7 @@ import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
 import 'package:labouchee/services/navigator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
@@ -69,9 +70,9 @@ class LandingView extends StatelessWidget {
                                   (e) => ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5.0)),
-                                    child: Image.network(
-                                      e.photo!,
-                                      fit: BoxFit.cover,
+                                    child: CustomCachedImage(
+                                      image: e.photo!,
+                                      boxFit: BoxFit.cover,
                                     ),
                                   ),
                                 )
@@ -92,13 +93,18 @@ class LandingView extends StatelessWidget {
                                   ),
                                   tabs: [
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.featured),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!
+                                              .featured),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.hotSale),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!
+                                              .hotSale),
                                     ),
                                     Tab(
-                                      child: buildCategoryCapsule(AppLocalizations.of(context)!.viewed),
+                                      child: buildCategoryCapsule(
+                                          AppLocalizations.of(context)!.viewed),
                                     ),
                                   ],
                                 ),
@@ -121,7 +127,8 @@ class LandingView extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              buildCategoryCapsule(AppLocalizations.of(context)!.ourCatalog),
+                              buildCategoryCapsule(
+                                  AppLocalizations.of(context)!.ourCatalog),
                             ],
                           ),
                         ),
@@ -238,28 +245,31 @@ class LandingView extends StatelessWidget {
                 )
               ],
             ),
-
             const SizedBox(
               height: 10,
             ),
-            LayoutBuilder(builder: (context, constraints) {
-              return ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(
-                  similarProduct[selectedIndex].images!.first,
-                  fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: AspectRatio(
+                aspectRatio: 3/2,
+                child: CustomCachedImage(
+                  image: similarProduct[selectedIndex].images!.first,
+                  boxFit: BoxFit.cover,
                 ),
-              );
-            }),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
             LayoutBuilder(builder: (context, constraints) {
               return Wrap(
                 children: [
-                  if (item.priceSmall != null) buildSizeCapsule(AppLocalizations.of(context)!.small),
-                  if (item.priceMedium != null) buildSizeCapsule(AppLocalizations.of(context)!.medium),
-                  if (item.priceLarge != null) buildSizeCapsule(AppLocalizations.of(context)!.large),
+                  if (item.priceSmall != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.small),
+                  if (item.priceMedium != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.medium),
+                  if (item.priceLarge != null)
+                    buildSizeCapsule(AppLocalizations.of(context)!.large),
                 ],
               );
             }),
