@@ -148,7 +148,7 @@ class _CartState extends State<Cart> {
                             height: 8,
                           ),
                           CustomText(
-                            text: e.type!,
+                            text: convertText(e.type!),
                             color: Colors.black38,
                             fontSize: 14.sp,
                             maxLines: 2,
@@ -189,7 +189,7 @@ class _CartState extends State<Cart> {
                                             onTap: () => vm.increase(
                                               item.id!,
                                               1,
-                                              e.type!,
+                                              convertText(e.type!)??"",
                                             ),
                                             child: Icon(
                                               Icons.add,
@@ -243,5 +243,18 @@ class _CartState extends State<Cart> {
             .toList(),
       ],
     );
+  }
+
+  String? convertText(String text){
+    switch(text){
+      case 'sm':
+        return AppLocalizations.of(context)!.small;
+      case 'md':
+        return AppLocalizations.of(context)!.medium;
+      case 'lg':
+        return AppLocalizations.of(context)!.large;
+      default:
+        return text.capitalize;
+    }
   }
 }

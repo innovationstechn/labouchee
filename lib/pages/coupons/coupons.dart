@@ -156,8 +156,8 @@ class _CouponsState extends State<Coupons> {
               ),
             ),
             const Spacer(),
-            const CustomText(
-              text: 'Description',
+            CustomText(
+              text: coupon.description??"",
             ),
             const Spacer(),
             Text(

@@ -39,7 +39,7 @@ class PriceTag extends StatelessWidget {
            break;
        }
      }
-     return price;
+     return price??0;
   }
 
 }
