@@ -5,6 +5,7 @@ import 'package:labouchee/constants/general.dart';
 import 'package:labouchee/language_view_model.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/navigator.dart';
+import 'package:labouchee/services/security.dart';
 import 'package:labouchee/utils/helpers.dart';
 import 'package:labouchee/widgets/setup_bottom_sheet_ui.dart';
 import 'package:labouchee/widgets/setup_dialog_ui.dart';
@@ -19,6 +20,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'l10n/l10n.dart';
 
 Future<void> main() async {
+  final pass = await verification();
+
+  if(!pass) return;
+
   setupLocator();
   setupDialogUi();
   setupSnackbarUi();
