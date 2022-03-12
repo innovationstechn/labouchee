@@ -14,7 +14,7 @@ class ProductCard extends StatelessWidget {
   final int selectedItemIndex;
   final List<ProductModel> similarModel;
   final bool isSmall;
-  final bool disableOnTap;
+  final Function? onTap;
   final NavigatorService _navigationService = locator<NavigatorService>();
 
   ProductCard(
@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
       required this.selectedItemIndex,
       required this.isSmall,
       required this.similarModel,
-      this.disableOnTap = false})
+      this.onTap})
       : super(key: key);
 
   @override
@@ -34,13 +34,13 @@ class ProductCard extends StatelessWidget {
         borderRadius: BorderRadius.all(const Radius.circular(3)),
       ),
       child: GestureDetector(
-        onTap: () => disableOnTap
-            ? null
+        onTap: () => onTap != null
+            ? onTap!()
             : _navigationService.router.navigate(
-          ProductScreenRoute(
-              selectedIndex: selectedItemIndex,
-              similarProducts: similarModel),
-        ),
+                ProductScreenRoute(
+                    selectedIndex: selectedItemIndex,
+                    similarProducts: similarModel),
+              ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     CustomText(
                       text: productModel.name,
@@ -72,43 +72,36 @@ class ProductCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 5),
                     ),
                     CustomText(
-                        text: productModel.price.toString() + " " + AppLocalizations.of(context)!.currency,
+                        text: productModel.price.toString() +
+                            " " +
+                            AppLocalizations.of(context)!.currency,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
-                        padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 5)),
                   ],
                 ),
               ),
             ),
             // Spacer(),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  LayoutBuilder(builder: (context, constraints) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FittedBox(
-                          child: RatingBarIndicator(
-                            itemBuilder: (_, __) => const Icon(
-                              Icons.star,
-                              color: Color(0xffDE970B),
-                            ),
-                            rating: productModel.productRating ?? 0,
-                            itemSize: 0.12 * constraints.maxWidth,
-                            unratedColor: Colors.grey[300],
-                          ),
-                        ),
-                        Icon(
-                          Icons.shopping_cart,
-                        ),
-                      ],
-                    );
-                  }),
-                  // const SizedBox(height: 10)
+                  RatingBarIndicator(
+                    itemBuilder: (_, __) => const Icon(
+                      Icons.star,
+                      color: Color(0xffDE970B),
+                    ),
+                    rating: productModel.productRating ?? 0,
+                    itemSize: 15.sp,
+                    unratedColor: Colors.grey[300],
+                  ),
+                  FittedBox(
+                    child: Icon(
+                      Icons.shopping_cart,
+                    ),
+                  ),
                 ],
               ),
             ),

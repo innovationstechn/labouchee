@@ -102,7 +102,7 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
         Center(
           child: CustomButton(
             text: AppLocalizations.of(context)?.addREVIEW,
-            onTap: () => _showRatingAppDialog(boxConstraints,widget.productDetailsVM),
+            onTap: () => _showRatingAppDialog(widget.productDetailsVM),
             buttonColor: Theme.of(context).primaryColor,
           ),
         ),
@@ -110,81 +110,83 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
     );
   }
 
-  void _showRatingAppDialog(
-      BoxConstraints boxConstraints, ProductDetailsVM productDetailsVM) {
+  void _showRatingAppDialog(ProductDetailsVM productDetailsVM) {
     final TextEditingController comment = TextEditingController();
     double? rating = 3;
 
     final _dialog = AlertDialog(
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox.expand(
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AspectRatio(
+            aspectRatio: 16/9,
+            child: SizedBox.expand(
               child: Image.network(
                 widget.similarProducts[widget.selectedIndex].images!
                     .elementAt(0),
                 fit: BoxFit.fill,
               ),
             ),
-            CustomText(
-              text: AppLocalizations.of(context)?.title,
-              fontSize: 14.sp,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              fontWeight: FontWeight.bold,
+          ),
+          CustomText(
+            text: widget.similarProducts[widget.selectedIndex].name,
+            fontSize: 14.sp,
+            padding: EdgeInsets.symmetric(vertical: 10),
+            fontWeight: FontWeight.bold,
+          ),
+          CustomText(
+            text: AppLocalizations.of(context)?.tapAStar,
+            fontSize: 12.sp,
+            maxLines: 3,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            fontWeight: FontWeight.normal,
+          ),
+          SizedBox(height: 5,),
+          RatingBar.builder(
+            initialRating: 3,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Color(0xffDE970B),
             ),
-            CustomText(
-              text: AppLocalizations.of(context)?.tapAStar,
-              fontSize: 12.sp,
-              maxLines: 3,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              fontWeight: FontWeight.normal,
-            ),
-            RatingBar.builder(
-              initialRating: 3,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Color(0xffDE970B),
-              ),
-              itemSize: 0.08 * boxConstraints.maxWidth,
-              onRatingUpdate: (rate) {
-                rating = rate;
-              },
-            ),
-            TextFormField(
-                controller: comment,
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)?.comment,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                )),
-            CustomButton(
-              onTap: () async {
-                if (comment.text.isEmpty) {
-                  productDetailsVM.postProductReview("N/A", rating!.toInt());
-                } else {
-                  productDetailsVM.postProductReview(
-                      comment.text, rating!.toInt());
-                }
-                Navigator.of(context).pop();
-              },
-              text: AppLocalizations.of(context)?.submit,
-              padding: const EdgeInsetsDirectional.only(top: 10),
-            )
-          ],
-        ),
-      ),
+            itemSize: 18.sp,
+            onRatingUpdate: (rate) {
+              rating = rate;
+            },
+          ),
+          TextFormField(
+              controller: comment,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)?.comment,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Theme.of(context).primaryColor),
+                ),
+              )),
+          CustomButton(
+            onTap: () async {
+              if (comment.text.isEmpty) {
+                productDetailsVM.postProductReview("N/A", rating!.toInt());
+              } else {
+                productDetailsVM.postProductReview(
+                    comment.text, rating!.toInt());
+              }
+              Navigator.of(context).pop();
+            },
+            text: AppLocalizations.of(context)?.submit,
+            padding: const EdgeInsetsDirectional.only(top: 20,bottom: 10),
+          )
+        ],
+      )
     );
     showDialog(
       context: context,

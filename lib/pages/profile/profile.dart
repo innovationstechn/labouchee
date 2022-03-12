@@ -47,9 +47,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)?.profile,
       ),
@@ -216,7 +215,7 @@ class _ProfileState extends State<Profile> {
               ),
             );
           }),
-    ));
+    );
   }
 
   Future showPicker() {

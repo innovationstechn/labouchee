@@ -1,0 +1,6 @@
+{
+  "ar": [
+    "emailAddressBelowToResetPassword",
+    "availableSizes"
+  ]
+}

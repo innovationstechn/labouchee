@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sizer/sizer.dart';
 import '../../app/locator.dart';
@@ -45,7 +46,7 @@ class SimilarProducts extends StatelessWidget {
                       : Container(
                     width: boxConstraints.maxWidth * 0.4,
                     padding: const EdgeInsetsDirectional.only(end: 10),
-                    child: GestureDetector(
+                    child: ProductCard(
                       onTap: () {
                         _navigationService.router.popAndPush(
                           ProductScreenRoute(
@@ -53,12 +54,9 @@ class SimilarProducts extends StatelessWidget {
                               similarProducts: similarProducts),
                         );
                       },
-                      child: ProductCard(
-                        disableOnTap: true,
-                        isSmall: false,
-                        selectedItemIndex: index,
-                        similarModel: similarProducts,
-                      ),
+                      isSmall: false,
+                      selectedItemIndex: index,
+                      similarModel: similarProducts,
                     ),
                   );
                 },
@@ -66,7 +64,6 @@ class SimilarProducts extends StatelessWidget {
             ),
           ],
         );
-
       }
     );
   }

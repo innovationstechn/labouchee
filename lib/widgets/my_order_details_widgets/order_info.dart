@@ -47,7 +47,7 @@ class OrderInfo extends StatelessWidget {
 
   Widget orderInfoTile(String title, String value) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -32,56 +32,54 @@ class _CheckOutState extends State<CheckOut> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       boxConstraints = constraints;
-      return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 50,
-            leading: const BackButton(color: Colors.black),
-            title: CustomText(
-              text: AppLocalizations.of(context)!.checkOUT,
-              fontWeight: FontWeight.bold,
-              fontSize: 15.sp,
-            ),
-            titleTextStyle: const TextStyle(color: Colors.black),
-            backgroundColor: Colors.white,
+      return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 50,
+          leading: const BackButton(color: Colors.black),
+          title: CustomText(
+            text: AppLocalizations.of(context)!.checkOUT,
+            fontWeight: FontWeight.bold,
+            fontSize: 15.sp,
           ),
-          body: ViewModelBuilder<CheckoutVM>.reactive(
-              viewModelBuilder: () => CheckoutVM(),
-              onModelReady: (model) => model.initialize(),
-              builder: (context, checkoutVM, _) {
-                if (checkoutVM.isBusy) {
-                  return const Center(
-                    child: CustomCircularProgressIndicator(),
-                  );
-                }
-                return Stack(
-                  children: [
-                    SizedBox(
-                      height: constraints.maxHeight - 230,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return displayProduct(constraints,
-                              checkoutVM.details!.cart!.items![index]);
-                        },
-                        itemCount: checkoutVM.details!.cart!.items!.length,
-                      ),
-                    ),
-                    SlidingUpPanel(
-                      controller: panelController,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(18.0),
-                          topRight: Radius.circular(18.0)),
-                      maxHeight: 200,
-                      minHeight: 200,
-                      panelBuilder: (sc) =>
-                          _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
-                      onPanelSlide: (double pos){},
-                    )
-                  ],
-                );
-              }),
+          titleTextStyle: const TextStyle(color: Colors.black),
+          backgroundColor: Colors.white,
         ),
+        body: ViewModelBuilder<CheckoutVM>.reactive(
+            viewModelBuilder: () => CheckoutVM(),
+            onModelReady: (model) => model.initialize(),
+            builder: (context, checkoutVM, _) {
+              if (checkoutVM.isBusy) {
+                return const Center(
+                  child: CustomCircularProgressIndicator(),
+                );
+              }
+              return Stack(
+                children: [
+                  SizedBox(
+                    height: constraints.maxHeight - 230,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return displayProduct(constraints,
+                            checkoutVM.details!.cart!.items![index]);
+                      },
+                      itemCount: checkoutVM.details!.cart!.items!.length,
+                    ),
+                  ),
+                  SlidingUpPanel(
+                    controller: panelController,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(18.0),
+                        topRight: Radius.circular(18.0)),
+                    maxHeight: 200,
+                    minHeight: 200,
+                    panelBuilder: (sc) =>
+                        _panel(sc, checkoutVM.details!.cartInfo!, checkoutVM),
+                    onPanelSlide: (double pos){},
+                  )
+                ],
+              );
+            }),
       );
     });
   }

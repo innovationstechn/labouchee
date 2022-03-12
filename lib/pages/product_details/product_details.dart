@@ -171,6 +171,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               productDetailsVM: productDetailsVM,
                               similarProducts: widget.similarProducts,
                               selectedIndex: widget.selectedIndex),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           SimilarProducts(
                             similarProducts: widget.similarProducts,
                             selectedIndex: widget.selectedIndex,

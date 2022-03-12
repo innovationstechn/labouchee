@@ -20,54 +20,52 @@ class _ReviewsState extends State<Reviews> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: CustomAppBar(title:AppLocalizations.of(context)?.reviews),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  text: AppLocalizations.of(context)!.reviews,
-                  padding: EdgeInsets.all(10),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                  itemCount: widget.reviewsModel.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ReviewUI(
-                          image: widget.reviewsModel[index].avatar,
-                          name: widget.reviewsModel[index].name,
-                          date: widget.reviewsModel[index].createdAt.toString(),
-                          comment: widget.reviewsModel[index].review,
-                          rating: 5,
-                          onPressed: () => print("More Action $index"),
-                          onTap: (){},
-                          isLess: false,
-                        ),
-                        const Divider(
-                          thickness: 1.0,
-                          color: Colors.black12,
-                        )
-                      ],
-                    );
-                  },
-                )
-              ],
-            ),
+    return Scaffold(
+      appBar: CustomAppBar(title:AppLocalizations.of(context)?.reviews),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                text: AppLocalizations.of(context)!.reviews,
+                padding: EdgeInsets.all(10),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                itemCount: widget.reviewsModel.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      ReviewUI(
+                        image: widget.reviewsModel[index].avatar,
+                        name: widget.reviewsModel[index].name,
+                        date: widget.reviewsModel[index].createdAt.toString(),
+                        comment: widget.reviewsModel[index].review,
+                        rating: 5,
+                        onPressed: () => print("More Action $index"),
+                        onTap: (){},
+                        isLess: false,
+                      ),
+                      const Divider(
+                        thickness: 1.0,
+                        color: Colors.black12,
+                      )
+                    ],
+                  );
+                },
+              )
+            ],
           ),
-        )
+        ),
+      )
 
-      ),
     );
   }
 }

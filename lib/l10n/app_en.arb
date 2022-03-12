@@ -1,9 +1,9 @@
 {
-  "welcomeToAll": "Welcome to the all-newLaBouchee MobileApp",
+  "welcomeToAll": "Welcome to the New LaBouchee Mobile App",
   "@welcomeToAll": {
     "description": "The current language"
   },
-  "premiumChocolate": "Premiumchocolate with wide range of our products with improved user experience.",
+  "premiumChocolate": "Premium Chocolate with wide range of our products with improved user experience.",
   "@premiumChocolate": {
     "description": "The current language"
   },
@@ -15,7 +15,7 @@
   "@laBoucheeIsArt": {
     "description": "The current language"
   },
-  "ourGoal": "our goal is to satisfy the tastes of the customers.",
+  "ourGoal": "Our goal is to satisfy the tastes of the customers.",
   "@ourGoal": {
     "description": "The current language"
   },
@@ -35,11 +35,11 @@
   "@signIn": {
     "description": "The current language"
   },
-  "signInWithEmailPassword": "Sign in with email password",
+  "signInWithEmailPassword": "Sign in with E-mail and Password",
   "@signInWithEmailPassword": {
     "description": "The current language"
   },
-  "email": "Email",
+  "email": "E-mail",
   "@email": {
     "description": "The current language"
   },
@@ -79,7 +79,7 @@
   "@myProfile": {
     "description": "The current language"
   },
-  "myOrders": "My orders",
+  "myOrders": "My Orders",
   "@myOrders": {
     "description": "The current language"
   },
@@ -87,11 +87,11 @@
   "@featuredProducts": {
     "description": "The current language"
   },
-  "proceedToPay": "Proceed to pay",
+  "proceedToPay": "Proceed to Pay",
   "@proceedToPay": {
     "description": "The current language"
   },
-  "submitOrder": "Submit order",
+  "submitOrder": "Submit Order",
   "@submitOrder": {
     "description": "The current language"
   },
@@ -131,11 +131,11 @@
   "@quantity": {
     "description": "The current language"
   },
-  "addToCard": "Add to cart",
+  "addToCard": "Add to Cart",
   "@addToCard": {
     "description": "The current language"
   },
-  "addReview": "ADD A REVIEW",
+  "addReview": "Add a Review",
   "@addReview": {
     "description": "The current language"
   },
@@ -147,7 +147,7 @@
   "@yourRatings": {
     "description": "The current language"
   },
-  "yourReview": "Your review*",
+  "yourReview": "Your Review*",
   "@yourReview": {
     "description": "The current language"
   },
@@ -191,11 +191,11 @@
   "@name": {
     "description": "The current language"
   },
-  "emailAddress": "Email Address *",
+  "emailAddress": "E-mail Address *",
   "@emailAddress": {
     "description": "The current language"
   },
-  "zipCode": "Zip Code",
+  "zipCode": "Postal Code",
   "@zipCode": {
     "description": "The current language"
   },
@@ -215,239 +215,239 @@
   "@otpVerification": {
     "description": "The current language"
   },
-  "branches": "branches",
+  "branches": "Branches",
   "@branches": {
     "description": "The current language"
   },
-  "cartIsEmpty": "cartIsEmpty",
+  "cartIsEmpty": "Cart is Empty",
   "@cartIsEmpty": {
     "description": "The current language"
   },
-  "checkOUT": "checkOUT",
+  "checkOUT": "Check Out",
   "@checkOUT": {
     "description": "The current language"
   },
-  "categories": "categories",
+  "categories": "Categories",
   "@categories": {
     "description": "The current language"
   },
-  "haveCouponCode": "haveCouponCode?",
+  "haveCouponCode": "Have Coupon Code?",
   "@haveCouponCode?": {
     "description": "The current language"
   },
-  "applyCoupon": "applyCoupon",
+  "applyCoupon": "Apply Coupon",
   "@applyCoupon": {
     "description": "The current language"
   },
-  "enterYourCouponCode": "enterYourCouponCode",
+  "enterYourCouponCode": "Enter Your Coupon Code",
   "@enterYourCouponCode": {
     "description": "The current language"
   },
-  "apply": "apply",
+  "apply": "Apply",
   "@apply": {
     "description": "The current language"
   },
-  "couponOff": "couponOff",
+  "couponOff": "Coupon Off",
   "@couponOff": {
     "description": "The current language"
   },
-  "currency": "currency",
+  "currency": "SAR",
   "@currency": {
     "description": "The current language"
   },
-  "shippingCost": "shippingCost",
+  "shippingCost": "Shipping Cost",
   "@shippingCost": {
     "description": "The current language"
   },
-  "totalCost": "totalCost",
+  "totalCost": "Total Cost",
   "@totalCost": {
     "description": "The current language"
   },
-  "pay": "pay",
+  "pay": "Pay",
   "@pay": {
     "description": "The current language"
   },
-  "coupons": "coupons",
+  "coupons": "Coupons",
   "@coupons": {
     "description": "The current language"
   },
-  "off": "off",
+  "off": "Off",
   "@off": {
     "description": "The current language"
   },
-  "available": "available",
+  "available": "Available",
   "@available": {
     "description": "The current language"
   },
-  "notAvailable": "notAvailable",
+  "notAvailable": "Not Available",
   "@notAvailable": {
     "description": "The current language"
   },
-  "status": "status",
+  "status": "Status",
   "@status": {
     "description": "The current language"
   },
-  "couponCode": "couponCode",
+  "couponCode": "Coupon Code",
   "@couponCode": {
     "description": "The current language"
   },
-  "description": "description",
+  "description": "Description",
   "@description": {
     "description": "The current language"
   },
-  "validTill": "validTill",
+  "validTill": "Valid Till",
   "@validTill": {
     "description": "The current language"
   },
-  "inquiryForm": "inquiryForm",
+  "inquiryForm": "Inquiry Form",
   "@inquiryForm": {
     "description": "The current language"
   },
-  "title": "title",
+  "title": "Title",
   "@title": {
     "description": "The current language"
   },
-  "note": "note",
+  "note": "Note",
   "@note": {
     "description": "The current language"
   },
-  "submit": "submit",
+  "submit": "Submit",
   "@submit": {
     "description": "The current language"
   },
-  "resetPassword": "resetPassword",
+  "resetPassword": "Reset Password",
   "@resetPassword": {
     "description": "The current language"
   },
-  "emailAddressBelowResetPassword": "emailAddressBelowResetPassword",
+  "emailAddressBelowResetPassword": "Add E-mail Address Below to Reset Password",
   "@emailAddressBelowResetPassword": {
     "description": "The current language"
   },
-  "send": "send",
+  "send": "Send",
   "@send": {
     "description": "The current language"
   },
-  "otpVerification": "otpVerification",
+  "otpVerification": "OTP Verification",
   "@otpVerification": {
     "description": "The current language"
   },
-  "enterInformationBelowToResetPassword": "enterInformationBelowToResetPassword",
+  "enterInformationBelowToResetPassword": "Enter Information Below to Reset Password",
   "@enterInformationBelowToResetPassword": {
     "description": "The current language"
   },
-  "otp": "otp",
+  "otp": "OTP",
   "@otp": {
     "description": "The current language"
   },
-  "submit": "submit",
+  "submit": "Submit",
   "@submit": {
     "description": "The current language"
   },
-  "category": "category",
+  "category": "Category",
   "@category": {
     "description": "The current language"
   },
-  "viewAll": "viewAll",
+  "viewAll": "View All",
   "@viewAll": {
     "description": "The current language"
   },
-  "featured": "featured",
+  "featured": "Featured",
   "@featured": {
     "description": "The current language"
   },
-  "hotSale": "hotSale",
+  "hotSale": "Hot Sales",
   "@hotSale": {
     "description": "The current language"
   },
-  "viewed": "viewed",
+  "viewed": "Viewed",
   "@viewed": {
     "description": "The current language"
   },
-  "ourCatalog": "ourCatalog",
+  "ourCatalog": "Our Products",
   "@ourCatalog": {
     "description": "The current language"
   },
-  "small": "small",
+  "small": "Mini",
   "@small": {
     "description": "The current language"
   },
-  "medium": "medium",
+  "medium": "Medium",
   "@medium": {
     "description": "The current language"
   },
-  "large": "large",
+  "large": "Large",
   "@large": {
     "description": "The current language"
   },
-  "myOrder": "myOrder",
+  "myOrder": "My Order",
   "@myOrder": {
     "description": "The current language"
   },
-  "deliveryCharges": "deliveryCharges",
+  "deliveryCharges": "Delivery Charges",
   "@deliveryCharges": {
     "description": "The current language"
   },
-  "discountAmount": "discountAmount",
+  "discountAmount": "Discount Amount",
   "@discountAmount": {
     "description": "The current language"
   },
-  "grandTotal": "grandTotal",
+  "grandTotal": "Grand Total",
   "@grandTotal": {
     "description": "The current language"
   },
-  "myOrders": "myOrders",
+  "myOrders": "My Orders",
   "@myOrders": {
     "description": "The current language"
   },
-  "orderID": "orderID: ",
+  "orderID": "Order ID:",
   "@orderID": {
     "description": "The current language"
   },
-  "totalAmount": "totalAmount:",
+  "totalAmount": "Total Amount:",
   "@totalAmount": {
     "description": "The current language"
   },
-  "details": "details",
+  "details": "Details",
   "@details": {
     "description": "The current language"
   },
-  "status": "status",
+  "status": "Status",
   "@status": {
     "description": "The current language"
   },
-  "createdAt": "createdAt ",
+  "createdAt": "Created At ",
   "@createdAt": {
     "description": "The current language"
   },
-  "otpVerification": "otpVerification",
+  "otpVerification": "OTP Verification",
   "@otpVerification": {
     "description": "The current language"
   },
-  "emailAddressBelowToResetPassword": "emailAddressBelowToResetPassword",
+  "emailAddressBelowToResetPassword": "E-mail Address Below to Reset Password",
   "@emailAddressBelowToResetPassword": {
     "description": "The current language"
   },
-  "placeOrder": "placeOrder",
+  "placeOrder": "Place Order",
   "@placeOrder": {
     "description": "The current language"
   },
-  "address": "address",
+  "address": "Address",
   "@address": {
     "description": "The current language"
   },
-  "contactNumberLikeThat": "contactNumberLikeThat",
+  "contactNumberLikeThat": "Contact Number Like That",
   "@contactNumberLikeThat": {
     "description": "The current language"
   },
-  "paymentMethod": "paymentMethod",
+  "paymentMethod": "Payment Method",
   "@paymentMethod": {
     "description": "The current language"
   },
-  "selectBranch": "selectBranch",
+  "selectBranch": "Select Branch",
   "@selectBranch": {
     "description": "The current language"
   },
-  "note": "note",
+  "note": "Note",
   "@note": {
     "description": "The current language"
   },
@@ -455,199 +455,199 @@
   "@proceed": {
     "description": "The current language"
   },
-  "selectCity": "selectCity",
+  "selectCity": "Select City",
   "@selectCity": {
     "description": "The current language"
   },
-  "confirm": "confirm",
+  "confirm": "Confirm",
   "@confirm": {
     "description": "The current language"
   },
-  "notNow": "notNow",
+  "notNow": "Not Now",
   "@notNow": {
     "description": "The current language"
   },
-  "bookingTime": "bookingTime",
+  "bookingTime": "Booking Time",
   "@bookingTime": {
     "description": "The current language"
   },
-  "creditOrDebitCard": "creditOrDebitCard",
+  "creditOrDebitCard": "Credit/Debit/Mada Card",
   "@creditOrDebitCard": {
     "description": "The current language"
   },
-  "cashOnDelivery": "cashOnDelivery",
+  "cashOnDelivery": "Cash On Delivery",
   "@cashOnDelivery": {
     "description": "The current language"
   },
-  "pickFromBranch": "pickFromBranch",
+  "pickFromBranch": "Pick From Branch",
   "@pickFromBranch": {
     "description": "The current language"
   },
-  "description": "description",
+  "description": "Description",
   "@description": {
     "description": "The current language"
   },
-  "addToCart": "addToCart",
+  "addToCart": "Add to Cart",
   "@addToCart": {
     "description": "The current language"
   },
-  "standard": "standard",
+  "standard": "Standard",
   "@standard": {
     "description": "The current language"
   },
-  "availableSize": "availableSize: ",
+  "availableSize": "Available Size: ",
   "@availableSize": {
     "description": "The current language"
   },
-  "availableSizes": "availableSizes",
+  "availableSizes": "Available Sizes",
   "@availableSizes": {
     "description": "The current language"
   },
-  "reviews": "reviews",
+  "reviews": "Reviews",
   "@reviews": {
     "description": "The current language"
   },
-  "viewAll": "viewAll",
+  "viewAll": "View All",
   "@viewAll": {
     "description": "The current language"
   },
-  "addREVIEW": "addREVIEW",
+  "addREVIEW": "Add Review",
   "@addREVIEW": {
     "description": "The current language"
   },
-  "tapAStar": "tapAStar",
+  "tapAStar": "Tap a Star",
   "@tapAStar": {
     "description": "The current language"
   },
-  "comment": "comment",
+  "comment": "Comment",
   "@comment": {
     "description": "The current language"
   },
-  "submit": "submit",
+  "submit": "Submit",
   "@submit": {
     "description": "The current language"
   },
-  "similarProducts": "similarProducts",
+  "similarProducts": "Similar Products",
   "@similarProducts": {
     "description": "The current language"
   },
-  "profile": "profile",
+  "profile": "Profile",
   "@profile": {
     "description": "The current language"
   },
-  "save": "save",
+  "save": "Save",
   "@save": {
     "description": "The current language"
   },
-  "selectOption": "selectOption",
+  "selectOption": "Select Option",
   "@selectOption": {
     "description": "The current language"
   },
-  "camera": "camera",
+  "camera": "Camera",
   "@camera": {
     "description": "The current language"
   },
-  "storage": "storage",
+  "storage": "Storage",
   "@storage": {
     "description": "The current language"
   },
-  "searchYourFavouriteItem": "searchYourFavouriteItem",
+  "searchYourFavouriteItem": "Search Your Favourite Item",
   "@searchYourFavouriteItem": {
     "description": "The current language"
   },
-  "home": "home",
+  "home": "Home",
   "@home": {
     "description": "The current language"
   },
-  "search": "search",
+  "search": "Search",
   "@search": {
     "description": "The current language"
   },
-  "cart": "cart",
+  "cart": "Cart",
   "@cart": {
     "description": "The current language"
   },
-  "notifications": "notifications",
+  "notifications": "Notifications",
   "@notifications": {
     "description": "The current language"
   },
-  "languages": "languages",
+  "languages": "Languages",
   "@languages": {
     "description": "The current language"
   },
-  "logout": "logout",
+  "logout": "Logout",
   "@logout": {
     "description": "The current language"
   },
-  "termsOfService": "termsOfService",
+  "termsOfService": "Terms of Service",
   "@termsOfService": {
     "description": "The current language"
   },
-  "orderInfo": "orderInfo",
+  "orderInfo": "Order Info",
   "@orderInfo": {
     "description": "The current language"
   },
-  "orderDate": "orderDate",
+  "orderDate": "Order Date",
   "@orderDate": {
     "description": "The current language"
   },
-  "paymentMethod": "paymentMethod",
+  "paymentMethod": "Payment Method",
   "@paymentMethod": {
     "description": "The current language"
   },
-  "paymentStatus": "paymentStatus",
+  "paymentStatus": "Payment Status",
   "@paymentStatus": {
     "description": "The current language"
   },
-  "note": "note",
+  "note": "Note",
   "@note": {
     "description": "The current language"
   },
-  "orderDetails": "orderDetails",
+  "orderDetails": "Order Details",
   "@orderDetails": {
     "description": "The current language"
   },
-  "product": "product",
+  "product": "Product",
   "@product": {
     "description": "The current language"
   },
-  "unitPrice": "unitPrice",
+  "unitPrice": "Unit Price",
   "@unitPrice": {
     "description": "The current language"
   },
-  "size": "size",
+  "size": "Size",
   "@size": {
     "description": "The current language"
   },
-  "quantity": "quantity",
+  "quantity": "Quantity",
   "@quantity": {
     "description": "The current language"
   },
-  "total": "total",
+  "total": "Total",
   "@total": {
     "description": "The current language"
   },
-  "arabic": "arabic",
+  "arabic": "Arabic",
   "@arabic": {
     "description": "The current language"
   },
-  "english": "english",
+  "english": "English",
   "@english": {
     "description": "The current language"
   },
-  "login": "login",
+  "login": "Login",
   "@login": {
     "description": "The current language"
   },
-  "cityNotSelected": "cityNotSelected",
+  "cityNotSelected": "City Not Selected",
   "@cityNotSelected": {
     "description": "The current language"
   },
-  "change": "change",
+  "change": "Change",
   "@change": {
     "description": "The current language"
   },
-  "createAccount": "createAccount",
+  "createAccount": "Create Account",
   "@createAccount": {
     "description": "The current language"
   },
@@ -655,7 +655,7 @@
   "@selectTime": {
     "description": "The current language"
   },
-  "unknownError": "Sorry, we encountered an unknown error",
+  "unknownError": "Sorry, we encounter an unknown error",
   "@unknownError": {
     "description": "The current language"
   },
@@ -679,11 +679,11 @@
   "@paymentProcessError": {
     "description": "The current language"
   },
-  "emailEmpty": "EMAIL SHOULD NOT BE EMPTY",
+  "emailEmpty": "E-MAIL SHOULD NOT BE EMPTY",
   "@emailEmpty": {
     "description": "The current language"
   },
-  "invalidEmail": "INVALID EMAIL",
+  "invalidEmail": "INVALID E-MAIL ID",
   "@invalidEmail": {
     "description": "The current language"
   },
@@ -715,7 +715,10 @@
   "@bookingTime": {
     "description": "The current language"
   },
-  "city": "City"
+  "city": "City",
+  "@city": {
+    "description": "The current language"
+  }
 }
 
 
