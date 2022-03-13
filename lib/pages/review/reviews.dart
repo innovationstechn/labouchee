@@ -46,7 +46,7 @@ class _ReviewsState extends State<Reviews> {
                           name: widget.reviewsModel[index].name,
                           date: widget.reviewsModel[index].createdAt.toString(),
                           comment: widget.reviewsModel[index].review,
-                          rating: 5,
+                          rating: double.parse(widget.reviewsModel[index].rating??"0"),
                           onPressed: () => print("More Action $index"),
                           onTap: () {},
                           isLess: false,

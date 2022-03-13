@@ -146,7 +146,6 @@
   "orderInfo": "بيانات الطلب",
   "orderDate": "تاريخ الطلب",
   "paymentMethod": "طريقة الدفع",
-  "paymentStatus": "حالة الدفع",
   "note": "ملاحظة",
   "orderDetails": "تفاصيل الطلب",
   "product": "المنتج",
@@ -176,6 +175,8 @@
   "nameEmpty": "الإسم لا يمكن أن يكون خالي",
   "bookingDate": "تاريخ الحجز",
   "bookingTime": "وقت الحجز",
-  "city": "المدينة"
+  "city": "المدينة",
+  "orderStatus": "حالة الدفع",
+  "branchName": "اسم الفرع"
 }
 

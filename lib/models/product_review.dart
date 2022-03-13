@@ -5,12 +5,13 @@ part 'product_review.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class ProductReviewModel {
   final int? id;
-  final String? name, review, avatar, userId;
+  final String? name,rating, review, avatar, userId;
   final DateTime? createdAt;
 
   ProductReviewModel({
     this.id,
     this.name,
+    this.rating,
     this.review,
     this.avatar,
     this.userId,

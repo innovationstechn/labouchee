@@ -35,8 +35,11 @@ class OrderInfo extends StatelessWidget {
               detailModel.orderDetails?.bookingTime ?? ""),
           orderInfoTile(AppLocalizations.of(context)!.paymentMethod,
               detailModel.paymentMethod!),
-          orderInfoTile(AppLocalizations.of(context)!.paymentStatus,
+          orderInfoTile(AppLocalizations.of(context)!.orderStatus,
               detailModel.paymentStatus!),
+          if(detailModel.branchId!=null)
+            orderInfoTile(AppLocalizations.of(context)!.branchName,
+                detailModel.branchName??""),
           orderInfoTile(AppLocalizations.of(context)!.note,
               detailModel.orderDetails!.orderNote ?? ""),
           Container(

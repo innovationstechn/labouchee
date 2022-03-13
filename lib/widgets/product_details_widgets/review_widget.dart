@@ -87,7 +87,7 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
               name: review.name!,
               date: review.createdAt!.toString(),
               comment: review.review!,
-              rating: 5,
+              rating: double.parse(review.rating??"0"),
               onPressed: () => print("More Action $index"),
               onTap: () {},
               isLess: false,
