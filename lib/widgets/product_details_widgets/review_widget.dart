@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:labouchee/models/product.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -39,13 +40,12 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, boxConstraints) {
-      return buildReviewCard(
-          boxConstraints, widget.productDetailsVM.productReviews);
+      return buildReviewCard(boxConstraints, widget.productDetailsVM.productReviews);
     });
   }
 
-  Widget buildReviewCard(
-      BoxConstraints boxConstraints, List<ProductReviewModel> reviews) {
+  Widget buildReviewCard(BoxConstraints boxConstraints,
+      List<ProductReviewModel> reviews) {
     return Column(
       children: [
         Row(
@@ -87,7 +87,7 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
               name: review.name!,
               date: review.createdAt!.toString(),
               comment: review.review!,
-              rating: 5,
+              rating: double.parse(review.rating??"0"),
               onPressed: () => print("More Action $index"),
               onTap: () {},
               isLess: false,
@@ -116,76 +116,76 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
     double? rating = 3;
 
     final _dialog = AlertDialog(
-        content: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: SizedBox.expand(
-            child: Image.network(
-              widget.similarProducts[widget.selectedIndex].images!.elementAt(0),
-              fit: BoxFit.fill,
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AspectRatio(
+            aspectRatio: 16/9,
+            child: SizedBox.expand(
+              child: CustomCachedImage(image: widget.similarProducts[widget.selectedIndex].images!
+                  .elementAt(0),)
             ),
           ),
-        ),
-        CustomText(
-          text: widget.similarProducts[widget.selectedIndex].name,
-          fontSize: 14.sp,
-          padding: EdgeInsets.symmetric(vertical: 10),
-          fontWeight: FontWeight.bold,
-        ),
-        CustomText(
-          text: AppLocalizations.of(context)?.tapAStar,
-          fontSize: 12.sp,
-          maxLines: 3,
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          fontWeight: FontWeight.normal,
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        RatingBar.builder(
-          initialRating: 3,
-          minRating: 1,
-          direction: Axis.horizontal,
-          allowHalfRating: true,
-          itemCount: 5,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-          itemBuilder: (context, _) => Icon(
-            Icons.star,
-            color: Color(0xffDE970B),
+          CustomText(
+            text: widget.similarProducts[widget.selectedIndex].name,
+            fontSize: 14.sp,
+            padding: EdgeInsets.symmetric(vertical: 10),
+            fontWeight: FontWeight.bold,
           ),
-          itemSize: 18.sp,
-          onRatingUpdate: (rate) {
-            rating = rate;
-          },
-        ),
-        TextFormField(
-            controller: comment,
-            decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)?.comment,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              ),
-            )),
-        CustomButton(
-          onTap: () async {
-            if (comment.text.isEmpty) {
-              productDetailsVM.postProductReview("N/A", rating!.toInt());
-            } else {
-              productDetailsVM.postProductReview(comment.text, rating!.toInt());
-            }
-            Navigator.of(context).pop();
-          },
-          text: AppLocalizations.of(context)?.submit,
-          padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10),
-        )
-      ],
-    ));
+          CustomText(
+            text: AppLocalizations.of(context)?.tapAStar,
+            fontSize: 12.sp,
+            maxLines: 3,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            fontWeight: FontWeight.normal,
+          ),
+          SizedBox(height: 5,),
+          RatingBar.builder(
+            initialRating: 3,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Color(0xffDE970B),
+            ),
+            itemSize: 18.sp,
+            onRatingUpdate: (rate) {
+              rating = rate;
+            },
+          ),
+          TextFormField(
+              controller: comment,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)?.comment,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Theme.of(context).primaryColor),
+                ),
+              )),
+          CustomButton(
+            onTap: () async {
+              if (comment.text.isEmpty) {
+                productDetailsVM.postProductReview("N/A", rating!.toInt());
+              } else {
+                productDetailsVM.postProductReview(
+                    comment.text, rating!.toInt());
+              }
+              Navigator.of(context).pop();
+            },
+            text: AppLocalizations.of(context)?.submit,
+            padding: const EdgeInsetsDirectional.only(top: 20,bottom: 10),
+          )
+        ],
+      )
+    );
     showDialog(
       context: context,
       barrierDismissible: true, // set to false if you want to force a rating

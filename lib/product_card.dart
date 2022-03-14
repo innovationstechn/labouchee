@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:labouchee/widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -48,11 +49,8 @@ class ProductCard extends StatelessWidget {
           children: [
             Flexible(
               flex: 4,
-              child: SizedBox.expand(
-                child: Image.network(
-                  productModel.images!.elementAt(0),
-                  fit: BoxFit.fill,
-                ),
+              child:CustomCachedImage(
+                image:productModel.images!.elementAt(0)
               ),
             ),
             Flexible(

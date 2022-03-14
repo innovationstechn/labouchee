@@ -59,7 +59,7 @@ class _MyOrdersState extends State<MyOrders> {
                 Row(
                   children: [
                     CustomText(
-                      text: AppLocalizations.of(context)!.name,
+                      text: AppLocalizations.of(context)!.name + ":",
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                     ),

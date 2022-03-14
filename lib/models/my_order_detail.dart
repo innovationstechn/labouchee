@@ -38,7 +38,8 @@ class MyOrderDetailModel {
       cancelledBy,
       cancellationReason,
       deletedAt,
-      createdTime;
+      createdTime,
+      branchName;
 
   MyOrderDetailModel({
     this.id,
@@ -65,6 +66,7 @@ class MyOrderDetailModel {
     this.cancellationReason,
     this.deletedAt,
     this.createdTime,
+    this.branchName
   });
 
   factory MyOrderDetailModel.fromJson(Map<String, dynamic> json) =>

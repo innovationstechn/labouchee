@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/models/my_order_detail.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:sizer/sizer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../custom_text.dart';
 
@@ -60,8 +62,9 @@ class _MyOrderProductDetailsState extends State<MyOrderProductDetails> {
             height: boxConstraints.maxWidth * 0.28,
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              child: SizedBox.expand(
-                  child: Image.network(cartItemModel.image!, fit: BoxFit.fill)),
+              child: CustomCachedImage(
+                image: cartItemModel.image!,
+              ),
             ),
           ),
           Column(
@@ -72,7 +75,7 @@ class _MyOrderProductDetailsState extends State<MyOrderProductDetails> {
                   cartItemModel.size![0].price.toString()),
               productInfoTile(AppLocalizations.of(context)!.size,
                   cartItemModel.size![0].type!),
-              productInfoTile(AppLocalizations.of(context)!.size,
+              productInfoTile(AppLocalizations.of(context)!.quantity,
                   cartItemModel.size![0].quantity.toString()),
               productInfoTile(
                   AppLocalizations.of(context)!.totalAmount,

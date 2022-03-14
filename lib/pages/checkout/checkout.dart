@@ -5,6 +5,7 @@ import 'package:labouchee/models/cart_item.dart';
 import 'package:labouchee/pages/checkout/checkout_viewmodel.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
 import 'package:labouchee/widgets/custom_button.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:stacked/stacked.dart';
@@ -261,11 +262,8 @@ class _CheckOutState extends State<CheckOut> {
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10.0)),
-                            child: SizedBox.expand(
-                              child: Image.network(
-                                item.image!,
-                                fit: BoxFit.fill,
-                              ),
+                            child: CustomCachedImage(
+                              image: item.image!,
                             ),
                           ),
                         ),

@@ -9,6 +9,7 @@ import 'package:labouchee/models/product.dart';
 import 'package:labouchee/pages/home/category.dart';
 import 'package:labouchee/services/navigator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
@@ -69,9 +70,9 @@ class LandingView extends StatelessWidget {
                                   (e) => ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5.0)),
-                                    child: Image.network(
-                                      e.photo!,
-                                      fit: BoxFit.cover,
+                                    child: CustomCachedImage(
+                                      image: e.photo!,
+                                      boxFit: BoxFit.cover,
                                     ),
                                   ),
                                 )
@@ -245,19 +246,19 @@ class LandingView extends StatelessWidget {
                 )
               ],
             ),
-
             const SizedBox(
               height: 10,
             ),
-            LayoutBuilder(builder: (context, constraints) {
-              return ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(
-                  similarProduct[selectedIndex].images!.first,
-                  fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: AspectRatio(
+                aspectRatio: 3/2,
+                child: CustomCachedImage(
+                  image: similarProduct[selectedIndex].images!.first,
+                  boxFit: BoxFit.cover,
                 ),
-              );
-            }),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),

@@ -7,6 +7,7 @@ import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/category.dart';
 import '../../services/navigator.dart';
+import '../../widgets/custom_cached_image.dart';
 import '../../widgets/custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -75,7 +76,14 @@ class _CategoryState extends State<Category> {
       ),
       child: Column(
         children: [
-          Image.network(categoryModel.photo!, width: 32.w, height: 10.h),
+          Container(
+            width: 32.w,
+            height: 10.h,
+            child: CustomCachedImage(
+              image: categoryModel.photo!,
+              boxFit: BoxFit.contain,
+            ),
+          ),
           const SizedBox(
             height: 8,
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labouchee/app/locator.dart';
 import 'package:labouchee/widgets/custom_app_bar.dart';
+import 'package:labouchee/widgets/custom_cached_image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -50,7 +51,14 @@ class _CategoriesListingState extends State<CategoriesListing> {
           .navigate(CategoryProductListingScreenRoute(category: categoryModel)),
       child: Column(
         children: [
-          Image.network(categoryModel.photo!, width: 32.w, height: 10.h),
+          Container(
+            width: 32.w,
+            height: 10.h,
+            child: CustomCachedImage(
+              image: categoryModel.photo!,
+              boxFit: BoxFit.contain,
+            ),
+          ),
           const SizedBox(
             height: 8,
           ),
