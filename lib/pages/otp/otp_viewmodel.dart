@@ -25,10 +25,10 @@ class OtpVM extends BaseViewModel {
       try {
         _otpCode = await _api.sendOTP();
       } on ErrorModelException<int> catch (e) {
-        _otpCode = e.error.toString();
+        // _otpCode = e.error.toString();
 
-        _snackbarService.showSnackbar(message: 'OTP code is $_otpCode');
-        log('OTP code is $_otpCode');
+        // _snackbarService.showSnackbar(message: 'OTP code is $_otpCode');
+        // log('OTP code is $_otpCode');
         rethrow;
       } catch (e) {
         _snackbarService.showSnackbar(message: e.toString());

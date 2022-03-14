@@ -22,6 +22,7 @@ class NotificationsVM extends BaseViewModel {
           NotificationFilterModel(seen: 0, type: 'order'),
         );
       } catch (e) {
+        setError(e.toString());
         _snackbarService.showSnackbar(message: e.toString());
       }
     }

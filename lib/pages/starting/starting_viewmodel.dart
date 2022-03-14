@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:labouchee/app/routes.gr.dart';
+import 'package:labouchee/services/language_service.dart';
 import 'package:labouchee/services/local_storage/hive_local_storage.dart';
 import 'package:labouchee/services/navigator.dart';
 import 'package:stacked/stacked.dart';
@@ -11,8 +13,11 @@ import '../../services/user_service.dart';
 class StartingStreamVM extends StreamViewModel<UserModel> {
   final _userService = locator<UserService>();
   final _navigationService = locator<NavigatorService>();
+  final _languageService = locator<LanguageService>();
   final _storageService = locator<HiveLocalStorage>();
   final _snackbarService = locator<SnackbarService>();
+
+  Stream<Locale> get locale => _languageService.locale;
 
   Future<void> refresh() async {
     Future<void> _loadData() async {

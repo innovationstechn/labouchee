@@ -7,6 +7,8 @@ import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../widgets/custom_circular_progress_indicator.dart';
+
 class Notifications extends StatelessWidget {
   Notifications({Key? key}) : super(key: key);
 
@@ -18,6 +20,18 @@ class Notifications extends StatelessWidget {
         viewModelBuilder: () => NotificationsVM(),
         onModelReady: (model) => model.loadData(),
         builder: (context, notificationsVM, _) {
+          if (notificationsVM.isBusy) {
+            return const Center(
+              child: CustomCircularProgressIndicator(),
+            );
+          } else if (notificationsVM.hasError) {
+            return Center(
+              child: Text(
+                notificationsVM.error(notificationsVM),
+              ),
+            );
+          }
+
           return ListView.builder(
             shrinkWrap: true,
             itemBuilder: (context, index) {

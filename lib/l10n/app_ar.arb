@@ -176,6 +176,8 @@
   "nameEmpty": "الإسم لا يمكن أن يكون خالي",
   "bookingDate": "تاريخ الحجز",
   "bookingTime": "وقت الحجز",
-  "city": "المدينة"
+  "city": "المدينة",
+  "resetPassword": "إسترجاع كلمة المرور",
+  "emailAddressBelowResetPassword": "البريد الإلكتروني لاسترجاع كلمة المرور"
 }
 

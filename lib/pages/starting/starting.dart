@@ -49,7 +49,7 @@ class _StartingState extends State<Starting> {
     final snackBarService = locator<SnackbarService>();
 
     return AdvancedDrawer(
-      backdropColor: Colors.blueGrey,
+      backdropColor: Colors.brown[500],
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -119,17 +119,23 @@ class _StartingState extends State<Starting> {
               }
             },
             child: SizedBox.expand(
-              child: PageView(
+              child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {
                   setState(() => _currentIndex = index);
                 },
-                children: <Widget>[
-                  LandingView(),
-                  SearchBar(),
-                  Cart(),
-                  Notifications()
-                ],
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  if(index == 1) {
+                    return SearchBar();
+                  } else if(index == 2) {
+                    return const Cart();
+                  } else if (index == 3) {
+                    return Notifications();
+                  } else {
+                    return LandingView();
+                  }
+                },
               ),
             ),
           ),

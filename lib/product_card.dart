@@ -72,7 +72,7 @@ class ProductCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 5),
                     ),
                     CustomText(
-                        text: productModel.price.toString() +
+                        text: generatePrice(productModel).toString() +
                             " " +
                             AppLocalizations.of(context)!.currency,
                         fontSize: 12.sp,
@@ -109,5 +109,13 @@ class ProductCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  double generatePrice(ProductModel product) {
+    return product.price ??
+        product.priceSmall ??
+        product.priceMedium ??
+        product.priceLarge ??
+        0.0;
   }
 }
