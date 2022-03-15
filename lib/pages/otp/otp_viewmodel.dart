@@ -38,6 +38,12 @@ class OtpVM extends BaseViewModel {
     await runBusyFuture(_sendOTP());
   }
 
+
+  Future<void> goBackToLogin() async {
+    await _localStorage.clearToken();
+    _navigationService.router.replaceAll([LoginScreenRoute()]);
+  }
+
   Future<void> match(String userOtpCode) async {
     Future<void> _match() async {
       if (userOtpCode == _otpCode) {
