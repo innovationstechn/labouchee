@@ -12,7 +12,7 @@ class CustomCachedImage extends StatelessWidget {
     return SizedBox.expand(
       child: CachedNetworkImage(
         imageUrl: image,
-        placeholder: (context, url) => Image.asset("assets/images/flags/placeholder.jpeg"),
+        placeholder: (context, url) => Center(child: Image.asset("assets/images/flags/placeholder.jpeg")),
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -21,7 +21,7 @@ class CustomCachedImage extends StatelessWidget {
             ),
           ),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Center(child: Image.asset("assets/images/flags/placeholder.jpeg")),
       ),
     );
   }

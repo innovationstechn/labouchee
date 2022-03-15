@@ -109,10 +109,10 @@ class PlaceOrderVM extends BaseViewModel {
     try {
       final message = await _api.placeOrder(order);
       _snackbarService.showSnackbar(message: message);
-      _navigationService.router.popAndPushAll([
-        StartingScreenRoute(),
-        MyOrdersScreenRoute(),
-      ]);
+      _navigationService.router.popUntilRoot();
+      _navigationService.router.pop();
+      _navigationService.router.navigate(MyOrdersScreenRoute());
+
     } catch (e) {
       if (e is ErrorModelException) {
         setError(e.error as PlaceOrderErrorModel);

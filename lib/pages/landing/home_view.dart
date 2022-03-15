@@ -20,7 +20,6 @@ import 'package:stacked/stacked.dart';
 import '../../widgets/custom_circular_progress_indicator.dart';
 
 class LandingView extends StatefulWidget {
-
   LandingView({Key? key}) : super(key: key);
 
   @override
@@ -43,8 +42,7 @@ class _LandingViewState extends State<LandingView> {
               return Center(
                 child: CustomCircularProgressIndicator(),
               );
-            }
-            else if (landingVM.hasError) {
+            } else if (landingVM.hasError) {
               return Center(
                 child: Text(
                   landingVM.error(landingVM),
@@ -199,8 +197,13 @@ class _LandingViewState extends State<LandingView> {
                     child: ClipRRect(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(5.0)),
-                      child: Image.network(item.images!.first,
-                          fit: BoxFit.cover, width: 1000.0),
+                      child: SizedBox(
+                        width: 1000.0,
+                        child: CustomCachedImage(
+                          image: item.images!.first,
+                          boxFit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -259,7 +262,7 @@ class _LandingViewState extends State<LandingView> {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
               child: AspectRatio(
-                aspectRatio: 3/2,
+                aspectRatio: 3 / 2,
                 child: CustomCachedImage(
                   image: similarProduct[selectedIndex].images!.first,
                   boxFit: BoxFit.cover,
