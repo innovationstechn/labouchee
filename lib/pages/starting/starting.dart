@@ -126,9 +126,9 @@ class _StartingState extends State<Starting> {
                 },
                 itemCount: 4,
                 itemBuilder: (context, index) {
-                  if(index == 1) {
+                  if (index == 1) {
                     return SearchBar();
-                  } else if(index == 2) {
+                  } else if (index == 2) {
                     return const Cart();
                   } else if (index == 3) {
                     return Notifications();

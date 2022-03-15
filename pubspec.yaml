@@ -90,6 +90,7 @@ dev_dependencies:
   flutter_animated_dialog: ^2.0.1
   double_back_to_close: ^2.0.0
   cached_network_image: ^3.2.0
+  connectivity_plus: ^2.2.1
   sdk:
     path: .\sdk\sdk
 #    path: F:\TelrSDK_Flutter_17072021\TelrSDK_Flutter\sdk

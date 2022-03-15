@@ -15,7 +15,7 @@ import '../../app/locator.dart';
 import '../../services/api/labouchee_api.dart';
 import '../../services/navigator.dart';
 
-class LandingVM extends LanguageAwareBaseView {
+class LandingVM extends BaseViewModel{
   final _laboucheeAPI = locator<LaboucheeAPI>();
   final _snackbarService = locator<SnackbarService>();
   final _navigationService = locator<NavigatorService>();
@@ -79,11 +79,6 @@ class LandingVM extends LanguageAwareBaseView {
     await runBusyFuture(
       _initialize(),
     );
-  }
-
-  @override
-  void onLanguageChanged(Locale newLocale) {
-    initialize();
   }
 
   void goToProductDetailPage(

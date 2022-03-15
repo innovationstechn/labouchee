@@ -19,10 +19,16 @@ import 'package:stacked/stacked.dart';
 
 import '../../widgets/custom_circular_progress_indicator.dart';
 
-class LandingView extends StatelessWidget {
-  final NavigatorService _navigationService = locator();
+class LandingView extends StatefulWidget {
 
   LandingView({Key? key}) : super(key: key);
+
+  @override
+  State<LandingView> createState() => _LandingViewState();
+}
+
+class _LandingViewState extends State<LandingView> {
+  final NavigatorService _navigationService = locator();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,8 @@ class LandingView extends StatelessWidget {
               return Center(
                 child: CustomCircularProgressIndicator(),
               );
-            } else if (landingVM.hasError) {
+            }
+            else if (landingVM.hasError) {
               return Center(
                 child: Text(
                   landingVM.error(landingVM),
