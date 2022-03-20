@@ -33,13 +33,26 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   String? selectedSize = "SMALL";
   int quantitySelected = 1;
   int? selectedImageIndex = 0;
+  ScrollController scrollController = ScrollController();
+  PanelController panelController = PanelController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     selectedItem = widget.similarProducts[widget.selectedIndex];
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_){
+      scrollController.addListener(() {
+        if(scrollController.position.pixels> scrollController.position.maxScrollExtent/2){
+          panelController.animatePanelToPosition(1.0,duration:Duration(milliseconds:200 ),curve: Curves.linear);
+        }else if(scrollController.position.pixels == scrollController.position.minScrollExtent){
+          panelController.close();
+        }
+      });
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +79,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                 ),
                 SlidingUpPanel(
+                  backdropEnabled: true,
+                  panelSnapping: true,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(18.0),
                       topRight: Radius.circular(18.0)),
-                  maxHeight: constraints.maxHeight * 0.7,
-                  minHeight: constraints.maxHeight * 0.7,
+                  maxHeight: constraints.maxHeight*0.85,
+                  minHeight: constraints.maxHeight * 0.66,
+                  controller: panelController,
                   panel: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
+                        horizontal: 10, vertical: 20),
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
