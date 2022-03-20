@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
+import '../../language_view_model.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_text.dart';
 import '../cart/cart.dart';
@@ -61,8 +62,12 @@ class _StartingState extends State<Starting> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 6.h>6.w?6.h:6.w,
           elevation: 1,
-          title: Image.asset("assets/images/flags/logo.png"),
+          title: Image.asset(
+            "assets/images/flags/logo.png",
+            height: 6.h>6.w?6.h:6.w,
+          ),
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -85,6 +90,7 @@ class _StartingState extends State<Starting> {
                 icon: Icon(
                   Icons.language,
                   color: primaryColor,
+                  size: 17.sp,
                 ),
                 onPressed: () => navigationService.router.navigate(
                   LanguageScreenRoute(nextPage: StartingScreenRoute()),
@@ -94,7 +100,10 @@ class _StartingState extends State<Starting> {
             ),
             Container(
                 child: IconButton(
-                  icon: Icon(Icons.shopping_cart),
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    size: 17.sp,
+                  ),
                   color: primaryColor,
                   onPressed: () {
                     _pageController.jumpToPage(2);
@@ -236,8 +245,12 @@ class _StartingState extends State<Starting> {
               ListTile(
                 onTap: () => navigationService.router
                     .navigate(const ProfileScreenRoute()),
-                leading: const Icon(Icons.account_circle_rounded),
+                leading: Icon(
+                  Icons.account_circle_rounded,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.profile,
                   color: Colors.white,
                 ),
@@ -247,18 +260,25 @@ class _StartingState extends State<Starting> {
                   _pageController.jumpToPage(2);
                   _advancedDrawerController.hideDrawer();
                 },
-                leading: const Icon(Icons.shopping_cart),
+                leading: Icon(
+                  Icons.shopping_cart,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.cart,
                   color: Colors.white,
                 ),
               ),
               ListTile(
-                onTap: () {
-                  navigationService.router.navigateNamed('/my-orders');
-                },
-                leading: const Icon(Icons.receipt_long_outlined),
+                onTap: () =>
+                    navigationService.router.navigateNamed('/my-orders'),
+                leading: Icon(
+                  Icons.receipt_long_outlined,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.myOrders,
                   color: Colors.white,
                 ),
@@ -266,44 +286,54 @@ class _StartingState extends State<Starting> {
               ListTile(
                 onTap: () =>
                     navigationService.router.navigate(BranchesScreenRoute()),
-                leading: const Icon(Icons.description),
+                leading: Icon(
+                  Icons.description,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.branches,
                   color: Colors.white,
                 ),
               ),
               ListTile(
-                onTap: () {
-                  navigationService.router
-                      .navigate(CustomerSupportScreenRoute());
-                },
-                leading: const Icon(Icons.message),
+                onTap: () => navigationService.router
+                    .navigate(CustomerSupportScreenRoute()),
+                leading: Icon(
+                  Icons.message,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.inquiryForm,
                   color: Colors.white,
                 ),
               ),
               ListTile(
-                onTap: () {
-                  navigationService.router
-                      .navigate(CouponsSupportScreenRoute());
-                },
-                leading: const Icon(Icons.card_giftcard),
+                onTap: () => navigationService.router
+                    .navigate(CouponsSupportScreenRoute()),
+                leading: Icon(
+                  Icons.card_giftcard,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.coupons,
                   color: Colors.white,
                 ),
               ),
               ListTile(
-                onTap: () {
-                  navigationService.router.navigate(
-                    LanguageScreenRoute(
-                      nextPage: StartingScreenRoute(),
-                    ),
-                  );
-                },
-                leading: const Icon(Icons.language),
+                onTap: () => navigationService.router.navigate(
+                  LanguageScreenRoute(
+                    nextPage: StartingScreenRoute(),
+                  ),
+                ),
+                leading: Icon(
+                  Icons.language,
+                  size: 17.sp,
+                ),
                 title: CustomText(
+                  fontSize: 12.sp,
                   text: AppLocalizations.of(context)?.languages,
                   color: Colors.white,
                 ),
@@ -313,11 +343,13 @@ class _StartingState extends State<Starting> {
                   onModelReady: (model) => model.refresh(),
                   builder: (context, startingVM, _) {
                     return ListTile(
-                      onTap: () {
-                        startingVM.logout();
-                      },
-                      leading: const Icon(Icons.logout),
+                      onTap: () => startingVM.logout(),
+                      leading: Icon(
+                        Icons.logout,
+                        size: 17.sp,
+                      ),
                       title: CustomText(
+                        fontSize: 12.sp,
                         text: AppLocalizations.of(context)?.logout,
                         color: Colors.white,
                       ),

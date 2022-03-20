@@ -85,7 +85,7 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
             return ReviewUI(
               image: review.avatar!,
               name: review.name!,
-              date: review.createdAt!.toString(),
+              date: review.createdDate,
               comment: review.review!,
               rating: double.parse(review.rating??"0"),
               onPressed: () => print("More Action $index"),
@@ -103,6 +103,7 @@ class _ProductDetailsReviewCardState extends State<ProductDetailsReviewCard> {
         Center(
           child: CustomButton(
             text: AppLocalizations.of(context)?.addREVIEW,
+            textFontSize: 14.sp,
             onTap: () => _showRatingAppDialog(widget.productDetailsVM),
             buttonColor: Theme.of(context).primaryColor,
           ),

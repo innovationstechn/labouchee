@@ -6,7 +6,7 @@ part 'product_review.g.dart';
 class ProductReviewModel {
   final int? id;
   final String? name,rating, review, avatar, userId;
-  final DateTime? createdAt;
+  final String? createdDate;
 
   ProductReviewModel({
     this.id,
@@ -15,7 +15,7 @@ class ProductReviewModel {
     this.review,
     this.avatar,
     this.userId,
-    this.createdAt,
+    this.createdDate,
   });
 
   factory ProductReviewModel.fromJson(Map<String, dynamic> json) =>

@@ -27,12 +27,6 @@ class _ReviewsState extends State<Reviews> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(
-                  text: AppLocalizations.of(context)!.reviews,
-                  padding: EdgeInsets.all(10),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
                 ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -44,7 +38,7 @@ class _ReviewsState extends State<Reviews> {
                         ReviewUI(
                           image: widget.reviewsModel[index].avatar,
                           name: widget.reviewsModel[index].name,
-                          date: widget.reviewsModel[index].createdAt.toString(),
+                          date: widget.reviewsModel[index].createdDate,
                           comment: widget.reviewsModel[index].review,
                           rating: double.parse(widget.reviewsModel[index].rating??"0"),
                           onPressed: () => print("More Action $index"),

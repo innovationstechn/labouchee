@@ -390,7 +390,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             data: ThemeData(
               primarySwatch: Colors.grey,
               splashColor: Colors.black,
-              textTheme: TextTheme(
+              textTheme: const TextTheme(
                 subtitle1: TextStyle(color: Colors.white),
                 button: TextStyle(color: Colors.white),
               ),
@@ -434,7 +434,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
             address.text,
             selectedDate,
             selectedTime,
-            "NO NOTES",
+            notes.text,
           );
           break;
         case 1:

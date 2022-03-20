@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:labouchee/product_card.dart';
-import 'package:sizer/sizer.dart';
-
 import 'models/product.dart';
 
 class LandingProductList extends StatelessWidget {
@@ -12,8 +10,6 @@ class LandingProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverLayoutBuilder(builder: (context, constraints) {
-      final orientation = MediaQuery.of(context).orientation;
-      final width = constraints.asBoxConstraints().maxWidth;
 
       final hItemCount = 2;
 

@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
                   primaryColor: const Color.fromRGBO(80, 32, 10, 1),
                   fontFamily: languageVM.locale.languageCode == "en"
                       ? "ExoRegular"
-                      : 'DaxMedium'),
+                      : 'GEDinar'),
               title: 'Flutter Demo',
               routeInformationParser:
                   _navigatorService.router.defaultRouteParser(),

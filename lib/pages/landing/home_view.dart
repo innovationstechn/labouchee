@@ -6,10 +6,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:getwidget/components/carousel/gf_items_carousel.dart';
 import 'package:labouchee/models/product.dart';
-import 'package:labouchee/pages/home/category.dart';
+import 'package:labouchee/widgets/category.dart';
 import 'package:labouchee/services/navigator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:labouchee/widgets/custom_cached_image.dart';
+import 'package:sizer/sizer.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/product.dart';
@@ -18,9 +19,10 @@ import 'package:labouchee/pages/landing/landing_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../widgets/custom_circular_progress_indicator.dart';
+import '../../widgets/custom_text.dart';
 
 class LandingView extends StatefulWidget {
-  LandingView({Key? key}) : super(key: key);
+  const LandingView({Key? key}) : super(key: key);
 
   @override
   State<LandingView> createState() => _LandingViewState();
@@ -53,11 +55,11 @@ class _LandingViewState extends State<LandingView> {
             return Center(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 800),
-                child: SingleChildScrollView(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    final int hItemCount = constraints.maxWidth.round() ~/ 150;
+                child: LayoutBuilder(builder: (context, constraints) {
+                  final int hItemCount = constraints.maxWidth.round() ~/ 150;
 
-                    return Column(
+                  return SingleChildScrollView(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,14 +75,14 @@ class _LandingViewState extends State<LandingView> {
                             items: landingVM.banners
                                 .map(
                                   (e) => ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5.0)),
-                                    child: CustomCachedImage(
-                                      image: e.photo!,
-                                      boxFit: BoxFit.cover,
-                                    ),
-                                  ),
-                                )
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(5.0)),
+                                child: CustomCachedImage(
+                                  image: e.photo!,
+                                  boxFit: BoxFit.cover,
+                                ),
+                              ),
+                            )
                                 .toList(),
                           ),
                         ),
@@ -127,6 +129,7 @@ class _LandingViewState extends State<LandingView> {
                         ),
                         Category(
                           categories: landingVM.categories,
+                          constraints: constraints,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -148,7 +151,7 @@ class _LandingViewState extends State<LandingView> {
                                     index, landingVM, landingVM.products);
                               },
                               crossAxisCount:
-                                  constraints.maxWidth > 400 ? 2 : 1,
+                              constraints.maxWidth > 400 ? 2 : 1,
                             );
                           },
                         ),
@@ -163,9 +166,9 @@ class _LandingViewState extends State<LandingView> {
                         //   },
                         // )
                       ],
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                })
               ),
             );
           },
@@ -234,8 +237,8 @@ class _LandingViewState extends State<LandingView> {
                 Expanded(
                   child: Text(
                     item.name!,
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -246,13 +249,13 @@ class _LandingViewState extends State<LandingView> {
                           .productRating
                           ?.toStringAsFixed(1) ??
                       "-",
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 13.sp, fontWeight: FontWeight.w500),
                 ),
                 Icon(
                   Icons.star,
                   color: Colors.yellow[700],
-                  size: 18,
+                  size: 13.sp,
                 )
               ],
             ),
@@ -287,11 +290,7 @@ class _LandingViewState extends State<LandingView> {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              item.description!,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
+            CustomText(text: item.description, maxLines: 3,fontSize: 13.sp,)
             // const Divider()
           ],
         ),
@@ -312,7 +311,7 @@ class _LandingViewState extends State<LandingView> {
           child: FittedBox(
             child: Text(
               name,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 12.sp),
             ),
           ),
         ),
@@ -334,9 +333,11 @@ class _LandingViewState extends State<LandingView> {
           child: Align(
             alignment: Alignment.center,
             child: FittedBox(
-              child: Text(
-                name,
-                style: const TextStyle(color: Colors.white),
+              child: CustomText(
+                text:name,
+                  color: Colors.white,
+                  fontSize: 11.sp,
+                // style: const TextStyle(),
               ),
             ),
           ),

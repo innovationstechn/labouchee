@@ -174,7 +174,7 @@ class _CartState extends State<Cart> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
-                                      height: 25,
+                                      // height: 25,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 5),
                                       decoration: BoxDecoration(
@@ -199,6 +199,7 @@ class _CartState extends State<Cart> {
                                               Icons.add,
                                               color: Theme.of(context)
                                                   .primaryColor,
+                                              size:12.sp,
                                             ),
                                           ),
                                           CustomText(
@@ -218,6 +219,7 @@ class _CartState extends State<Cart> {
                                               Icons.remove,
                                               color: Theme.of(context)
                                                   .primaryColor,
+                                              size:12.sp,
                                             ),
                                           ),
                                         ],
@@ -229,7 +231,7 @@ class _CartState extends State<Cart> {
                                       child: Icon(
                                         Icons.delete,
                                         color: Theme.of(context).primaryColor,
-                                        size: 30,
+                                        size: 17.sp,
                                       ),
                                     ),
                                   ],

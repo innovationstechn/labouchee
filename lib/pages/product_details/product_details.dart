@@ -149,6 +149,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomButton(
+                                textFontSize: 14.sp,
                                 size: Size(constraints.maxWidth * 0.5,
                                     constraints.maxWidth * 0.1),
                                 onTap: () => productDetailsVM.addToCart(

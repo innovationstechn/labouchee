@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:coupon_uikit/coupon_uikit.dart';
 import 'package:labouchee/pages/coupons/coupons_viewmodel.dart';
 import 'package:labouchee/widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -76,18 +77,19 @@ class _CouponsState extends State<Coupons> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '${coupon.amount ?? 0} RAYAL',
+                      '${coupon.amount ?? 0} ' +
+                          AppLocalizations.of(context)!.currency,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      'OFF',
+                    Text(
+                      AppLocalizations.of(context)!.off,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -104,10 +106,12 @@ class _CouponsState extends State<Coupons> {
                     CustomText(
                       text: coupon.title ?? "",
                       color: Colors.white,
+                      fontSize: 10.sp,
                       padding: const EdgeInsets.only(bottom: 10),
                     ),
                     Text(
-                      'Status: ${coupon.status == '1' ? 'Available' : 'Not Available'}',
+                      AppLocalizations.of(context)!.status +
+                          ': ${coupon.status == '1' ? AppLocalizations.of(context)!.available : AppLocalizations.of(context)!.notAvailable}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
@@ -129,11 +133,11 @@ class _CouponsState extends State<Coupons> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Coupon Code',
+            Text(
+              AppLocalizations.of(context)!.couponCode,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black54,
               ),
@@ -148,7 +152,7 @@ class _CouponsState extends State<Coupons> {
                 coupon.code ?? '-',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 15.sp,
                   color: secondaryColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -157,10 +161,12 @@ class _CouponsState extends State<Coupons> {
             const Spacer(),
             CustomText(
               text: coupon.description ?? "",
+              maxLines: 1,
             ),
             const Spacer(),
             Text(
-              'Valid Till - ${coupon.validTill ?? "-"}',
+              AppLocalizations.of(context)!.validTill +
+                  ' - ${coupon.validTill ?? "-"}',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.black45,

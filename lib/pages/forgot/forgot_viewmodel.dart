@@ -25,8 +25,8 @@ class ForgotVM extends BaseViewModel {
       try {
         final code = await _api.forgotPassword(email);
 
-        log('OTP code is $code');
-        _snackbarService.showSnackbar(message: 'OTP code is $code');
+        // log('OTP code is $code');
+        // // _snackbarService.showSnackbar(message: 'OTP code is $code');
 
         _takeOTPCode = true;
       } catch (e) {

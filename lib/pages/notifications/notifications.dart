@@ -30,6 +30,12 @@ class Notifications extends StatelessWidget {
                 notificationsVM.error(notificationsVM),
               ),
             );
+          } else if (notificationsVM.notifications.isEmpty) {
+            return Center(
+              child: Text(
+                AppLocalizations.of(context)!.noNotifications,
+              ),
+            );
           }
 
           return ListView.builder(

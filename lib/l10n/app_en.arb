@@ -722,6 +722,10 @@
   "branchName": "Branch Name",
   "@branchName": {
     "description": "The current language"
+  },
+  "noNotifications": "NO NOTIFICATIONS",
+  "@noNotifications": {
+    "description": "The current language"
   }
 }
 

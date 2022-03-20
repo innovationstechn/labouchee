@@ -134,7 +134,7 @@ class _MyOrdersState extends State<MyOrders> {
                 ),
                 CustomText(
                   text: AppLocalizations.of(context)!.status +
-                      " " +
+                      ":" +
                       myOrderModel.status!,
                   fontSize: 12.sp,
                   color: Theme.of(context).primaryColor,

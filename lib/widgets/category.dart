@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../app/locator.dart';
-import '../../app/routes.gr.dart';
-import '../../models/category.dart';
-import '../../services/navigator.dart';
-import '../../widgets/custom_cached_image.dart';
-import '../../widgets/custom_text.dart';
+import '../app/locator.dart';
+import '../app/routes.gr.dart';
+import '../models/category.dart';
+import '../services/navigator.dart';
+import 'custom_cached_image.dart';
+import 'custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Category extends StatefulWidget {
   final List<CategoryModel> categories;
+  final BoxConstraints constraints;
 
-  const Category({Key? key, required this.categories}) : super(key: key);
+  const Category({Key? key, required this.categories, required this.constraints}) : super(key: key);
 
   @override
   State<Category> createState() => _CategoryState();
@@ -40,31 +41,29 @@ class _CategoryState extends State<Category> {
               CustomText(
                   text: AppLocalizations.of(context)!.viewAll,
                   color: Theme.of(context).primaryColor,
-                  onTap: () {
+                  fontSize: 14.sp,
+                  onTap: () =>
                     _navigationService.router.navigate(
                       CategoriesListingScreenRoute(
                           categories: widget.categories),
-                    );
-                  }),
+                    )
+                  ),
             ],
           ),
         ),
-        SizedBox(
-          height: 30.h,
-          child: Padding(
-              padding: EdgeInsets.all(1.w),
-              child: Wrap(
-                direction: Axis.horizontal,
-                children: [
-                  for (int index = 0; index < widget.categories.length; index++)
-                    if (index < 6)
-                      SizedBox(
-                          height: 15.h,
-                          width: 32.w,
-                          child: categoryCard(widget.categories[index]))
-                ],
-              )),
-        ),
+        Padding(
+            padding: EdgeInsets.all(widget.constraints.maxWidth*0.01),
+            child: Wrap(
+              direction: Axis.horizontal,
+              children: [
+                for (int index = 0; index < widget.categories.length; index++)
+                  if (index < 6)
+                    SizedBox(
+                        height: widget.constraints.maxHeight*0.15,
+                        width: widget.constraints.maxWidth*0.32,
+                        child: categoryCard(widget.categories[index]))
+              ],
+            )),
       ],
     );
   }
@@ -77,8 +76,8 @@ class _CategoryState extends State<Category> {
       child: Column(
         children: [
           Container(
-            width: 32.w,
-            height: 10.h,
+            width: widget.constraints.maxWidth*0.32,
+            height: widget.constraints.maxHeight*0.10,
             child: CustomCachedImage(
               image: categoryModel.photo!,
               boxFit: BoxFit.contain,
@@ -87,14 +86,11 @@ class _CategoryState extends State<Category> {
           const SizedBox(
             height: 8,
           ),
-          Text(
-            categoryModel.name!,
-            overflow: TextOverflow.fade,
-            style: TextStyle(
+          CustomText(
+            text:categoryModel.name!,
               fontSize: 10.sp,
               fontWeight: FontWeight.normal,
             ),
-          )
         ],
       ),
     );
