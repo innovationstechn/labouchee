@@ -122,7 +122,7 @@
   "addToCart": "إضافة إلى العربة",
   "standard": "قياسي",
   "availableSize": "الأحجام المتوفرة: ",
-  "الأحجام المتوفرة": "available Sizes",
+  "availableSizes": "الأحجام المتوفرة",
   "reviews": "تقييمات",
   "viewAll": "مشاهدة الكل",
   "addREVIEW": "أضف تقييم",
@@ -179,6 +179,7 @@
   "resetPassword": "إسترجاع كلمة المرور",
   "emailAddressBelowResetPassword": "البريد الإلكتروني لاسترجاع كلمة المرور",
   "orderStatus": "حالة الدفع",
-  "branchName": "اسم الفرع"
+  "branchName": "اسم الفرع",
+  "noNotifications": "لا إشعارات"
 }
 
