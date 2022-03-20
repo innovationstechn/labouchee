@@ -16,18 +16,6 @@ class OnboardingVM extends BaseViewModel {
   final _navigationService = locator<NavigatorService>();
   final _storageService = locator<HiveLocalStorage>();
 
-  Future<void> init() async {
-    Future<void> _init() async {
-      final onboardingDone = await _storageService.onboardingDone();
-
-      if (onboardingDone) {
-        await _navigationService.router.navigate(LandingScreenRoute());
-      }
-    }
-
-    await runBusyFuture(_init());
-  }
-
   void onUserDone() async {
     await _storageService.onboardingDone(isDone: true);
     _navigationService.router.replace(

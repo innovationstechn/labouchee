@@ -4,11 +4,11 @@ part 'inquiry.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class InquiryModel {
-  final String? subject, feedback;
+  final String? subject, message;
 
   InquiryModel({
     this.subject,
-    this.feedback,
+    this.message,
   });
 
   factory InquiryModel.fromJson(Map<String, dynamic> json) =>

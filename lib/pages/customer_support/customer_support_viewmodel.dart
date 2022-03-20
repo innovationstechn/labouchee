@@ -13,7 +13,7 @@ class CustomerSupportVM extends BaseViewModel {
     Future<void> _submit() async {
       try {
         final message = await _api
-            .submitInquiry(InquiryModel(subject: subject, feedback: inquiry));
+            .submitInquiry(InquiryModel(subject: subject, message: inquiry));
         _snackbarService.showSnackbar(message: message);
       } catch (e) {
         _snackbarService.showSnackbar(message: e.toString());

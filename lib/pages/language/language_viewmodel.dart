@@ -15,8 +15,8 @@ class LanguageVM extends BaseViewModel {
   Future<void> languageSelection(
       String language, PageRouteInfo nextPage) async {
     await _languageService.changeLanguage(Locale(language));
-    _navigationService.router.replaceAll([LanguageScreenRoute(nextPage: StartingScreenRoute())]);
-    _navigationService.router.replaceAll([StartingScreenRoute()]);
+    // _navigationService.router.replaceAll([LanguageScreenRoute(nextPage: StartingScreenRoute())]);
+    _navigationService.router.replaceAll([nextPage]);
   }
 
   void update() {

@@ -15,7 +15,6 @@ class OnboardingView extends StatelessWidget {
       body: SafeArea(
         child: ViewModelBuilder<OnboardingVM>.reactive(
           viewModelBuilder: () => OnboardingVM(),
-          onModelReady: (model) async => await model.init(),
           builder: (context, onboardingVM, _) {
             if (onboardingVM.isBusy) {
               return Center(
