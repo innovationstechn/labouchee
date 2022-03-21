@@ -229,6 +229,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         CustomText(
           color: Colors.black,
+          fontSize: 10.sp,
           text: quantitySelected.toString(),
           padding: const EdgeInsets.symmetric(horizontal: 10),
         ),

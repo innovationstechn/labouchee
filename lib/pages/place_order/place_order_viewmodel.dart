@@ -202,7 +202,7 @@ class PlaceOrderVM extends BaseViewModel {
       //tran
       builder.element('tran', nest: () {
         builder.element('test', nest: () {
-          builder.text('1');
+          builder.text('0');
         });
         builder.element('type', nest: () {
           builder.text('auth');

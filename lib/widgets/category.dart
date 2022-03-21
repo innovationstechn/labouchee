@@ -59,7 +59,7 @@ class _CategoryState extends State<Category> {
                 for (int index = 0; index < widget.categories.length; index++)
                   if (index < 6)
                     SizedBox(
-                        height: widget.constraints.maxHeight*0.15,
+                        // height: widget.constraints.maxHeight*0.15,
                         width: widget.constraints.maxWidth*0.32,
                         child: categoryCard(widget.categories[index]))
               ],
@@ -76,8 +76,8 @@ class _CategoryState extends State<Category> {
       child: Column(
         children: [
           Container(
-            width: widget.constraints.maxWidth*0.32,
-            height: widget.constraints.maxHeight*0.10,
+            width: widget.constraints.maxWidth*0.22,
+            height: widget.constraints.maxWidth*0.22,
             child: CustomCachedImage(
               image: categoryModel.photo!,
               boxFit: BoxFit.contain,
@@ -90,6 +90,7 @@ class _CategoryState extends State<Category> {
             text:categoryModel.name!,
               fontSize: 10.sp,
               fontWeight: FontWeight.normal,
+              padding: EdgeInsets.symmetric(vertical: 5),
             ),
         ],
       ),

@@ -50,7 +50,7 @@ class _CheckOutState extends State<CheckOut> {
               return Stack(
                 children: [
                   SizedBox(
-                    height: constraints.maxHeight * 0.72,
+                    height: constraints.maxHeight * 0.65,
                     child: CheckoutProducts(
                       constraints: constraints,
                       checkoutVM: checkoutVM,

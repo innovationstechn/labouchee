@@ -33,6 +33,7 @@ class _LandingViewState extends State<LandingView> {
 
   @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

@@ -29,6 +29,7 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
     return ViewModelBuilder<CartVM>.reactive(
       viewModelBuilder: () => CartVM(),
       onModelReady: (model) => model.sync(),
@@ -199,7 +200,7 @@ class _CartState extends State<Cart> {
                                               Icons.add,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size:12.sp,
+                                              size:18.sp,
                                             ),
                                           ),
                                           CustomText(
@@ -219,7 +220,7 @@ class _CartState extends State<Cart> {
                                               Icons.remove,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size:12.sp,
+                                              size:18.sp,
                                             ),
                                           ),
                                         ],
@@ -231,7 +232,7 @@ class _CartState extends State<Cart> {
                                       child: Icon(
                                         Icons.delete,
                                         color: Theme.of(context).primaryColor,
-                                        size: 17.sp,
+                                        size: 20.sp,
                                       ),
                                     ),
                                   ],
