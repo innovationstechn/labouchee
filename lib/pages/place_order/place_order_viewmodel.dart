@@ -106,6 +106,8 @@ class PlaceOrderVM extends BaseViewModel {
   }
 
   void onPayment(PlaceOrderModel order) async {
+    setBusy(true);
+
     try {
       final message = await _api.placeOrder(order);
       _snackbarService.showSnackbar(message: message);
@@ -119,6 +121,8 @@ class PlaceOrderVM extends BaseViewModel {
       } else {
         _snackbarService.showSnackbar(message: e.toString());
       }
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -133,30 +137,34 @@ class PlaceOrderVM extends BaseViewModel {
       platform = 'iOS';
     }
 
-    telrPayment(
-      TelrPaymentModel(
-        storeId: '26550',
-        key: '9F2sv-N8hFS@zKdS',
-        deviceType: platform,
-        deviceId: deviceId!,
-        appName: 'Labouchee',
-        userId: user!.id!.toString(),
-        description: _cart!.cart!.items.toString(),
-        currency: 'SAR',
-        amount: _cart!.cartInfo!.totalPrice!.toString(),
-        language: locale!,
-        userName: '',
-        userFirstName: order.name!,
-        userSecondName: '',
-        address: order.addr1!,
-        city: order.city!.toString(),
-        region: order.city!.toString(),
-        country: 'Saudia Arabia',
-        userPhoneNumber: order.phone!,
-        email: order.email!,
-      ),
-      order,
-    );
+    try {
+      telrPayment(
+        TelrPaymentModel(
+          storeId: '26550',
+          key: '9F2sv-N8hFS@zKdS',
+          deviceType: platform,
+          deviceId: deviceId!,
+          appName: 'Labouchee',
+          userId: user!.id!.toString(),
+          description: _cart!.cart!.items.toString(),
+          currency: 'SAR',
+          amount: _cart!.cartInfo!.totalPrice!.toString(),
+          language: locale!,
+          userName: '',
+          userFirstName: order.name!,
+          userSecondName: '',
+          address: order.addr1!,
+          city: order.city!.toString(),
+          region: order.city!.toString(),
+          country: 'Saudia Arabia',
+          userPhoneNumber: order.phone!,
+          email: order.email!,
+        ),
+        order,
+      );
+    } catch (e) {
+      _snackbarService.showSnackbar(message: Strings.unknownError);
+    }
   }
 
   void displayMessage(String message) {
@@ -320,12 +328,15 @@ class PlaceOrderVM extends BaseViewModel {
       WebViewScreen(
         url: url,
         code: code,
-        onResponse: (bool success, String xml) {
+        onResponse: (bool success, String xml, String? errorMessage) {
+          _navigationService.router.popUntil(
+                  (route) => route.settings.name == PlaceOrderScreenRoute.name);
+
           if (success) {
             onPayment(order..telr = xml);
           } else {
             _snackbarService.showSnackbar(
-              message: Strings.paymentProcessError,
+              message: errorMessage ?? Strings.paymentProcessError,
             );
           }
         },
