@@ -39,6 +39,8 @@ class CheckoutVM extends BaseViewModel {
         );
 
         _snackbarService.showSnackbar(message: message);
+
+        details = await _api.getDetailedCart();
       } catch (e) {
         _snackbarService.showSnackbar(message: e.toString());
       }
