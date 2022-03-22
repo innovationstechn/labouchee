@@ -144,7 +144,7 @@ class PlaceOrderVM extends BaseViewModel {
           key: '9F2sv-N8hFS@zKdS',
           deviceType: platform,
           deviceId: deviceId!,
-          appName: 'Labouchee',
+          appName: 'LaBouchee',
           userId: user!.id!.toString(),
           description: _cart!.cart!.items.toString(),
           currency: 'SAR',
@@ -194,13 +194,13 @@ class PlaceOrderVM extends BaseViewModel {
       // app
       builder.element('app', nest: () {
         builder.element('name', nest: () {
-          builder.text('Telr');
+          builder.text(telrPaymentModel.appName);
         });
         builder.element('version', nest: () {
-          builder.text('1.1.6');
+          builder.text('1.0.0');
         });
         builder.element('user', nest: () {
-          builder.text('2');
+          builder.text(telrPaymentModel.userId);
         });
         builder.element('id', nest: () {
           builder.text('123');
@@ -219,7 +219,8 @@ class PlaceOrderVM extends BaseViewModel {
           builder.text('paypage');
         });
         builder.element('cartid', nest: () {
-          builder.text(Random().nextInt(100000));
+          builder.text(
+              Random(DateTime.now().millisecondsSinceEpoch).nextInt(100000));
         });
         builder.element('description', nest: () {
           builder.text(telrPaymentModel.description);
@@ -233,12 +234,12 @@ class PlaceOrderVM extends BaseViewModel {
         builder.element('language', nest: () {
           builder.text(telrPaymentModel.language);
         });
-        builder.element('firstref', nest: () {
-          builder.text('first');
-        });
-        builder.element('ref', nest: () {
-          builder.text('null');
-        });
+        // builder.element('firstref', nest: () {
+        //   builder.text('first');
+        // });
+        // builder.element('ref', nest: () {
+        //   builder.text('null');
+        // });
       });
 
       //billing
@@ -330,7 +331,7 @@ class PlaceOrderVM extends BaseViewModel {
         code: code,
         onResponse: (bool success, String xml, String? errorMessage) {
           _navigationService.router.popUntil(
-                  (route) => route.settings.name == PlaceOrderScreenRoute.name);
+              (route) => route.settings.name == PlaceOrderScreenRoute.name);
 
           if (success) {
             onPayment(order..telr = xml);
