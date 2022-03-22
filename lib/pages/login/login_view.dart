@@ -89,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
                               onTap: () => onForgotPassword(loginVM))),
                       SizedBox(height: 1.5.h),
                       if (loginVM.isBusy)
-                        CustomCircularProgressIndicator()
+                        const CustomCircularProgressIndicator()
                       else
                         CustomButton(
                           // padding: EdgeInsets.symmetric(vertical: 5),

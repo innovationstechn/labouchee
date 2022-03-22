@@ -95,7 +95,7 @@ class ProductCard extends StatelessWidget {
                     itemSize: 15.sp,
                     unratedColor: Colors.grey[300],
                   ),
-                  FittedBox(
+                  const FittedBox(
                     child: Icon(
                       Icons.shopping_cart,
                     ),

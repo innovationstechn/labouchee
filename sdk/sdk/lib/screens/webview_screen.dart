@@ -155,7 +155,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            // brightness: Brightness.light,
             title: Text(
               'Payment',
               style: TextStyle(color: Colors.black),

@@ -29,7 +29,7 @@ class _MyOrdersState extends State<MyOrders> {
           onModelReady: (model) => model.loadData(),
           builder: (context, ordersVM, _) {
             if (ordersVM.isBusy) {
-              return Center(
+              return const Center(
                 child: CustomCircularProgressIndicator(),
               );
             }

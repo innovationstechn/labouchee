@@ -1,25 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:labouchee/landing_products_list.dart';
 import 'package:labouchee/pages/searchbar/search_viewmodel.dart';
-import 'package:labouchee/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stacked/stacked.dart';
-import '../../models/product.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../widgets/custom_circular_progress_indicator.dart';
 
 class SearchBar extends StatefulWidget {
-  SearchBar({Key? key}) : super(key: key);
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
   State<SearchBar> createState() => _SearchBarState();
 }
 
 class _SearchBarState extends State<SearchBar> {
-  final FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +36,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               ),
               if (searchVM.isBusy)
-                SliverFillRemaining(
+                const SliverFillRemaining(
                   child: Center(
                     child: CustomCircularProgressIndicator(),
                   ),
@@ -62,20 +57,10 @@ class _SearchBarState extends State<SearchBar> {
         if (text != null && text.length > 3) onSearch(text);
       },
       autofocus: true,
+      focusNode: FocusNode(),
       style: TextStyle(color: Colors.black, fontSize: 13.sp),
       decoration: InputDecoration(
-        // prefix: const Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 5.0),
-        //   child: Icon(Icons.search),
-        // ),
         hintText: AppLocalizations.of(context)?.searchYourFavouriteItem,
-        // labelText: "Search an item",
-        // labelStyle: TextStyle(
-        //     color: focusNode!.hasFocus
-        //         ? Colors.black
-        //         : Theme.of(context!).primaryColor,
-        //     fontSize: 13.sp,
-        //     fontWeight: FontWeight.w300),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(

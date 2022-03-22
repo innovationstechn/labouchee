@@ -33,7 +33,6 @@ class _LandingViewState extends State<LandingView> {
 
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -42,7 +41,7 @@ class _LandingViewState extends State<LandingView> {
           onModelReady: (model) => model.initialize(),
           builder: (context, landingVM, _) {
             if (landingVM.isBusy) {
-              return Center(
+              return const Center(
                 child: CustomCircularProgressIndicator(),
               );
             } else if (landingVM.hasError) {
@@ -55,122 +54,122 @@ class _LandingViewState extends State<LandingView> {
 
             return Center(
               child: Container(
-                constraints: const BoxConstraints(maxWidth: 800),
-                child: LayoutBuilder(builder: (context, constraints) {
-                  final int hItemCount = constraints.maxWidth.round() ~/ 150;
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    final int hItemCount = constraints.maxWidth.round() ~/ 150;
 
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GFCarousel(
-                            hasPagination: true,
-                            passiveIndicator: Colors.white.withAlpha(100),
-                            activeIndicator: Colors.white.withAlpha(200),
-                            viewportFraction: 1.0,
-                            autoPlay: true,
-                            enableInfiniteScroll: true,
-                            items: landingVM.banners
-                                .map(
-                                  (e) => ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(5.0)),
-                                child: CustomCachedImage(
-                                  image: e.photo!,
-                                  boxFit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                                .toList(),
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GFCarousel(
+                              hasPagination: true,
+                              passiveIndicator: Colors.white.withAlpha(100),
+                              activeIndicator: Colors.white.withAlpha(200),
+                              viewportFraction: 1.0,
+                              autoPlay: true,
+                              enableInfiniteScroll: true,
+                              items: landingVM.banners
+                                  .map(
+                                    (e) => ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(5.0)),
+                                      child: CustomCachedImage(
+                                        image: e.photo!,
+                                        boxFit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           ),
-                        ),
-                        DefaultTabController(
-                          length: 3,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 50,
-                                child: TabBar(
-                                  unselectedLabelColor: Colors.redAccent,
-                                  indicatorSize: TabBarIndicatorSize.label,
-                                  indicator: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
+                          DefaultTabController(
+                            length: 3,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                  child: TabBar(
+                                    unselectedLabelColor: Colors.redAccent,
+                                    indicatorSize: TabBarIndicatorSize.label,
+                                    indicator: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    tabs: [
+                                      Tab(
+                                        child: buildCategoryCapsule(
+                                            AppLocalizations.of(context)!
+                                                .featured),
+                                      ),
+                                      Tab(
+                                        child: buildCategoryCapsule(
+                                            AppLocalizations.of(context)!
+                                                .hotSale),
+                                      ),
+                                      Tab(
+                                        child: buildCategoryCapsule(
+                                            AppLocalizations.of(context)!
+                                                .viewed),
+                                      ),
+                                    ],
                                   ),
-                                  tabs: [
-                                    Tab(
-                                      child: buildCategoryCapsule(
-                                          AppLocalizations.of(context)!
-                                              .featured),
-                                    ),
-                                    Tab(
-                                      child: buildCategoryCapsule(
-                                          AppLocalizations.of(context)!
-                                              .hotSale),
-                                    ),
-                                    Tab(
-                                      child: buildCategoryCapsule(
-                                          AppLocalizations.of(context)!.viewed),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 220,
-                                child: TabBarView(children: [
-                                  buildTab(landingVM.featured, hItemCount),
-                                  buildTab(landingVM.hotSale, hItemCount),
-                                  buildTab(landingVM.mostViewed, hItemCount),
-                                ]),
-                              )
-                            ],
+                                SizedBox(
+                                  height: 220,
+                                  child: TabBarView(children: [
+                                    buildTab(landingVM.featured, hItemCount),
+                                    buildTab(landingVM.hotSale, hItemCount),
+                                    buildTab(landingVM.mostViewed, hItemCount),
+                                  ]),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Category(
-                          categories: landingVM.categories,
-                          constraints: constraints,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              buildCategoryCapsule(
-                                  AppLocalizations.of(context)!.ourCatalog),
-                            ],
+                          Category(
+                            categories: landingVM.categories,
+                            constraints: constraints,
                           ),
-                        ),
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            return AlignedGridView.count(
-                              itemCount: landingVM.products.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return productCard(
-                                    index, landingVM, landingVM.products);
-                              },
-                              crossAxisCount:
-                              constraints.maxWidth > 400 ? 2 : 1,
-                            );
-                          },
-                        ),
-                        // ListView.builder(
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   itemCount: landingVM.products.length,
-                        //   itemBuilder: (context, index) {
-                        //     final item = landingVM.products[index];
-                        //
-                        //     return productCard(item);
-                        //   },
-                        // )
-                      ],
-                    ),
-                  );
-                })
-              ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                buildCategoryCapsule(
+                                    AppLocalizations.of(context)!.ourCatalog),
+                              ],
+                            ),
+                          ),
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              return AlignedGridView.count(
+                                itemCount: landingVM.products.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return productCard(
+                                      index, landingVM, landingVM.products);
+                                },
+                                crossAxisCount:
+                                    constraints.maxWidth > 400 ? 2 : 1,
+                              );
+                            },
+                          ),
+                          // ListView.builder(
+                          //   physics: const NeverScrollableScrollPhysics(),
+                          //   shrinkWrap: true,
+                          //   itemCount: landingVM.products.length,
+                          //   itemBuilder: (context, index) {
+                          //     final item = landingVM.products[index];
+                          //
+                          //     return productCard(item);
+                          //   },
+                          // )
+                        ],
+                      ),
+                    );
+                  })),
             );
           },
         ),
@@ -250,8 +249,8 @@ class _LandingViewState extends State<LandingView> {
                           .productRating
                           ?.toStringAsFixed(1) ??
                       "-",
-                  style: TextStyle(
-                      fontSize: 13.sp, fontWeight: FontWeight.w500),
+                  style:
+                      TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w500),
                 ),
                 Icon(
                   Icons.star,
@@ -291,7 +290,11 @@ class _LandingViewState extends State<LandingView> {
             const SizedBox(
               height: 10,
             ),
-            CustomText(text: item.description, maxLines: 3,fontSize: 13.sp,)
+            CustomText(
+              text: item.description,
+              maxLines: 3,
+              fontSize: 13.sp,
+            )
             // const Divider()
           ],
         ),
@@ -312,7 +315,7 @@ class _LandingViewState extends State<LandingView> {
           child: FittedBox(
             child: Text(
               name,
-              style: TextStyle(color: Colors.white,fontSize: 12.sp),
+              style: TextStyle(color: Colors.white, fontSize: 12.sp),
             ),
           ),
         ),
@@ -335,9 +338,9 @@ class _LandingViewState extends State<LandingView> {
             alignment: Alignment.center,
             child: FittedBox(
               child: CustomText(
-                text:name,
-                  color: Colors.white,
-                  fontSize: 11.sp,
+                text: name,
+                color: Colors.white,
+                fontSize: 11.sp,
                 // style: const TextStyle(),
               ),
             ),

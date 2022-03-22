@@ -11,7 +11,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/locator.dart';
 import '../../app/routes.gr.dart';
 import '../../models/cart.dart';
-import '../../services/api/labouchee_api.dart';
 import '../../services/navigator.dart';
 import '../../widgets/custom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,18 +23,17 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  final _laboucheeAPI = locator<LaboucheeAPI>();
   final _navigationService = locator<NavigatorService>();
 
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
     return ViewModelBuilder<CartVM>.reactive(
       viewModelBuilder: () => CartVM(),
       onModelReady: (model) => model.sync(),
       builder: (context, cartVM, _) {
-        if (cartVM.isBusy)
-          return Center(child: CustomCircularProgressIndicator());
+        if (cartVM.isBusy) {
+          return const Center(child: CustomCircularProgressIndicator());
+        }
 
         return LayoutBuilder(
           builder: (context, constraints) {
@@ -129,9 +127,7 @@ class _CartState extends State<Cart> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10.0)),
-                        child: CustomCachedImage(
-                          image:item.image!
-                        ),
+                        child: CustomCachedImage(image: item.image!),
                       ),
                     ),
                     Container(
@@ -200,7 +196,7 @@ class _CartState extends State<Cart> {
                                               Icons.add,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size:18.sp,
+                                              size: 18.sp,
                                             ),
                                           ),
                                           CustomText(
@@ -220,7 +216,7 @@ class _CartState extends State<Cart> {
                                               Icons.remove,
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              size:18.sp,
+                                              size: 18.sp,
                                             ),
                                           ),
                                         ],
