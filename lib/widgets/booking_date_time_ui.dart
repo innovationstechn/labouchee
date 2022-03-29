@@ -191,7 +191,7 @@ class _BookingDateAndTimeState extends State<BookingDateAndTime> {
             dataList: List.generate(
               time.length,
                   (index) {
-                return time[index]
+                return time[index];
               },
             ),
           );

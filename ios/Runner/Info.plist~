@@ -51,9 +51,5 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
-                <key>NSPhotoLibraryUsageDescription</key>
-                <string>This application needs access to your photo library for selecting profile pictures.</string>
-                <key>NSPhotoLibraryUsageDescription</key>
-                <string>This application needs access to your camera for capturing profile pictures.</string>
 	</dict>
 </plist>
